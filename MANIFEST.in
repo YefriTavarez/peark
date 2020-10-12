@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include merpigc *.css
+recursive-include merpigc *.csv
+recursive-include merpigc *.html
+recursive-include merpigc *.ico
+recursive-include merpigc *.js
+recursive-include merpigc *.json
+recursive-include merpigc *.md
+recursive-include merpigc *.png
+recursive-include merpigc *.py
+recursive-include merpigc *.svg
+recursive-include merpigc *.txt
+recursive-exclude merpigc *.pyc

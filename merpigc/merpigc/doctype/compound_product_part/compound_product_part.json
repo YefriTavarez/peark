@@ -1,0 +1,60 @@
+{
+ "creation": "2020-10-12 09:26:19.168531",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product_assembly",
+  "part_name",
+  "product_specification",
+  "qty"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "product_assembly",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product Assembly",
+   "options": "Product Assembly",
+   "reqd": 1
+  },
+  {
+   "columns": 3,
+   "fetch_from": "product_assembly.full_specifications",
+   "fetch_if_empty": 1,
+   "fieldname": "product_specification",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Product Specification",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "part_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Part Name"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-12 10:23:28.705782",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "merpigc",
+ "name": "Compound Product Part",
+ "owner": "ytavarez@igcaribe.com",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

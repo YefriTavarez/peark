@@ -1,0 +1,646 @@
+// Copyright (c) 2020, Yefri Tavarez Nolasco and contributors
+// For license information, please see license.txt
+
+frappe.provide("frappe.events.product_assembly");
+frappe.ui.form.on('Product Assembly', {
+    refresh(frm) {
+        frappe.run_serially([
+            () => frm.trigger("add_custom_buttons"),
+            () => frm.trigger("set_custom_queries"),
+            () => frm.trigger("toggle_display_fields"),
+        ]);
+    },
+
+    onload_post_render(frm) {
+        frm.trigger("set_color_masks");
+    },
+
+    set_custom_queries(frm) {
+        const { doc } = frm;
+
+        if (!doc.product_profile) {
+            return false;
+        }
+
+        frappe.run_serially([
+            () => frm.trigger("set_item_group_1_query"), ,
+            () => frm.trigger("set_item_group_2_query"), ,
+            () => frm.trigger("set_item_group_3_query"), ,
+            () => frm.trigger("set_item_group_4_query"), ,
+            () => frm.trigger("set_dimension_query"),
+            () => frm.trigger("set_paperboard_query"),
+            () => frm.trigger("set_backboard_query"),
+            () => frm.trigger("set_control_query"),
+            () => frm.trigger("set_cutting_query"),
+            () => frm.trigger("set_gluing_query"),
+            () => frm.trigger("set_folding_query"),
+            () => frm.trigger("set_protection_query"),
+            () => frm.trigger("set_utils_query"),
+            () => frm.trigger("set_texture_query"),
+        ]);
+    },
+
+    add_custom_buttons(frm) {
+
+        if (frm.is_new()) {
+            return false;
+        }
+
+        frappe.run_serially([
+            () => frm.trigger("add_view_items_button"),
+        ]);
+    },
+    set_item_group_1_query(frm) {
+        const { root_item_group } = frappe.boot;
+
+        frm.set_query("item_group_1", {
+            filters: {
+                "parent_item_group": root_item_group,
+            },
+        });
+    },
+
+    set_item_group_2_query(frm) {
+        frm.set_query("item_group_2", doc => {
+            return {
+                filters: {
+                    "parent_item_group": doc.item_group_1,
+                }
+            }
+        });
+    },
+
+    set_item_group_3_query(frm) {
+        frm.set_query("item_group_3", doc => {
+            return {
+                filters: {
+                    "parent_item_group": doc.item_group_2,
+                }
+            }
+        });
+    },
+
+    set_item_group_4_query(frm) {
+        frm.set_query("item_group_4", doc => {
+            return {
+                filters: {
+                    "parent_item_group": doc.item_group_3,
+                }
+            }
+        });
+    },
+
+    set_dimension_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const dimensions = jQuery
+                .map(product_profile_doc.dimensions, d => d.dimension);
+
+            const filters = {
+                name: ["in", dimensions.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("dimension", query);
+    },
+
+    set_paperboard_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const paperboards = jQuery
+                .map(product_profile_doc.paperboards, d => d.paperboard);
+
+            const filters = {
+                name: ["in", paperboards.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("paperboard", query);
+    },
+
+    set_backboard_query(frm) {
+        const {
+            doc: {
+                __onload: {
+                    product_profile_doc,
+                }
+            }
+        } = frm;
+
+        const query = () => {
+            const backboards = product_profile_doc
+                .backboards
+                .map(d => d.paperboard);
+
+            const filters = {
+                name: ["in", backboards.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("backboard", query);
+    },
+
+    set_control_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const features = product_profile_doc
+                .control_features
+                .map(d => d.product_feature);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("control_feature", query);
+    },
+
+    set_cutting_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const features = product_profile_doc
+                .cutting_features
+                .map(d => d.product_feature);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("cutting_feature", query);
+    },
+
+    set_gluing_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const features = product_profile_doc
+                .gluing_features
+                .map(d => d.product_feature);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("gluing_feature", query);
+    },
+
+    set_folding_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const features = product_profile_doc
+                .folding_features
+                .map(d => d.product_feature);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("folding_feature", query);
+    },
+
+    set_protection_query(frm) {
+        const tablename = "protection_features";
+        const fieldname = "product_feature";
+        const { get_available_list } = frappe.events.product_assembly;
+
+        const query = () => {
+            const features = get_available_list(tablename);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query(fieldname, tablename, query);
+    },
+
+    set_utils_query(frm) {
+        const tablename = "utils_features";
+        const fieldname = "product_feature";
+        const { get_available_list } = frappe.events.product_assembly;
+
+        const query = () => {
+            const features = get_available_list(tablename);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query(fieldname, tablename, query);
+    },
+
+    set_texture_query(frm) {
+        const tablename = "texture_features";
+        const fieldname = "product_feature";
+        const { get_available_list } = frappe.events.product_assembly;
+
+        const query = () => {
+            const features = get_available_list(tablename);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query(fieldname, tablename, query);
+    },
+
+    add_view_items_button(frm) {
+        const label = __("Item");
+        const parent = __("View");
+        const route_options = {
+            "ref_doctype": frm.doctype,
+            "ref_docname": frm.docname,
+        };
+
+        const action = event => {
+            frappe.route_options = route_options;
+            frappe.set_route("List", "Item", "List");
+        };
+
+        if (frm.is_new()) {
+            return false;
+        }
+
+        frm.add_custom_button(label, action, parent);
+    },
+
+    set_color_masks(frm) {
+        const selector_template = "input[data-fieldname=%(fieldname)s]";
+        const fields = [
+            "front_colors",
+            "pantone_colors",
+            "back_colors",
+            "pantone_back_colors",
+        ];
+
+        jQuery.map(fields, fieldname => {
+            // pantone_
+            const fieldsdict = { fieldname };
+            const selector = repl(selector_template, fieldsdict);
+
+            let mask = {
+                'translation': {
+                    C: { pattern: /[0-4]/ },
+                }
+            };
+
+            if (fieldname.includes("pantone")) {
+                mask = {
+                    'translation': {
+                        C: { pattern: /[0-9]/ },
+                    }
+                };
+            }
+
+            jQuery(selector).mask('C', mask);
+        });
+    },
+
+    handle_is_compound_product(frm) {
+        const { doc } = frm;
+
+        const msgparts = new Array();
+
+        msgparts.push(__("If you mark this product as Compound Product, it will be cleared."));
+        msgparts.push(__("Are you sure you want to continue?"));
+
+        const msg = msgparts.join(" ");
+
+        const ifyes = event => {
+            frm.trigger("clear_compound_product_fields");
+            frm.trigger("set_is_compound_product_silently");
+        };
+
+        const ifno = event => {
+            // pass
+        };
+
+        frappe.confirm(msg, ifyes, ifno);
+    },
+
+    set_is_compound_product_silently(frm) {
+        const { doc } = frm;
+
+        doc.is_compound_product = 1;
+        frm.refresh_field("is_compound_product");
+    },
+
+    unset_is_compound_product_silently(frm) {
+        const { doc } = frm;
+
+        doc.is_compound_product = 0;
+        frm.refresh_field("is_compound_product");
+    },
+
+    clear_compound_product_fields(frm) {
+        const fields_to_clear = [
+            ["dimension", null],
+            ["paperboard", null],
+            ["paperboard_name", null],
+            ["backboard", null],
+            ["backboard_name", null],
+            ["horizontal_margin", .000],
+            ["vertical_margin", .000],
+            ["control_feature", null],
+            ["cutting_feature", null],
+            ["gluing_feature", null],
+            ["folding_feature", null],
+            ["protection_features", []],
+            ["utils_features", []],
+            ["texture_features", []],
+        ];
+
+        const clearfunc = ([fieldname, value]) => {
+            frm.set_value(fieldname, value);
+        };
+
+        jQuery.map(fields_to_clear, clearfunc);
+
+        // frm.toggle_reqd(fields_to_enable, false);
+        // frm.toggle_display(fields_to_enable, false);
+    },
+
+    disable_compound_product_fields(frm) {
+        const fields_to_enable = [
+            "dimension",
+            "paperboard",
+            "keep_stock",
+            "horizontal_margin",
+            "vertical_margin",
+            "is_compound_product",
+            "item_group_1",
+            "item_group_2",
+            "item_group_3",
+            "item_group_4",
+            "control_feature",
+            "cutting_feature",
+            "gluing_feature",
+            "folding_feature",
+            "protection_features",
+            "utils_features",
+            "texture_features",
+        ];
+
+        frm.toggle_display(fields_to_enable, false);
+        frm.trigger("set_is_compound_product_silently");
+    },
+
+    re_render_form(frm) {
+        frappe.run_serially([
+            () => frm.trigger("clear_fields"),
+            () => frm.trigger("set_default_values"),
+            () => frm.trigger("set_custom_queries"),
+            () => frm.trigger("toggle_display_fields"),
+        ]);
+    },
+
+    clear_fields(frm) {
+        const fields_list = [
+            ["dimension", null],
+            ["dimension", null],
+            ["horizontal_margin", 0],
+            ["vertical_margin", 0],
+            ["item_group_1", null],
+            ["item_group_2", null],
+            ["item_group_3", null],
+            ["item_group_4", null],
+            ["paperboard", null],
+            ["paperboard_name", null],
+            ["backboard", null],
+            ["backboard_name", null],
+            ["front_colors", 0],
+            ["pantone_colors", 0],
+            ["back_colors", 0],
+            ["pantone_back_colors", 0],
+            ["control_feature", null],
+            ["cutting_feature", null],
+            ["gluing_feature", null],
+            ["folding_feature", null],
+            ["protection_features", new Array()],
+            ["utils_features", new Array()],
+            ["texture_features", new Array()],
+            ["unique_hash", null],
+        ];
+
+        jQuery.map(fields_list, function ([fieldname, value]) {
+            frm.set_value(fieldname, value);
+        });
+    },
+
+    set_default_values(frm) {
+        const { doc } = frm;
+        const {
+            __onload = {}
+        } = doc;
+        const product_profile_doc = __onload.product_profile_doc || {};
+
+        const fields = [
+            ["item_group_1", "parent_item_group"],
+            ["item_group_2", "item_group"],
+            // ["item_group_3", "item_group_3"],
+            // ["item_group_4", "item_group_4"],
+            ["keep_stock", "keep_stock"],
+        ];
+
+        fields.map(function ([target, source]) {
+            doc[target] = product_profile_doc[source];
+        });
+
+        frm.refresh_fields();
+    },
+
+    toggle_display_fields(frm) {
+        const {
+            doc: {
+                __onload = {}
+            }
+        } = frm;
+        const product_profile_doc = __onload.product_profile_doc || {};
+
+        const fields_list = [
+            ["backboard", "has_backboard", d => !!d],
+            ["front_colors", "oneside", d => !!d],
+            ["pantone_colors", "oneside", d => !!d],
+            ["back_colors", "backprinted", d => !!d],
+            ["pantone_back_colors", "backprinted", d => !!d],
+            ["control_feature", "control_features", d => !!d.length],
+            ["cutting_feature", "cutting_features", d => !!d.length],
+            ["gluing_feature", "gluing_features", d => !!d.length],
+            ["folding_feature", "folding_features", d => !!d.length],
+            ["protection_features", "protection_features", d => !!d.length],
+            ["utils_features", "utils_features", d => !!d.length],
+            ["texture_features", "texture_features", d => !!d.length],
+        ];
+
+        jQuery.map(fields_list, function ([target, source, condition]) {
+            const value = product_profile_doc[source];
+
+            if (!value) {
+                frm.toggle_display(target, false);
+                return false;
+            }
+
+            const display = condition(value);
+
+            frm.toggle_display(target, display);
+        });
+
+        frm.refresh_fields();
+    },
+
+    set_item_group_query(frm) {
+        const { doc } = frm;
+        const opts = {
+            filters: {
+                parent_item_group: doc.parent_item_group,
+            }
+        };
+
+        frm.set_query("item_group", opts);
+    },
+
+    fetch_product_profile_details(frm) {
+        const callback = () => {
+            frm.trigger("re_render_form");
+        };
+
+        frm.call("add_product_profile_details")
+            .then(callback);
+    },
+
+    product_profile(frm) {
+        const { doc } = frm;
+
+        if (doc.product_profile) {
+            frm.trigger("fetch_product_profile_details");
+        }
+    },
+
+    paperboard(frm) {
+        const { doc } = frm;
+
+        if (!doc.paperboard) {
+            frm.set_value("paperboard_name", null);
+        }
+    },
+
+    backboard(frm) {
+        const { doc } = frm;
+
+        if (!doc.backboard) {
+            frm.set_value("backboard_name", null);
+        }
+    },
+
+    item_group_1(frm) {
+        // frm.set_value("item_group_2", null);
+    },
+    item_group_2(frm) {
+        // frm.set_value("item_group_3", null);
+    },
+    item_group_3(frm) {
+        // frm.set_value("item_group_4", null);
+    },
+
+    is_compound_product(frm) {
+        const { doc } = frm;
+        const { is_compound_product } = doc;
+
+        if (is_compound_product) {
+            frappe.run_serially([
+                () => frm.trigger("unset_is_compound_product_silently"),
+                // () => frm.trigger("clear_compound_product_fields"),
+                () => frm.trigger("handle_is_compound_product"),
+            ]);
+
+        } else {
+            // frappe.run_serially([
+            //     () => frm.trigger("clear_compound_product_fields"),
+            //     () => frm.trigger("set_is_compound_product_silently"),
+            // ]);
+        }
+    },
+});
+
+jQuery.extend(frappe.events.product_assembly, {
+    get_available_list: function (tablename) {
+        const { product_assembly } = frappe.events;
+
+        const all_opts = product_assembly.get_all_options(tablename);
+        const chosen_list = product_assembly.get_chosen_list(tablename);
+
+        return all_opts.filter(d => !chosen_list.includes(d));
+    },
+    get_all_options: function (tablename) {
+        const {
+            doc: {
+                __onload: {
+                    product_profile_doc,
+                }
+            }
+        } = cur_frm;
+
+        return product_profile_doc[tablename]
+            .filter(d => d.product_feature)
+            .map(d => d.product_feature);
+    },
+    get_chosen_list: function (tablename) {
+        const table = cur_frm.doc[tablename];
+
+        const found = table
+            .filter(d => d.product_feature)
+            .map(d => d.product_feature);
+
+        return found;
+    },
+});

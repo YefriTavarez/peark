@@ -1,0 +1,108 @@
+{
+ "autoname": "field:product_assembly",
+ "creation": "2020-10-12 09:29:59.689675",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product_profile",
+  "product_assembly",
+  "enabled",
+  "section_break_4",
+  "product_specifications",
+  "section_break_6",
+  "parts"
+ ],
+ "fields": [
+  {
+   "fieldname": "product_profile",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product Profile",
+   "options": "Product Profile",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_assembly",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Product Assembly",
+   "options": "Product Assembly",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "parts",
+   "fieldtype": "Table",
+   "label": "Compound Product Part",
+   "options": "Compound Product Part",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_specifications",
+   "fieldtype": "Long Text",
+   "label": "Product Specifications",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "modified": "2020-10-12 17:14:47.505835",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "merpigc",
+ "name": "Compound Product",
+ "owner": "ytavarez@igcaribe.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

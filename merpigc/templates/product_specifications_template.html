@@ -1,0 +1,10 @@
+<strong>{{ product_profile }}</strong>
+<br>
+
+{% if specs %}
+<ul>
+	{% for row in specs %}
+	<li>{% if row.part_name %}{{ row.part_name }}: {% endif %} ({{ row.qty }}x) {{ row.description }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
