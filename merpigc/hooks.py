@@ -111,23 +111,23 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"merpigc.tasks.all"
-# 	],
-# 	"daily": [
-# 		"merpigc.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"merpigc.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"merpigc.tasks.weekly"
-# 	]
-# 	"monthly": [
-# 		"merpigc.tasks.monthly"
-# 	]
-# }
+scheduler_events = {
+    "all": [
+        "merpigc.tasks.all"
+    ],
+    "daily": [
+        "merpigc.tasks.daily"
+    ],
+    "hourly": [
+        "merpigc.tasks.hourly"
+    ],
+    "weekly": [
+        "merpigc.tasks.weekly"
+    ],
+    "monthly": [
+        "merpigc.tasks.monthly"
+    ],
+}
 
 # Testing
 # -------
