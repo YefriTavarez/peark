@@ -357,8 +357,11 @@ frappe.ui.form.on('Product Assembly', {
         const msg = msgparts.join(" ");
 
         const ifyes = event => {
-            frm.trigger("clear_compound_product_fields");
-            frm.trigger("set_is_compound_product_silently");
+            frappe.run_serially([
+                () => frm.trigger("clear_compound_product_fields"),
+                () => frm.trigger("set_is_compound_product_silently"),
+                () => frm.trigger("toggle_display_fields"),
+            ]);
         };
 
         const ifno = event => {
@@ -447,7 +450,6 @@ frappe.ui.form.on('Product Assembly', {
     clear_fields(frm) {
         const fields_list = [
             ["dimension", null],
-            ["dimension", null],
             ["horizontal_margin", 0],
             ["vertical_margin", 0],
             ["item_group_1", null],
@@ -500,14 +502,17 @@ frappe.ui.form.on('Product Assembly', {
     },
 
     toggle_display_fields(frm) {
+        const { doc } = frm;
         const {
-            doc: {
-                __onload = {}
-            }
-        } = frm;
+            __onload = {}
+        } = doc;
+
         const product_profile_doc = __onload.product_profile_doc || {};
 
         const fields_list = [
+            ["dimension", "dimension", d => !!d],
+            ["paperboard", "paperboard", d => !!d],
+            ["paperboard_name", "paperboard_name", d => !!d],
             ["backboard", "has_backboard", d => !!d],
             ["front_colors", "oneside", d => !!d],
             ["pantone_colors", "oneside", d => !!d],
@@ -530,7 +535,7 @@ frappe.ui.form.on('Product Assembly', {
                 return false;
             }
 
-            const display = condition(value);
+            const display = condition(value) && !doc.is_compound_product;
 
             frm.toggle_display(target, display);
         });
@@ -608,7 +613,11 @@ frappe.ui.form.on('Product Assembly', {
             //     () => frm.trigger("clear_compound_product_fields"),
             //     () => frm.trigger("set_is_compound_product_silently"),
             // ]);
+            frappe.run_serially([
+                () => frm.trigger("toggle_display_fields"),
+            ]);
         }
+
     },
 });
 

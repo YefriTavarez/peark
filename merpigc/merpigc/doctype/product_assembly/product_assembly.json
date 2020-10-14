@@ -280,7 +280,7 @@
    "label": "Compound Product"
   }
  ],
- "modified": "2020-10-12 14:22:07.324396",
+ "modified": "2020-10-13 16:16:17.601557",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "merpigc",
  "name": "Product Assembly",
@@ -299,6 +299,7 @@
    "write": 1
   }
  ],
+ "search_fields": "full_specifications",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

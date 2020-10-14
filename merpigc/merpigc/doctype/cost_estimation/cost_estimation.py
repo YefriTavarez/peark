@@ -11,7 +11,8 @@ from frappe import _dict as pydict
 from frappe import db as database
 from frappe import _ as translate
 
-from frappe.utils import flt, cint
+from frappe.utils import today
+from frappe.utils import flt, cint, cstr
 
 
 class CostEstimation(Document):
@@ -20,11 +21,23 @@ class CostEstimation(Document):
         self.fetch_product_assembly()
 
     def validate(self):
+        self.update_status()
+
         self.validate_product_assembly()
         self.validate_qty_to_produce()
 
     def on_change(self):
         self.calculate_totals()
+
+    def update_status(self):
+        valid_until = cstr(self.valid_until)
+
+        if valid_until >= today():
+            self.db_set("status", "Valid")
+
+            return True
+
+        self.db_set("status", "Expired")
 
     def validate_qty_to_produce(self):
         qty_to_produce = flt(self.qty_to_produce)
@@ -54,33 +67,110 @@ class CostEstimation(Document):
             frappe.throw(formatted_error)
 
     def fetch_product_assembly(self):
-        # get_full_name
-
         doctype = self.meta \
             .get_field("product_assembly") \
             .options
 
         docname = self.product_assembly
 
-        product_assembly = pydict()
-
         if docname:
             product_assembly = frappe \
                 .get_doc(doctype, docname)
 
-            self.set_assembly_onload(product_assembly)
+            if not product_assembly.is_compound_product:
+                self.set_assembly_onload(product_assembly)
+                return [product_assembly]
 
-    def set_assembly_onload(self, product_assembly):
-        assembly_specifications = product_assembly \
-            .get_full_name()
+            doctype = "Compound Product"
+            filters = {
+                "enabled": True,
+                "product_assembly": self.product_assembly,
+            }
 
-        assembly_options = product_assembly \
-            .get_product_options()
+            errmsg = \
+                translate("The Product you're trying to estimate is marked "
+                          "as Compound Product, but no Enabled Compound "
+                          "Product template was found")
+
+            if not database.exists(doctype, filters):
+                frappe.throw(errmsg)
+
+            product_compound = frappe.get_doc(doctype, filters)
+
+            sub_assemblies = [d.get_product_assembly()
+                              for d in product_compound.parts]
+
+        self.set_assembly_onload(product_assembly, sub_assemblies)
+
+    def set_assembly_onload(self, product_assembly, sub_assemblies=None):
+        is_compound_product = product_assembly.is_compound_product
+
+        errmsg = \
+            translate("You've passed a Compound Product as a "
+                      "Product Assembly but no Sub Assemblies were passed")
+
+        if is_compound_product and sub_assemblies is None:
+            frappe.throw(errmsg)
+
+        options = pydict()
+        if is_compound_product:
+            assembly_specifications = ", ".join(
+                (d.get_full_name() for d in sub_assemblies))
+
+            # assembly_options = ", ".join(
+            #     (d.get_product_options() for d in sub_assemblies))
+
+            # group by options
+            for sub_assembly in sub_assemblies:
+                product_options = sub_assembly.get_product_options()
+                for product_option in product_options.split(", "):
+                    if not product_option in options:
+                        options[product_option] = pydict(
+                            qty=0, rate=.000)
+
+                    option = options[product_option]
+
+                    option.qty += 1
+
+            assembly_options = list()
+            for key in options.keys():
+                newdict = options[key]
+                newdict.setdefault("cost_specification", key)
+
+                assembly_options.append(newdict)
+
+        else:
+            assembly_specifications = product_assembly \
+                .get_full_name()
+
+            # assembly_options = product_assembly \
+            #     .get_product_options()
+
+            product_options = product_assembly.get_product_options()
+            for product_option in product_options.split(", "):
+                if not product_option in options:
+                    options[product_option] = pydict(
+                        qty=0, rate=.000)
+
+                option = options[product_option]
+
+                option.qty += 1
+
+            assembly_options = list()
+            for key in options.keys():
+                newdict = options[key]
+                newdict.setdefault("cost_specification", key)
+
+                assembly_options.append(newdict)
 
         final_dimension = product_assembly.dimension
 
         self.set_onload("product_assembly",
                         product_assembly)
+
+        if is_compound_product:
+            self.set_onload("sub_assemblies",
+                            sub_assemblies)
 
         self.set_onload("assembly_specifications",
                         assembly_specifications)
@@ -88,10 +178,10 @@ class CostEstimation(Document):
         self.set_onload("assembly_options",
                         assembly_options)
 
-        # temporary update of product_assembly_specification
-        if not self.product_assembly_specification == assembly_specifications:
-            self.db_set("product_assembly_specification",
-                        assembly_specifications, update_modified=False)
+        # # temporary update of product_assembly_specification
+        # if not self.product_assembly_specification == assembly_specifications:
+        #     self.db_set("product_assembly_specification",
+        #                 assembly_specifications, update_modified=False)
 
         # temporary update of final_dimension
         if not self.final_dimension == final_dimension:
@@ -142,7 +232,7 @@ class CostEstimation(Document):
 
         rate_per_unit = .000
 
-        if total_costs:
+        if total_costs and qty_to_produce:
             rate_per_unit = flt(total_costs / qty_to_produce,
                                 self.precision("rate_per_unit"))
 
@@ -175,7 +265,7 @@ class CostEstimation(Document):
         return commission_amount
 
     def get_total_fixed_costs(self):
-        fixed_costs = [d.rate for d in self.fixed_costs]
+        fixed_costs = [flt(d.rate) for d in self.fixed_costs]
 
         return sum(fixed_costs)
 
@@ -183,7 +273,7 @@ class CostEstimation(Document):
         for child in self.variable_costs:
             child.update_amount(self.qty_to_produce)
 
-        variable_costs = [d.rate for d in self.variable_costs]
+        variable_costs = [flt(d.rate) for d in self.variable_costs]
 
         return sum(variable_costs)
 

@@ -15,6 +15,7 @@
   "currency",
   "section_break_8",
   "product_profile",
+  "is_compound_product",
   "product_assembly",
   "column_break_12",
   "product_assembly_specification",
@@ -66,7 +67,7 @@
   },
   {
    "fieldname": "valid_until",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Valid Until",
    "no_copy": 1,
    "reqd": 1
@@ -96,6 +97,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "product_assembly.full_specifications",
    "fieldname": "product_assembly_specification",
    "fieldtype": "Long Text",
    "label": "Product Assembly Specification",
@@ -257,9 +259,16 @@
    "label": "Final Dimension",
    "options": "Dimension",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "Show only Compound Products",
+   "fieldname": "is_compound_product",
+   "fieldtype": "Check",
+   "label": "Compound Product"
   }
  ],
- "modified": "2020-10-09 16:17:02.094683",
+ "modified": "2020-10-14 16:20:24.552602",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "merpigc",
  "name": "Cost Estimation",

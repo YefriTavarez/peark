@@ -40,6 +40,7 @@ frappe.ui.form.on("Cost Estimation", {
 
             const filters = {
                 "product_profile": doc.product_profile,
+                "is_compound_product": doc.is_compound_product,
             };
             return { filters };
         });
@@ -174,6 +175,9 @@ frappe.ui.form.on("Cost Estimation", {
         frm.call("fetch_product_assembly")
             .then(() => {
                 frm.trigger("add_product_assembly_options");
+            }, () => {
+                frm.set_value("product_assembly", null);
+                frm.set_value("product_assembly_specification", null);
             });
     },
 
@@ -284,20 +288,18 @@ frappe.ui.form.on("Cost Estimation", {
             return false;
         }
 
-        const { assembly_options } = __onload;
+        const { assembly_options, product_assembly } = __onload;
+        const { is_compound_product } = product_assembly;
 
         if (!assembly_options) {
             return false;
         }
 
-        const product_options = assembly_options.split(", ");
 
-        product_options.map(option => {
-            frm.add_child("variable_costs", {
-                "cost_specification": option,
-                "qty": 1.000,
-                "rate": 0.000,
-            });
+        // const product_options = assembly_options.split(", ");
+
+        assembly_options.map(product_option => {
+            frm.add_child("variable_costs", product_option);
         });
 
         frm.refresh_fields();
@@ -319,4 +321,8 @@ frappe.ui.form.on("Cost Estimation", {
 
         frm.set_value("valid_until", valid_until);
     },
+
+    is_compound_product(frm) {
+        frm.set_value("product_assembly", null);
+    }
 });

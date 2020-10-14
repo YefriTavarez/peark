@@ -254,6 +254,8 @@ class ProductAssembly(Document):
         frappe.throw(err_msg.format(translated_label, value))
 
     def generate_hash_and_validate(self):
+
+        # don't validate for compound products
         unique_hash = self.generate_hash()
 
         doctype = self.doctype
@@ -277,7 +279,7 @@ class ProductAssembly(Document):
             <a href="{url_to_form}">{name}</a>
         """
 
-        if exists:
+        if exists and not self.is_compound_product:
             frappe.throw(
                 err_msg
                 .format(doctype=translate(doctype),
@@ -516,3 +518,5 @@ class ProductAssembly(Document):
     utils_features = list()
     texture_features = list()
     unique_hash = None
+    full_specifications = None
+    product_options = None
