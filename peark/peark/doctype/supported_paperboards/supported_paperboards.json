@@ -1,0 +1,41 @@
+{
+ "creation": "2020-08-18 17:07:54.658706",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "paperboard",
+  "material_name"
+ ],
+ "fields": [
+  {
+   "columns": 3,
+   "fieldname": "paperboard",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Paperboard",
+   "options": "Paperboard",
+   "reqd": 1
+  },
+  {
+   "columns": 7,
+   "fetch_from": "paperboard.title",
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Material Name",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-08-18 17:38:39.454908",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Supported Paperboards",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

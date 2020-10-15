@@ -1,0 +1,130 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2020-07-17 11:10:06.807558",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "copies",
+  "copies_per_page",
+  "label_generator_field_section",
+  "left_fields",
+  "column_break_6",
+  "right_fields",
+  "print_preview_section",
+  "printing_content",
+  "section_break_10",
+  "styling"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "LBL-GEN-",
+   "print_hide": 1
+  },
+  {
+   "default": "{% for idx in range(0, doc.copies) %}\n    <table class=\"label-generator\">\n        <tbody>\n            <tr>\n                <td class=\"col-sm-4\" style=\"float: left;\">\n                    <img src=\"/files/zE2dUiD.jpe\" style=\"width: 180px; max-width: 160px;\">\n                </td>\n                <td class=\"col-sm-8\" style=\"float: right;\">\n                    <div style=\"float: left;\">\n                        {% for field in doc.left_fields %}\n                        <div class=\"field-wrapper\">\n                            <strong>{{ field.label }}</strong>\n                            {% if not field.inline %}<br>{% endif %}\n                            <span>{{ field.value }}</span>\n                        </div>\n                        {% endfor %}\n                    </div>\n                    \n                    <div style=\"float: right;\">\n                        <div class=\"field-wrapper\">\n                            <strong style=\"font-size: 15px;\">{{ '%03d' % (loop.index) }}</strong>\n                            <span></span>\n                        </div>\n                        \n                        {% for field in doc.right_fields %}\n                        <div class=\"field-wrapper\">\n                            <strong>{{ field.label }}</strong>\n                            {% if not field.inline %}<br>{% endif %}\n                            <span>{{ field.value }}</span>\n                        </div>\n                        {% endfor %}\n                    </div>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n        {% if loop.index is sameas 1 %}\n           <div class=\"line-break\" style=\"clear: both;\"></div>\n        {% else %}\n            {% if loop.index is divisibleby(doc.copies_per_page) %}\n                <div class=\"break\"></div>\n            {% else %}\n                <div class=\"line-break\" style=\"clear: both;\"></div>\n            {% endif %}\n        {% endif %}\n{% endfor %}",
+   "fieldname": "printing_content",
+   "fieldtype": "HTML Editor",
+   "in_list_view": 1,
+   "reqd": 1
+  },
+  {
+   "default": "10",
+   "fieldname": "copies",
+   "fieldtype": "Int",
+   "label": "Copies",
+   "print_hide": 1,
+   "reqd": 1
+  },
+  {
+   "default": "5",
+   "fieldname": "copies_per_page",
+   "fieldtype": "Int",
+   "label": "Copies per Page",
+   "print_hide": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "label_generator_field_section",
+   "fieldtype": "Section Break",
+   "label": "Label Generator Field"
+  },
+  {
+   "fieldname": "left_fields",
+   "fieldtype": "Table",
+   "label": "Left Column",
+   "options": "Label Generator Field",
+   "print_hide": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "right_fields",
+   "fieldtype": "Table",
+   "label": "Right Column",
+   "options": "Label Generator Field",
+   "print_hide": 1,
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "print_preview_section",
+   "fieldtype": "Section Break",
+   "label": "Print Preview"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Styling"
+  },
+  {
+   "default": "@media print {\n    div.break { page-break-after: always; border: none; }\n}\n\n@media (min-width: 100px) {\n    .break { margin-bottom: 100px; }\n}\n\ndiv.line-break {\n    margin-top: 20px;\n    margin-bottom: 20px;\n\n    border: 0;\n    border-top: 1px solid #d1d8dd;\n}\n\ndiv.field-wrapper { margin-left: 25px; }\n",
+   "fieldname": "styling",
+   "fieldtype": "Code",
+   "options": "CSS",
+   "print_hide": 1
+  }
+ ],
+ "modified": "2020-07-24 16:08:16.238851",
+ "modified_by": "ytavarez@printworks.do",
+ "module": "peark",
+ "name": "Label Generator",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Manufacturing User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

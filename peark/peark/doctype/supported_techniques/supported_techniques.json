@@ -1,0 +1,28 @@
+{
+ "creation": "2020-08-06 12:00:26.598732",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "printing_technique"
+ ],
+ "fields": [
+  {
+   "fieldname": "printing_technique",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Printing Technique",
+   "options": "Printing Technique",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-08-06 12:00:26.598732",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Supported Techniques",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

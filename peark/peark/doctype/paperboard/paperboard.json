@@ -1,0 +1,216 @@
+{
+ "creation": "2020-08-07 10:00:15.688295",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "backboard",
+  "material_name",
+  "column_break_4",
+  "trademark",
+  "finish_type",
+  "double_sided",
+  "section_break_7",
+  "supported_techniques",
+  "column_break_9",
+  "item_group_1",
+  "item_group_2",
+  "item_group_3",
+  "item_group_4",
+  "section_break_14",
+  "caliper",
+  "caliper_uom",
+  "column_break_19",
+  "weights",
+  "form_settings_section",
+  "include_uom_in_title",
+  "column_break_22",
+  "title",
+  "purchase_info_section",
+  "last_purchase_rate",
+  "section_break_24",
+  "dimensions"
+ ],
+ "fields": [
+  {
+   "default": "1",
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Habilitado?"
+  },
+  {
+   "default": "0",
+   "fieldname": "backboard",
+   "fieldtype": "Check",
+   "label": "Es Respaldo?"
+  },
+  {
+   "fieldname": "material_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nombre del Material",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "T\u00edtulo"
+  },
+  {
+   "fieldname": "trademark",
+   "fieldtype": "Data",
+   "label": "Marca"
+  },
+  {
+   "fieldname": "finish_type",
+   "fieldtype": "Select",
+   "label": "Terminaci\u00f3n",
+   "options": "\nMatte\nGloss\nSemi-Gloss"
+  },
+  {
+   "fieldname": "item_group_1",
+   "fieldtype": "Link",
+   "label": "Categor\u00eda 1",
+   "options": "Item Group"
+  },
+  {
+   "depends_on": "item_group_1",
+   "fieldname": "item_group_2",
+   "fieldtype": "Link",
+   "label": "Categor\u00eda 2",
+   "options": "Item Group"
+  },
+  {
+   "depends_on": "item_group_2",
+   "fieldname": "item_group_3",
+   "fieldtype": "Link",
+   "label": "Categor\u00eda 3",
+   "options": "Item Group"
+  },
+  {
+   "depends_on": "item_group_3",
+   "fieldname": "item_group_4",
+   "fieldtype": "Link",
+   "label": "Categor\u00eda 4",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "supported_techniques",
+   "fieldtype": "Table MultiSelect",
+   "label": "T\u00e9cnicas de Impresi\u00f3n",
+   "options": "Supported Techniques"
+  },
+  {
+   "fieldname": "caliper",
+   "fieldtype": "Int",
+   "label": "Calibre",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "include_uom_in_title",
+   "fieldtype": "Check",
+   "label": "Incluir UdM en T\u00edtulo?"
+  },
+  {
+   "default": "0",
+   "fieldname": "double_sided",
+   "fieldtype": "Check",
+   "label": "Doble Cara?"
+  },
+  {
+   "fieldname": "dimensions",
+   "fieldtype": "Table",
+   "options": "Supported Dimensions"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.last_purchase_rate",
+   "fieldname": "purchase_info_section",
+   "fieldtype": "Section Break",
+   "label": "Purchase Info"
+  },
+  {
+   "default": "0",
+   "fieldname": "last_purchase_rate",
+   "fieldtype": "Currency",
+   "label": "Last Purchase Rate (Company Currency)",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "caliper_uom",
+   "fieldtype": "Link",
+   "label": "UdM",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "form_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Form Settings"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "weights",
+   "fieldtype": "Table",
+   "label": "Weights",
+   "options": "Paperboard Weights"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_24",
+   "fieldtype": "Section Break",
+   "label": "Supported Dimensions"
+  }
+ ],
+ "modified": "2020-08-24 10:07:27.148338",
+ "modified_by": "yefritavarez@gmail.com",
+ "module": "peark",
+ "name": "Paperboard",
+ "owner": "yefritavarez@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "title",
+ "track_changes": 1
+}

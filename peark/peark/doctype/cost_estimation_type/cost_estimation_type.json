@@ -1,0 +1,99 @@
+{
+ "allow_rename": 1,
+ "autoname": "field:cost_estimation_type_name",
+ "creation": "2020-10-08 11:54:38.397742",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cost_estimation_type_name",
+  "cost_estimation_validity_days",
+  "section_break_3",
+  "default_fixed_costs",
+  "section_break_5",
+  "default_variable_costs"
+ ],
+ "fields": [
+  {
+   "fieldname": "cost_estimation_type_name",
+   "fieldtype": "Data",
+   "label": "Cost Estimation Type Name",
+   "unique": 1
+  },
+  {
+   "default": "15",
+   "fieldname": "cost_estimation_validity_days",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Cost Estimation Validity days",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_fixed_costs",
+   "fieldtype": "Table",
+   "label": "Default Fixed Costs",
+   "options": "Fixed Cost Estimate"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "default_variable_costs",
+   "fieldtype": "Table",
+   "label": "Default Variable Costs",
+   "options": "Variable Cost Estimate"
+  }
+ ],
+ "modified": "2020-10-08 15:00:08.298755",
+ "modified_by": "yefritavarez@gmail.com",
+ "module": "peark",
+ "name": "Cost Estimation Type",
+ "owner": "yefritavarez@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

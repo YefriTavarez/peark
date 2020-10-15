@@ -4,15 +4,15 @@ include *.json
 include *.md
 include *.py
 include *.txt
-recursive-include merpigc *.css
-recursive-include merpigc *.csv
-recursive-include merpigc *.html
-recursive-include merpigc *.ico
-recursive-include merpigc *.js
-recursive-include merpigc *.json
-recursive-include merpigc *.md
-recursive-include merpigc *.png
-recursive-include merpigc *.py
-recursive-include merpigc *.svg
-recursive-include merpigc *.txt
-recursive-exclude merpigc *.pyc
+recursive-include peark *.css
+recursive-include peark *.csv
+recursive-include peark *.html
+recursive-include peark *.ico
+recursive-include peark *.js
+recursive-include peark *.json
+recursive-include peark *.md
+recursive-include peark *.png
+recursive-include peark *.py
+recursive-include peark *.svg
+recursive-include peark *.txt
+recursive-exclude peark *.pyc

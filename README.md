@@ -1,7 +1,7 @@
-## merpigc
+## peark
 
-Manufacturing ERP for IGC Company
+A totally revolutionary application specialized to the press business
 
 #### License
 
-MIT
+General Public License, v3

@@ -1,0 +1,212 @@
+{
+ "allow_rename": 1,
+ "autoname": "field:product_profile_name",
+ "creation": "2020-08-18 17:08:03.706903",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product_profile_name",
+  "old_item_name",
+  "keep_stock",
+  "column_break_4",
+  "parent_item_group",
+  "item_group",
+  "section_break_7",
+  "enabled",
+  "is_compound_product",
+  "has_backboard",
+  "paperboards",
+  "backboards",
+  "section_break_12",
+  "oneside",
+  "column_break_14",
+  "backprinted",
+  "section_break_16",
+  "control_features",
+  "cutting_features",
+  "gluing_features",
+  "folding_features",
+  "protection_features",
+  "utils_features",
+  "texture_features",
+  "supported_dimensions_section",
+  "dimensions"
+ ],
+ "fields": [
+  {
+   "fieldname": "product_profile_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Product Profile Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "old_item_name",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Item Name",
+   "options": "Item"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "parent_item_group",
+   "fieldtype": "Link",
+   "label": "Parent Item Group",
+   "options": "Item Group"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Habilitado?"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_backboard",
+   "fieldtype": "Check",
+   "label": "Tiene Respaldo?"
+  },
+  {
+   "fieldname": "paperboards",
+   "fieldtype": "Table",
+   "label": "Materiales",
+   "options": "Supported Paperboards"
+  },
+  {
+   "depends_on": "has_backboard",
+   "fieldname": "backboards",
+   "fieldtype": "Table",
+   "label": "Materiales Respaldo",
+   "options": "Supported Paperboards"
+  },
+  {
+   "default": "1",
+   "fieldname": "oneside",
+   "fieldtype": "Check",
+   "label": "Tiro"
+  },
+  {
+   "default": "0",
+   "fieldname": "backprinted",
+   "fieldtype": "Check",
+   "label": "Re-tiro"
+  },
+  {
+   "fieldname": "control_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Control",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "cutting_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Corte",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "gluing_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Empalme",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "folding_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Plegado",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "protection_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Proteccion",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "utils_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Utilidad",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "texture_features",
+   "fieldtype": "Table",
+   "label": "Opciones de Textura",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "dimensions",
+   "fieldtype": "Table",
+   "options": "Supported Dimensions"
+  },
+  {
+   "default": "1",
+   "description": "This will apply only for new Items",
+   "fieldname": "keep_stock",
+   "fieldtype": "Check",
+   "label": "Keep Stock?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "supported_dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Supported Dimensions"
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_compound_product",
+   "fieldtype": "Check",
+   "label": "Compound Product"
+  }
+ ],
+ "modified": "2020-10-12 09:47:19.004930",
+ "modified_by": "yefritavarez@gmail.com",
+ "module": "peark",
+ "name": "Product Profile",
+ "owner": "yefritavarez@gmail.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
