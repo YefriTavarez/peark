@@ -1,0 +1,144 @@
+{
+ "creation": "2020-10-16 18:54:09.123841",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "subject",
+  "planning_template",
+  "type",
+  "status",
+  "weight",
+  "description",
+  "department",
+  "expected_time",
+  "expected_start_date",
+  "expected_end_date",
+  "actual_start_date",
+  "actual_time",
+  "actual_end_date",
+  "data_to_ask",
+  "depends_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "subject",
+   "fieldtype": "Data",
+   "label": "Subject",
+   "reqd": 1
+  },
+  {
+   "fieldname": "planning_template",
+   "fieldtype": "Link",
+   "label": "Planning Template",
+   "options": "Planning Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "label": "Type",
+   "options": "Planning Mission Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Possible Status",
+   "options": "Open\nPending,\nWorking\nIn Review\nDelayed\nCompleted\nStopped\nCancelled",
+   "reqd": 1
+  },
+  {
+   "default": "10",
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "HTML Editor",
+   "label": "Description"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "reqd": 1
+  },
+  {
+   "description": "In Minutes",
+   "fieldname": "expected_time",
+   "fieldtype": "Int",
+   "label": "Expected Time (in Minutes)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "label": "Expected Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "label": "Expected End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "actual_start_date",
+   "fieldtype": "Date",
+   "label": "Actual Start Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_time",
+   "fieldtype": "Time",
+   "label": "Actual Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_end_date",
+   "fieldtype": "Date",
+   "label": "Actual End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "data_to_ask",
+   "fieldtype": "Code",
+   "label": "Data to Ask",
+   "options": "JSON"
+  },
+  {
+   "fieldname": "depends_on",
+   "fieldtype": "Table MultiSelect",
+   "label": "Depends On",
+   "options": "Planning Mission Templates"
+  }
+ ],
+ "modified": "2020-10-16 18:59:42.550296",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Planning Mission Template",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
