@@ -1,0 +1,55 @@
+{
+ "creation": "2020-10-16 18:27:05.549770",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "target_doctype",
+  "docname_field",
+  "source_docfield",
+  "target_docfield"
+ ],
+ "fields": [
+  {
+   "fieldname": "target_doctype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Target DocType",
+   "options": "DocType",
+   "reqd": 1
+  },
+  {
+   "fieldname": "docname_field",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Fieldname With DocName",
+   "options": "[Select]",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_docfield",
+   "fieldtype": "Code",
+   "in_list_view": 1,
+   "label": "Source DocField",
+   "options": "JSON",
+   "reqd": 1
+  },
+  {
+   "fieldname": "target_docfield",
+   "fieldtype": "Code",
+   "in_list_view": 1,
+   "label": "Target DocField",
+   "options": "JSON",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-16 18:27:05.549770",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Data to Ask",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
