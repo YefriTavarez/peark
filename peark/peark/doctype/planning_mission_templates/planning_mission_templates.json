@@ -1,0 +1,30 @@
+{
+ "creation": "2020-10-16 18:58:13.812055",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "planning_mission_template"
+ ],
+ "fields": [
+  {
+   "fieldname": "planning_mission_template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Planning Mission Template",
+   "options": "Planning Mission Template",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-16 18:58:13.812055",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Planning Mission Templates",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
