@@ -1,0 +1,30 @@
+{
+ "creation": "2020-10-16 23:59:41.423894",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "planning_mission"
+ ],
+ "fields": [
+  {
+   "fieldname": "planning_mission",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Planning Mission",
+   "options": "Planning Mission",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-17 08:46:01.595298",
+ "modified_by": "yefritavarez@tzcode.tech",
+ "module": "peark",
+ "name": "Planning Missions",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
