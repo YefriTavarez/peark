@@ -1,0 +1,249 @@
+{
+ "creation": "2020-10-16 23:54:33.280934",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "dashboard",
+  "type",
+  "title",
+  "item_code",
+  "production_qty",
+  "customer",
+  "order_required",
+  "column_break_7",
+  "status",
+  "project_manager",
+  "item_name",
+  "product_name",
+  "item_specifications",
+  "sales_order",
+  "more_section_sb",
+  "priority",
+  "percent_complete",
+  "expected_start_date",
+  "column_break_20",
+  "company",
+  "cost_center",
+  "expected_end_date",
+  "missions_sb",
+  "planning_missions",
+  "totals_sb",
+  "total_purchase_order_cost",
+  "total_sales_invoice_cost",
+  "total_sales_cost",
+  "total_billing_amount",
+  "totals_cb",
+  "total_costing_amount",
+  "total_expense_claim",
+  "margin",
+  "gross_margin"
+ ],
+ "fields": [
+  {
+   "fieldname": "dashboard",
+   "fieldtype": "Section Break",
+   "label": "Dashboard"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fetch_from": "sales_order.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "default": "0",
+   "fieldname": "order_required",
+   "fieldtype": "Check",
+   "label": "Order Required"
+  },
+  {
+   "depends_on": "eval:doc.order_required",
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item_code.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "production_qty",
+   "fieldtype": "Int",
+   "label": "Production Qty"
+  },
+  {
+   "fieldname": "item_specifications",
+   "fieldtype": "Data",
+   "label": "Item Specifications"
+  },
+  {
+   "fieldname": "project_manager",
+   "fieldtype": "Link",
+   "label": "Project Manager",
+   "options": "User"
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name (as the Customer knows it)"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nStopped\nPaused\nDelayed\nCancelled\nCompleted"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "label": "Planning Document Type",
+   "options": "Planning Document Type"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "Normal\nLow\nHigh\nUrgent\nRush"
+  },
+  {
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "label": "Expected Start Date"
+  },
+  {
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "label": "Expected End Date"
+  },
+  {
+   "fieldname": "percent_complete",
+   "fieldtype": "Percent",
+   "label": "Percent Complete"
+  },
+  {
+   "fieldname": "planning_missions",
+   "fieldtype": "HTML",
+   "label": "Planning Missions"
+  },
+  {
+   "fieldname": "total_costing_amount",
+   "fieldtype": "Currency",
+   "label": "Total Costing Amount"
+  },
+  {
+   "fieldname": "total_expense_claim",
+   "fieldtype": "Currency",
+   "label": "Total Expense Claim"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "total_billing_amount",
+   "fieldtype": "Currency",
+   "label": "Total Billing Amount"
+  },
+  {
+   "fieldname": "total_purchase_order_cost",
+   "fieldtype": "Currency",
+   "label": "Total Purchase Order Cost"
+  },
+  {
+   "fieldname": "total_sales_invoice_cost",
+   "fieldtype": "Currency",
+   "label": "Total Sales Invoice Cost"
+  },
+  {
+   "fieldname": "total_sales_cost",
+   "fieldtype": "Currency",
+   "label": "Total Sales Cost"
+  },
+  {
+   "fieldname": "margin",
+   "fieldtype": "Percent",
+   "label": "Margin"
+  },
+  {
+   "fieldname": "gross_margin",
+   "fieldtype": "Currency",
+   "label": "Gross Margin"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "missions_sb",
+   "fieldtype": "Section Break",
+   "label": "Missions"
+  },
+  {
+   "fieldname": "totals_sb",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "totals_cb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "more_section_sb",
+   "fieldtype": "Section Break",
+   "label": "More Information"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "modified": "2020-10-17 00:38:21.240477",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Planning Document",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
