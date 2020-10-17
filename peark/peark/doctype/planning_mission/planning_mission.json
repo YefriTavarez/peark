@@ -1,0 +1,215 @@
+{
+ "creation": "2020-10-16 23:59:16.085100",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "subject",
+  "type",
+  "weight",
+  "column_break_3",
+  "status",
+  "project",
+  "company",
+  "description_sb",
+  "description",
+  "dates_sb",
+  "expected_start_date",
+  "expected_end_date",
+  "expected_time",
+  "review_date",
+  "column_break_13",
+  "actual_start_date",
+  "actual_end_date",
+  "actual_time",
+  "closing_date",
+  "section_break_18",
+  "data_to_ask",
+  "department",
+  "depends_on",
+  "column_break_23",
+  "completed_by",
+  "totals_sb",
+  "total_costing_amount",
+  "total_expense_claim",
+  "total_sb",
+  "total_billing_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "subject",
+   "fieldtype": "Link",
+   "label": "Subject",
+   "options": "Planning Mission Subject"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Planning Document",
+   "options": "Planning Document"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Link",
+   "label": "Type",
+   "options": "Planning Mission Type"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Open\nPending\nWorking\nIn Review\nDelayed\nCompleted\nStopped\nCancelled"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "HTML Editor"
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department"
+  },
+  {
+   "fieldname": "completed_by",
+   "fieldtype": "Link",
+   "label": "Completed By",
+   "options": "User"
+  },
+  {
+   "fieldname": "expected_time",
+   "fieldtype": "Int",
+   "label": "Expected Time (in Minutes)"
+  },
+  {
+   "fieldname": "expected_start_date",
+   "fieldtype": "Date",
+   "label": "Expected Start Date"
+  },
+  {
+   "fieldname": "expected_end_date",
+   "fieldtype": "Date",
+   "label": "Expected End Date"
+  },
+  {
+   "fieldname": "actual_start_date",
+   "fieldtype": "Date",
+   "label": "Actual Start Date"
+  },
+  {
+   "fieldname": "actual_time",
+   "fieldtype": "Time",
+   "label": "Actual Time"
+  },
+  {
+   "fieldname": "actual_end_date",
+   "fieldtype": "Date",
+   "label": "Actual End Date"
+  },
+  {
+   "fieldname": "data_to_ask",
+   "fieldtype": "Code",
+   "hidden": 1,
+   "label": "Data to Ask"
+  },
+  {
+   "fieldname": "depends_on",
+   "fieldtype": "Data",
+   "label": "Depends On"
+  },
+  {
+   "fieldname": "total_costing_amount",
+   "fieldtype": "Currency",
+   "label": "Total Costing Amount"
+  },
+  {
+   "fieldname": "total_expense_claim",
+   "fieldtype": "Currency",
+   "label": "Total Expense Claim"
+  },
+  {
+   "fieldname": "total_billing_amount",
+   "fieldtype": "Currency",
+   "label": "Total Billing Amount"
+  },
+  {
+   "fieldname": "review_date",
+   "fieldtype": "Date",
+   "label": "Review Date"
+  },
+  {
+   "fieldname": "closing_date",
+   "fieldtype": "Date",
+   "label": "Closing Date"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description_sb",
+   "fieldtype": "Section Break",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "totals_sb",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "total_sb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dates_sb",
+   "fieldtype": "Section Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "modified": "2020-10-17 00:13:26.712712",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Planning Mission",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
