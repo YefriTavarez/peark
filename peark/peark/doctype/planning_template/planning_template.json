@@ -6,14 +6,16 @@
  "engine": "InnoDB",
  "field_order": [
   "template_name",
-  "order_required",
-  "section_break_3",
-  "responsible",
-  "type",
+  "planning_document_type",
   "priority",
-  "planning_missions",
+  "order_required",
+  "column_break_5",
+  "enabled",
+  "responsible",
   "company",
-  "cost_center"
+  "cost_center",
+  "section_break_9",
+  "missions"
  ],
  "fields": [
   {
@@ -28,11 +30,7 @@
    "default": "0",
    "fieldname": "order_required",
    "fieldtype": "Check",
-   "label": "Sales Order Required"
-  },
-  {
-   "fieldname": "section_break_3",
-   "fieldtype": "Section Break"
+   "label": "Sales Order Required?"
   },
   {
    "fieldname": "responsible",
@@ -41,25 +39,12 @@
    "options": "User"
   },
   {
-   "fieldname": "type",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Planning Document Type",
-   "options": "Planning Document Type",
-   "reqd": 1
-  },
-  {
    "fieldname": "priority",
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Default Priority",
    "options": "Normal\nLow\nHigh\nRush",
    "reqd": 1
-  },
-  {
-   "fieldname": "planning_missions",
-   "fieldtype": "HTML",
-   "label": "Planning Mission Template"
   },
   {
    "fieldname": "company",
@@ -72,9 +57,39 @@
    "fieldtype": "Link",
    "label": "Default Cost Center",
    "options": "Cost Center"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "missions",
+   "fieldtype": "Table",
+   "label": "Planning Mission Template",
+   "options": "Planning Mission Template"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "planning_document_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Planning Document Type",
+   "options": "Planning Document Type",
+   "reqd": 1
   }
  ],
- "modified": "2020-10-16 17:55:59.291438",
+ "modified": "2020-10-19 14:29:05.667412",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Template",

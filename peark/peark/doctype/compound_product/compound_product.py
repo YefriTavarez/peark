@@ -43,27 +43,9 @@ class CompoundProduct(Document):
         return doc
 
     def update_product_assembly_specs(self):
-        template = "templates/product_specifications_template.html"
+        product_assembly = self.get_product_assembly()
 
-        specs = list()
-
-        for part in self.parts:
-            spec = pydict()
-
-            if part.part_name:
-                spec.part_name = part.part_name
-
-            spec.qty = part.qty
-            spec.description = part.product_specification
-
-            specs.append(spec)
-
-        opts = {
-            "product_profile": self.product_profile,
-            "specs": specs,
-        }
-
-        product_specifications = frappe.render_template(template, opts)
+        product_specifications = product_assembly.get_full_specifications()
 
         self.product_specifications = product_specifications
 

@@ -5,15 +5,15 @@
  "engine": "InnoDB",
  "field_order": [
   "subject",
-  "type",
-  "weight",
+  "planning_document",
+  "planning_mission_template",
   "column_break_3",
+  "weight",
   "status",
-  "project",
   "company",
   "description_sb",
   "description",
-  "dates_sb",
+  "section_break_10",
   "expected_start_date",
   "expected_end_date",
   "expected_time",
@@ -22,8 +22,8 @@
   "actual_start_date",
   "actual_end_date",
   "actual_time",
-  "closing_date",
   "section_break_18",
+  "closing_date",
   "data_to_ask",
   "department",
   "depends_on",
@@ -39,26 +39,21 @@
   {
    "fieldname": "subject",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Subject",
-   "options": "Planning Mission Subject"
-  },
-  {
-   "fieldname": "project",
-   "fieldtype": "Link",
-   "label": "Planning Document",
-   "options": "Planning Document"
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Link",
-   "label": "Type",
-   "options": "Planning Mission Type"
+   "options": "Planning Mission Subject",
+   "reqd": 1
   },
   {
    "fieldname": "status",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nPending\nWorking\nIn Review\nDelayed\nCompleted\nStopped\nCancelled"
+   "options": "Planning Mission Status",
+   "reqd": 1
   },
   {
    "fieldname": "weight",
@@ -67,13 +62,18 @@
   },
   {
    "fieldname": "description",
-   "fieldtype": "HTML Editor"
+   "fieldtype": "Small Text",
+   "label": "Description"
   },
   {
    "fieldname": "department",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Department",
-   "options": "Department"
+   "options": "Department",
+   "reqd": 1
   },
   {
    "fieldname": "completed_by",
@@ -84,32 +84,38 @@
   {
    "fieldname": "expected_time",
    "fieldtype": "Int",
-   "label": "Expected Time (in Minutes)"
+   "label": "Expected Time (in Minutes)",
+   "read_only": 1
   },
   {
    "fieldname": "expected_start_date",
    "fieldtype": "Date",
-   "label": "Expected Start Date"
+   "label": "Expected Start Date",
+   "read_only": 1
   },
   {
    "fieldname": "expected_end_date",
    "fieldtype": "Date",
-   "label": "Expected End Date"
+   "label": "Expected End Date",
+   "read_only": 1
   },
   {
    "fieldname": "actual_start_date",
    "fieldtype": "Date",
-   "label": "Actual Start Date"
+   "label": "Actual Start Date",
+   "read_only": 1
   },
   {
    "fieldname": "actual_time",
    "fieldtype": "Time",
-   "label": "Actual Time"
+   "label": "Actual Time",
+   "read_only": 1
   },
   {
    "fieldname": "actual_end_date",
    "fieldtype": "Date",
-   "label": "Actual End Date"
+   "label": "Actual End Date",
+   "read_only": 1
   },
   {
    "fieldname": "data_to_ask",
@@ -159,8 +165,7 @@
   },
   {
    "fieldname": "description_sb",
-   "fieldtype": "Section Break",
-   "label": "Description"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_13",
@@ -180,16 +185,29 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "dates_sb",
-   "fieldtype": "Section Break",
-   "label": "Dates"
-  },
-  {
    "fieldname": "column_break_23",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "planning_document",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Planning Document",
+   "options": "Planning Document"
+  },
+  {
+   "fieldname": "planning_mission_template",
+   "fieldtype": "Link",
+   "label": "Planning Mission Template",
+   "options": "Planning Mission Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-10-17 00:13:26.712712",
+ "modified": "2020-10-19 17:21:06.184120",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission",

@@ -17,3 +17,19 @@ jQuery.extend(frappe.socketio, {
 		return host;
 	},
 });
+
+(function () {
+	const doctypes_to_preload = [
+		"Possible Planning Mission Status",
+		"Planning Mission Templates",
+		"Data to Ask Item",
+	];
+
+	jQuery.map(doctypes_to_preload, function (doctype) {
+		const { model } = frappe;
+
+		model.with_doctype(doctype, response => {
+			// todo: cache doctypes
+		});
+	});
+})();

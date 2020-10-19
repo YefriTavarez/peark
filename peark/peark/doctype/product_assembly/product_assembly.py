@@ -9,6 +9,7 @@ from frappe.model.document import Document
 
 from frappe import db as database
 from frappe import _ as translate
+from frappe import _dict as pydict
 
 from frappe.utils import cstr, cint
 from frappe.model.naming import make_autoname
@@ -52,9 +53,10 @@ class ProductAssembly(Document):
         self.validate_texture_features()
 
     def update_specs(self):
-        if not self.flags.dont_update_full_specifications:
-            self.full_specifications = self.get_full_name()
+        # if not self.flags.dont_update_full_specifications:
+        self.full_specifications = self.get_full_specifications()
 
+        # todo: get for compound products
         self.product_options = self.get_product_options()
 
         self.db_update()
@@ -359,6 +361,59 @@ class ProductAssembly(Document):
         product_profile_doc = frappe.get_doc(doctype, docname)
 
         return product_profile_doc
+
+    def get_compound_product(self, throw_error=True):
+        if not self.is_compound_product:
+            if throw_error:
+                err_msg = translate(
+                    "Product Assembly must be a marked as Compound Product")
+
+                frappe.throw(err_msg)
+
+            return False
+
+        doctype = "Compound Product"
+        filters = {
+            "product_profile": self.product_profile,
+            "product_assembly": self.name,
+        }
+
+        if not database.exists(doctype, filters):
+            err_msg = translate(
+                "A Compound Product linked to this "
+                "Product Assembly does not exist")
+
+            frappe.throw(err_msg)
+
+        return frappe.get_doc(doctype, filters)
+
+    def get_full_specifications(self):
+        if not self.is_compound_product:
+            return self.get_full_name()
+
+        compound_product = self.get_compound_product()
+
+        template = "templates/product_specifications_template.html"
+
+        specs = list()
+
+        for part in compound_product.parts:
+            spec = pydict()
+
+            if part.part_name:
+                spec.part_name = part.part_name
+
+            spec.qty = part.qty
+            spec.description = part.product_specification
+
+            specs.append(spec)
+
+        opts = {
+            "product_profile": self.product_profile,
+            "specs": specs,
+        }
+
+        return frappe.render_template(template, opts)
 
     def get_full_name(self):
         values = (

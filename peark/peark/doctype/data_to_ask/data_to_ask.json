@@ -1,13 +1,18 @@
 {
+ "allow_rename": 1,
+ "autoname": "field:data_to_ask",
  "creation": "2020-10-16 18:27:05.549770",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "target_doctype",
+  "data_to_ask",
+  "source_doctype",
   "docname_field",
   "source_docfield",
-  "target_docfield"
+  "section_break_5",
+  "target_doctype",
+  "target_fieldname"
  ],
  "fields": [
   {
@@ -24,7 +29,8 @@
    "in_list_view": 1,
    "label": "Fieldname With DocName",
    "options": "[Select]",
-   "reqd": 1
+   "reqd": 1,
+   "translatable": 1
   },
   {
    "fieldname": "source_docfield",
@@ -35,21 +41,74 @@
    "reqd": 1
   },
   {
-   "fieldname": "target_docfield",
-   "fieldtype": "Code",
-   "in_list_view": 1,
-   "label": "Target DocField",
-   "options": "JSON",
+   "fieldname": "data_to_ask",
+   "fieldtype": "Data",
+   "label": "Data to Ask",
+   "reqd": 1,
+   "translatable": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "source_doctype",
+   "fieldtype": "Link",
+   "label": "Source DocType",
+   "options": "DocType",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "target_fieldname",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Target Fieldname",
+   "options": "[Select]",
+   "reqd": 1,
+   "translatable": 1
   }
  ],
- "istable": 1,
- "modified": "2020-10-16 18:27:05.549770",
+ "modified": "2020-10-19 10:06:11.980557",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Data to Ask",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC"
 }

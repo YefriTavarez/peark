@@ -44,7 +44,7 @@ def create_item_based_on_product_assembly(doc):
         "over_billing_allowance": 100,
         # "description": get_compact_title(doc, item_doc, as_html=True),
         # "description": get_item_name(doc),
-        "description": doc.full_specifications,
+        "description": doc.get_full_specifications(),
         "default_material_request_type": "Manufacture",
         "valuation_method": "FIFO",
         "has_batch_no": True,

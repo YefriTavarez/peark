@@ -1,0 +1,12 @@
+div[data-fieldname="go_to_planning_template"] button[data-fieldname="go_to_planning_template"] {
+	float: right;
+	color:#fff;
+	background-color:#5e64ff;
+	border-color:#444bff;
+}
+
+div[data-fieldname="go_to_planning_template"] button[data-fieldname="go_to_planning_template"]:hover {
+	color: #fff;
+    background-color: #2b33ff;
+    border-color: #0711ff;
+}
