@@ -1,4 +1,5 @@
 {
+ "autoname": "naming_series:",
  "creation": "2020-10-16 23:54:33.280934",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -7,6 +8,7 @@
   "title",
   "dashboard_section",
   "section_break_3",
+  "naming_series",
   "planning_template",
   "planning_document_type",
   "column_break_6",
@@ -271,9 +273,18 @@
    "fieldtype": "Table",
    "label": "Planning Mission",
    "options": "Planning Mission"
+  },
+  {
+   "default": "PL-DOC-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "PL-DOC-",
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
- "modified": "2020-10-19 17:22:41.408397",
+ "modified": "2020-10-20 08:58:54.180097",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Document",

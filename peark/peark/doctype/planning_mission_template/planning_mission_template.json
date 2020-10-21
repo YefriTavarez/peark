@@ -14,11 +14,6 @@
   "expected_time",
   "data_to_ask",
   "open_form",
-  "section_break_8",
-  "possible_status",
-  "opening_status",
-  "closing_status",
-  "overdue_status",
   "section_break_10",
   "description",
   "section_break_12",
@@ -80,18 +75,6 @@
    "options": "Planning Mission Templates"
   },
   {
-   "fieldname": "possible_status",
-   "fieldtype": "Table MultiSelect",
-   "hidden": 1,
-   "in_preview": 1,
-   "label": "Possible Status",
-   "options": "Possible Planning Mission Status"
-  },
-  {
-   "fieldname": "section_break_8",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "section_break_10",
    "fieldtype": "Section Break"
   },
@@ -120,30 +103,9 @@
    "hidden": 1,
    "label": "Data to Ask",
    "options": "Data to Ask Item"
-  },
-  {
-   "fieldname": "opening_status",
-   "fieldtype": "Link",
-   "label": "Opening Status",
-   "options": "Planning Mission Status",
-   "reqd": 1
-  },
-  {
-   "fieldname": "closing_status",
-   "fieldtype": "Link",
-   "label": "Closing Status",
-   "options": "Planning Mission Status",
-   "reqd": 1
-  },
-  {
-   "fieldname": "overdue_status",
-   "fieldtype": "Link",
-   "label": "Overdue Status",
-   "options": "Planning Mission Status",
-   "reqd": 1
   }
  ],
- "modified": "2020-10-19 16:48:02.230432",
+ "modified": "2020-10-21 10:43:36.779246",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission Template",

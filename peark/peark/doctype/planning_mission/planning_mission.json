@@ -1,38 +1,43 @@
 {
+ "autoname": "naming_series:",
  "creation": "2020-10-16 23:59:16.085100",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "subject",
   "planning_document",
   "planning_mission_template",
-  "column_break_3",
+  "column_break_5",
+  "go_to_parent",
   "weight",
   "status",
+  "actions",
   "company",
-  "description_sb",
+  "open_form",
+  "section_break_11",
   "description",
-  "section_break_10",
+  "section_break_13",
   "expected_start_date",
   "expected_end_date",
   "expected_time",
   "review_date",
-  "column_break_13",
+  "column_break_18",
   "actual_start_date",
   "actual_end_date",
   "actual_time",
-  "section_break_18",
+  "section_break_22",
   "closing_date",
   "data_to_ask",
   "department",
   "depends_on",
-  "column_break_23",
+  "column_break_27",
   "completed_by",
-  "totals_sb",
+  "totals_section",
   "total_costing_amount",
   "total_expense_claim",
-  "total_sb",
+  "column_break_32",
   "total_billing_amount"
  ],
  "fields": [
@@ -44,16 +49,17 @@
    "in_standard_filter": 1,
    "label": "Subject",
    "options": "Planning Mission Subject",
-   "reqd": 1
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "fieldname": "status",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Planning Mission Status",
-   "reqd": 1
+   "options": "Open\nPending\nWorking\nIn Review\nDelayed\nCompleted\nStopped\nCancelled",
+   "read_only": 1
   },
   {
    "fieldname": "weight",
@@ -125,8 +131,9 @@
   },
   {
    "fieldname": "depends_on",
-   "fieldtype": "Data",
-   "label": "Depends On"
+   "fieldtype": "Table MultiSelect",
+   "label": "Depends On",
+   "options": "Planning Mission Templates"
   },
   {
    "fieldname": "total_costing_amount",
@@ -136,12 +143,14 @@
   {
    "fieldname": "total_expense_claim",
    "fieldtype": "Currency",
-   "label": "Total Expense Claim"
+   "label": "Total Expense Claim",
+   "read_only": 1
   },
   {
    "fieldname": "total_billing_amount",
    "fieldtype": "Currency",
-   "label": "Total Billing Amount"
+   "label": "Total Billing Amount",
+   "read_only": 1
   },
   {
    "fieldname": "review_date",
@@ -151,42 +160,14 @@
   {
    "fieldname": "closing_date",
    "fieldtype": "Date",
-   "label": "Closing Date"
+   "label": "Closing Date",
+   "read_only": 1
   },
   {
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
-  },
-  {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "description_sb",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_13",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_18",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "totals_sb",
-   "fieldtype": "Section Break",
-   "label": "Totals"
-  },
-  {
-   "fieldname": "total_sb",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "planning_document",
@@ -203,11 +184,66 @@
    "reqd": 1
   },
   {
-   "fieldname": "section_break_10",
+   "fieldname": "go_to_parent",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Go to Parent"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "open_form",
+   "fieldtype": "Button",
+   "label": "Open Form"
+  },
+  {
+   "default": "PL-MISSION-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "PL-MISSION-",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_11",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_27",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actions",
+   "fieldtype": "HTML",
+   "label": "Actions"
   }
  ],
- "modified": "2020-10-19 17:21:06.184120",
+ "modified": "2020-10-21 11:19:32.396850",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission",

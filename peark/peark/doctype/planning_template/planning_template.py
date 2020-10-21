@@ -59,7 +59,8 @@ def make_planning_document(source_name, target_doc=None, ignore_permissions=Fals
         "Planning Mission Template": {
             "doctype": "Planning Mission",
             "field_map": {
-                "name": "planning_mission_template"
+                "name": "planning_mission_template",
+                # "parent": "planning_document",
             },
             "postprocess": update_item
         },

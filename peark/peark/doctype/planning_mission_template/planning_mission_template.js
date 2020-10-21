@@ -14,6 +14,13 @@ frappe.ui.form.on('Planning Mission Template', {
     },
     reload_from_db(frm) {
         const { doc } = frm;
+
+        // todo: better this situation to prevent data loss
+        // system delays and overloads
+        if (doc.possible_status.length) {
+            return false;
+        }
+
         const { model } = frappe;
 
         const callback = function () {
@@ -97,8 +104,6 @@ frappe.ui.form.on('Planning Mission Template', {
     fetch_status_multiselect(frm) {
         const doctype = "Possible Planning Mission Status";
         const { model } = frappe;
-
-        console.log({ doctype });
 
         model.with_doctype(doctype);
     },

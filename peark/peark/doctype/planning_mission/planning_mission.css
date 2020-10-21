@@ -1,0 +1,12 @@
+div[data-fieldname="go_to_parent"] button[data-fieldname="go_to_parent"] {
+	float: right;
+	color:#fff;
+	background-color:#5e64ff;
+	border-color:#444bff;
+}
+
+div[data-fieldname="go_to_parent"] button[data-fieldname="go_to_parent"]:hover {
+	color: #fff;
+    background-color: #2b33ff;
+    border-color: #0711ff;
+}

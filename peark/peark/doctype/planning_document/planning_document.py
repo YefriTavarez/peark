@@ -16,6 +16,13 @@ class PlanningDocument(Document):
     def onload(self):
         self.load_planning_template()
 
+    def validate(self):
+        self.update_planning_document()
+
+    def update_planning_document(self):
+        for childoc in self.missions:
+            childoc.planning_document = self.name
+
     def load_planning_template(self, planning_template=None):
         if not planning_template:
             planning_template = self.get_planning_template()
