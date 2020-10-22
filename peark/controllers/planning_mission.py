@@ -31,6 +31,9 @@ def set_to_delayed():
 
 
 def get_all_planning_missions():
+    pass
+
+    # todo: fetch directly from the planning_mission
     namelist = list()
 
     doctype = "Planning Mission"
@@ -43,7 +46,7 @@ def get_all_planning_missions():
         filters = {
             "planning_mission_template": template.name,
             "expected_end_date": ["<", today()],
-            "status": template.opening_status,
+            "status": "Open",
         }
 
         for name, in get_all(doctype, filters, as_list=True):

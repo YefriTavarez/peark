@@ -105,11 +105,13 @@ frappe.ui.form.on('Planning Template', {
 });
 
 
+frappe.provide("frappe.params");
 frappe.ui.form.on('Planning Mission Template', {
     open_form(frm, cdt, cdn) {
-        const doc = frappe.get_doc(cdt, cdn);
+        const view = "Form";
 
-        frappe.set_route("Form", "Planning Mission Template",
-            doc.name);
+        frappe.params.should_reload = true;
+
+        frappe.set_route(view, cdt, cdn);
     },
 });

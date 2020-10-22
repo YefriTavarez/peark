@@ -17,7 +17,9 @@
   "section_break_10",
   "description",
   "section_break_12",
-  "depends_on"
+  "depends_on",
+  "section_break_14",
+  "default_status_workflow"
  ],
  "fields": [
   {
@@ -59,12 +61,12 @@
    "reqd": 1
   },
   {
-   "description": "In Minutes",
+   "description": "In Days",
    "fieldname": "expected_time",
    "fieldtype": "Int",
    "in_list_view": 1,
    "in_preview": 1,
-   "label": "Expected Time (in Minutes)",
+   "label": "Expected Time",
    "reqd": 1
   },
   {
@@ -103,9 +105,23 @@
    "hidden": 1,
    "label": "Data to Ask",
    "options": "Data to Ask Item"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break",
+   "label": "Status Workflow"
+  },
+  {
+   "default": "[\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"In Review\",\n        \"next_status\": \"Pending\",\n        \"action\": \"Reject Work\",\n        \"roles\": [\"Projects Manager\"]\n    },\n    {\n        \"status\": \"In Review\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Approve Work\",\n        \"roles\": [\"Projects Manager\"]\n    },\n    {\n        \"status\": \"Completed\",\n        \"next_status\": \"Pending\",\n        \"action\": \"Reopen\",\n        \"roles\": [\"Projects User\"]\n    }\n]",
+   "fieldname": "default_status_workflow",
+   "fieldtype": "Code",
+   "label": "Default Status Workflow",
+   "options": "JSON",
+   "reqd": 1
   }
  ],
- "modified": "2020-10-21 10:43:36.779246",
+ "modified": "2020-10-21 15:02:56.880730",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission Template",

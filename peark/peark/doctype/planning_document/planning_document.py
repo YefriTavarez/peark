@@ -16,8 +16,40 @@ class PlanningDocument(Document):
     def onload(self):
         self.load_planning_template()
 
+    def on_change(self):
+        pass
+
     def validate(self):
+        self.update_children_status()
         self.update_planning_document()
+
+    def update_children_status(self):
+        status = self.status
+        status_list = ("Stopped", "Paused", "Cancelled")
+
+        if not status in status_list:
+            db_status = self.db_get("status")
+
+            if db_status in status_list:
+                for childoc in self.missions:
+                    if childoc.status in (db_status,):
+                        continue
+
+                    childoc.status = "Pending"
+
+                    childoc.db_update()
+
+            return False
+
+        for childoc in self.missions:
+            if childoc.status in ("Completed",):
+                continue
+
+            childoc.status = status
+
+            childoc.db_update()
+
+        return True
 
     def update_planning_document(self):
         for childoc in self.missions:

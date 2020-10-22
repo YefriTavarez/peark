@@ -1,6 +1,8 @@
 // Copyright (c) 2020, Yefri Tavarez Nolasco and contributors
 // For license information, please see license.txt
 
+frappe.provide("frappe.params");
+frappe.provide("frappe.flashvals");
 frappe.ui.form.on('Planning Document', {
     setup: function (frm) {
         const { wrapper } = frm;
@@ -23,6 +25,7 @@ frappe.ui.form.on('Planning Document', {
         const { doc } = frm;
 
         frappe.run_serially([
+            () => frm.trigger("remember_status"),
             () => {
                 // this is just for parent field
                 frm.toggle_enable("missions", !doc.planning_template);
@@ -187,6 +190,10 @@ frappe.ui.form.on('Planning Document', {
 
         frm.toggle_reqd(fields, doc.order_required);
     },
+    remember_status(frm) {
+        const { doc } = frm;
+        doc.__previous_status = doc.status;
+    },
     order_required(frm) {
         // this is unlikely to be used
         frm.trigger("toggle_reqd_sales_order");
@@ -222,12 +229,142 @@ frappe.ui.form.on('Planning Document', {
             () => frm.trigger("toggle_reqd_sales_order"),
             () => frm.trigger("toggle_reqd_template_planning_fields"),
         ]);
+    },
+    missions_on_form_rendered(frm) {
+        const { doc } = frm;
+        const { parse } = JSON;
+        const { utils } = frappe;
+
+        jQuery.map(doc.missions, childdoc => {
+            const {
+                name,
+                doctype,
+                parentfield,
+                status,
+                status_workflow,
+            } = childdoc;
+
+            const { grid } = frm.get_field(parentfield);
+            const gridrow = grid.get_row(name);
+
+            const filters = { status };
+            const workflows = parse(status_workflow);
+
+            const actions = utils
+                .filter_dict(workflows, filters);
+
+            const html_rendered = frappe
+                .render_template("actions_template", { actions });
+
+            const wrapper = jQuery(gridrow.wrapper)
+                .find("div[data-fieldname=actions]");
+
+            // remove any child
+            wrapper.empty();
+
+            const htmlobj = jQuery(html_rendered)
+                .appendTo(wrapper);
+
+            jQuery(htmlobj)
+                .find("li>a")
+                .on("click", event => {
+                    event.preventDefault();
+
+                    const { target } = event;
+
+                    const status = jQuery(target)
+                        .attr("data-next-status");
+
+                    jQuery.extend(frappe.flashvals, { status });
+
+                    const event_name = "handle_status_change";
+
+                    frm.script_manager
+                        .trigger(event_name, doctype, name);
+
+                    frappe.run_serially([
+                        () => frappe.timeout(.5),
+                        () => frm.trigger("missions_on_form_rendered"),
+                    ]);
+                });
+        });
+    },
+    status(frm) {
+        const { doc } = frm;
+        const { __previous_status, status } = doc;
+
+        const status_list = [
+            "Stopped",
+            "Paused",
+            "Cancelled",
+        ];
+
+        if (!__previous_status) {
+            console.log("!__previous_status");
+            return false;
+        }
+
+        if (status_list.includes(__previous_status)) {
+            console.log("!status_list.includes(__previous_status)");
+            return false;
+        }
+
+        if (!status_list.includes(status)) {
+            console.log("!status_list.includes(status)");
+            return false;
+        }
+
+        const message = __("If you change the status of the "
+            + "Planning Document to <strong>%(status)s</strong>, all the "
+            + "non-completed missions will be set to this status as well. "
+            + "Are you sure you want to continue?");
+
+        const ifyes = () => {
+            const { db } = frappe;
+            const { doctype, name } = doc;
+
+            const fieldname = "status";
+
+            const callback = response => {
+                frm.reload_doc();
+            };
+
+            db
+                .set_value(doctype, name, fieldname, status, callback);
+        };
+
+        const ifno = () => {
+            doc.status = doc.__previous_status;
+            frm.refresh_fields();
+
+            const alertmsg = __("No changes made");
+
+            frappe.show_alert(alertmsg);
+        };
+
+        const opts = { "status": __(status) };
+
+        frappe.confirm(
+            repl(message, opts), ifyes, ifno);
     }
 });
 
 frappe.ui.form.on('Planning Mission', {
-    open_form(frm, cdt, cdn) {
-        // const doc = frappe.get_doc(cdt, cdn);
-        frappe.set_route("Form", cdt, cdn);
-    }
+    open_form(frm, doctype, name) {
+        const view = "Form";
+
+        frappe.params.should_reload = true;
+
+        frappe.set_route(view, doctype, name);
+    },
+    handle_status_change(frm, doctype, name) {
+        const { db, model } = frappe;
+
+        const fieldname = "status";
+        const { status } = frappe.flashvals;
+
+        jQuery.map([db, model], module => {
+            module.set_value(doctype, name, fieldname, status);
+        });
+    },
 });

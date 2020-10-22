@@ -114,7 +114,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nStopped\nPaused\nDelayed\nCancelled\nCompleted",
+   "options": "Open\nIn Progress\nStopped\nPaused\nDelayed\nCancelled\nCompleted",
    "reqd": 1
   },
   {
@@ -284,7 +284,7 @@
    "set_only_once": 1
   }
  ],
- "modified": "2020-10-20 08:58:54.180097",
+ "modified": "2020-10-21 16:34:30.340794",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Document",

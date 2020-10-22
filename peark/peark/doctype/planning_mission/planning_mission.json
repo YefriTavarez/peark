@@ -6,14 +6,14 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "actions",
+  "status",
   "subject",
-  "planning_document",
-  "planning_mission_template",
   "column_break_5",
   "go_to_parent",
+  "planning_mission_template",
+  "planning_document",
   "weight",
-  "status",
-  "actions",
   "company",
   "open_form",
   "section_break_11",
@@ -38,10 +38,13 @@
   "total_costing_amount",
   "total_expense_claim",
   "column_break_32",
-  "total_billing_amount"
+  "total_billing_amount",
+  "section_break_14",
+  "status_workflow"
  ],
  "fields": [
   {
+   "columns": 5,
    "fieldname": "subject",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -53,13 +56,18 @@
    "set_only_once": 1
   },
   {
+   "columns": 2,
+   "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nPending\nWorking\nIn Review\nDelayed\nCompleted\nStopped\nCancelled",
-   "read_only": 1
+   "no_copy": 1,
+   "options": "Open\nPending\nWorking\nIn Review\nDelayed\nPaused\nStopped\nCancelled\nCompleted",
+   "read_only": 1,
+   "reqd": 1,
+   "translatable": 1
   },
   {
    "fieldname": "weight",
@@ -72,6 +80,7 @@
    "label": "Description"
   },
   {
+   "columns": 3,
    "fieldname": "department",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -88,9 +97,10 @@
    "options": "User"
   },
   {
+   "description": "In Days",
    "fieldname": "expected_time",
    "fieldtype": "Int",
-   "label": "Expected Time (in Minutes)",
+   "label": "Expected Time",
    "read_only": 1
   },
   {
@@ -197,6 +207,7 @@
   },
   {
    "default": "PL-MISSION-",
+   "depends_on": "eval:doc.__islocal",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
@@ -238,12 +249,26 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:!doc.__islocal",
    "fieldname": "actions",
    "fieldtype": "HTML",
    "label": "Actions"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "[\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Open\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Pending\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"Working\",\n        \"action\": \"Start Working\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"In Review\",\n        \"action\": \"Send to Review\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"Delayed\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Mark as Completed\",\n        \"roles\": [\"Projects User\"]\n    },\n    {\n        \"status\": \"In Review\",\n        \"next_status\": \"Pending\",\n        \"action\": \"Reject Work\",\n        \"roles\": [\"Projects Manager\"]\n    },\n    {\n        \"status\": \"In Review\",\n        \"next_status\": \"Completed\",\n        \"action\": \"Approve Work\",\n        \"roles\": [\"Projects Manager\"]\n    },\n    {\n        \"status\": \"Completed\",\n        \"next_status\": \"Pending\",\n        \"action\": \"Reopen\",\n        \"roles\": [\"Projects User\"]\n    }\n]",
+   "fieldname": "status_workflow",
+   "fieldtype": "Code",
+   "hidden": 1,
+   "label": "Status Workflow",
+   "options": "JSON"
   }
  ],
- "modified": "2020-10-21 11:19:32.396850",
+ "modified": "2020-10-21 18:52:57.876453",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission",
@@ -265,5 +290,6 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "subject",
  "track_changes": 1
 }

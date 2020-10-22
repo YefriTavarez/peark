@@ -1,25 +1,27 @@
 // Copyright (c) 2020, Yefri Tavarez Nolasco and contributors
 // For license information, please see license.txt
 
-frappe.provide("peark.planning_mission_template");
+frappe.provide("frappe.params");
 
 frappe.ui.form.on('Planning Mission Template', {
     refresh(frm) {
         frappe.run_serially([
             () => frm.trigger("set_queries"),
             () => frm.trigger("enable_fields"),
-            () => frappe.timeout(1),
-            () => frm.trigger("reload_from_db"),
+            () => frm.trigger("should_reload_from_db"),
         ]);
+    },
+    should_reload_from_db(frm) {
+        const { params } = frappe;
+
+        if (params.should_reload) {
+            frm.trigger("reload_from_db");
+
+            delete params.should_reload;
+        }
     },
     reload_from_db(frm) {
         const { doc } = frm;
-
-        // todo: better this situation to prevent data loss
-        // system delays and overloads
-        if (doc.possible_status.length) {
-            return false;
-        }
 
         const { model } = frappe;
 
@@ -30,7 +32,7 @@ frappe.ui.form.on('Planning Mission Template', {
             model.with_doc(doc.doctype, doc.name, () => {
                 frm.refresh_fields();
             });
-        }
+        };
 
 
         if (doc.parenttype && doc.parent) {
@@ -117,7 +119,10 @@ frappe.ui.form.on('Planning Mission Template', {
         frm.toggle_display("open_form", false);
     },
     display_go_to_planning_template(frm) {
-        frm.toggle_display("go_to_planning_template", true);
+        const display = !frm.is_new();
+        const fieldname = "go_to_planning_template";
+
+        frm.toggle_display(fieldname, display);
     },
     go_to_planning_template(frm) {
         const { doc } = frm;
