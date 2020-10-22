@@ -177,7 +177,6 @@ frappe.ui.form.on('Planning Mission', {
     },
     display_status_workflow(frm) {
         const bigboss_list = [
-            "Projects Manager",
             "System Manager",
             "Administrator"
         ];
