@@ -56,6 +56,7 @@
    "fetch_from": "sales_order.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -249,6 +250,7 @@
   {
    "fieldname": "planning_template",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Planning Template",
    "options": "Planning Template",
    "set_only_once": 1
@@ -264,6 +266,7 @@
    "fieldname": "planning_document_type",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Planning Document Type",
    "options": "Planning Document Type",
    "reqd": 1
@@ -284,7 +287,7 @@
    "set_only_once": 1
   }
  ],
- "modified": "2020-10-21 16:34:30.340794",
+ "modified": "2020-10-22 10:26:34.567560",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Document",

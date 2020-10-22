@@ -81,4 +81,28 @@ def get_data():
             # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Compound Product", raise_exception=False)
         },
+        {
+            "module_name": 'Planning Document',
+            "category": "Places",
+            "label": _('Planning Documents'),
+            "icon": "fa fa-columns",
+            "type": 'link',
+            "link": '#List/Planning Document/List',
+            "color": '#FF4136',
+            'standard': 1,
+            # "description": "Para imprimir etiquetas a las paletas",
+            "condition": has_permission(doctype="Planning Document", raise_exception=False)
+        },
+        {
+            "module_name": 'Planning Mission',
+            "category": "Places",
+            "label": _('Planning Missions'),
+            "icon": "fa fa-tasks",
+            "type": 'link',
+            "link": '#List/Planning Mission/List',
+            "color": '#FF4136',
+            'standard': 1,
+            # "description": "Para imprimir etiquetas a las paletas",
+            "condition": has_permission(doctype="Planning Mission", raise_exception=False)
+        },
     ]
