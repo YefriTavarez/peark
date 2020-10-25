@@ -13,8 +13,9 @@ app_license = "MIT"
 
 # Fixtures
 # ------------------
-fixtures = {
-    "Custom Field": {
+fixtures = [
+    {
+        "doctype": "Custom Field",
         "filters": {
             "name": [
                 "in", [
@@ -60,7 +61,7 @@ fixtures = {
             ],
         },
     },
-}
+]
 # Includes in <head>
 # ------------------
 
