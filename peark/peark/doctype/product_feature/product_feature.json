@@ -33,7 +33,7 @@
    "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
    "reqd": 1,
    "translatable": 1
-  },c
+  },
   {
    "fieldname": "supported_techniques",
    "fieldtype": "Table MultiSelect",
