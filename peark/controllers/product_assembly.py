@@ -71,6 +71,8 @@ def create_item_based_on_product_assembly(doc):
         # "ref_childname": child.name,
     })
 
+    item_doc.flags.ignore_mandatory = True
+
     item_doc.save(ignore_permissions=True)
 
 

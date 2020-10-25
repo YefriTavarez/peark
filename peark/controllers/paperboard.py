@@ -72,6 +72,8 @@ def create_item_based_on_paperboard(doc):
             "ref_childname": child.name,
         })
 
+        item_doc.flags.ignore_mandatory = True
+
         item_doc.save(ignore_permissions=True)
 
 
