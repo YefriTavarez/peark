@@ -9,6 +9,7 @@
   "actions",
   "status",
   "subject",
+  "data_to_ask_display",
   "column_break_5",
   "go_to_parent",
   "planning_mission_template",
@@ -266,9 +267,14 @@
    "hidden": 1,
    "label": "Status Workflow",
    "options": "JSON"
+  },
+  {
+   "fieldname": "data_to_ask_display",
+   "fieldtype": "HTML",
+   "label": "Data to Ask"
   }
  ],
- "modified": "2020-10-21 18:52:57.876453",
+ "modified": "2020-10-23 09:20:31.392872",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Planning Mission",

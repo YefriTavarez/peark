@@ -57,7 +57,7 @@ class ProductAssembly(Document):
         self.full_specifications = self.get_full_specifications()
 
         # todo: get for compound products
-        self.product_options = self.get_product_options()
+        self.product_options = self.get_full_product_options()
 
         self.db_update()
 
@@ -386,6 +386,28 @@ class ProductAssembly(Document):
             frappe.throw(err_msg)
 
         return frappe.get_doc(doctype, filters)
+
+    def get_full_product_options(self):
+        if not self.is_compound_product:
+            return self.get_product_options()
+
+        compound_product = self.get_compound_product()
+
+        specs = list()
+
+        for part in compound_product.parts:
+            doctype = part.meta.get_field("product_assembly") \
+                .options
+
+            name = part.product_assembly
+
+            product_assembly = frappe.get_doc(doctype, name)
+
+            opts = product_assembly.get_product_options()
+
+            specs.append(opts)
+
+        return ", ".join(value for value in specs if value)
 
     def get_full_specifications(self):
         if not self.is_compound_product:

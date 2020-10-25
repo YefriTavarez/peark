@@ -30,10 +30,10 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Product Feature Type",
-   "options": "Control\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
+   "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
    "reqd": 1,
    "translatable": 1
-  },
+  },c
   {
    "fieldname": "supported_techniques",
    "fieldtype": "Table MultiSelect",

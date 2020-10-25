@@ -9,6 +9,8 @@ import frappe
 from frappe import db as database
 from frappe import _ as translate
 
+from frappe.utils import flt, cint, cstr
+
 from frappe.model.document import Document
 
 
@@ -17,11 +19,19 @@ class PlanningDocument(Document):
         self.load_planning_template()
 
     def on_change(self):
-        pass
+        self.update_percentage_completed()
+        # self.update_children_description()
+        self.update_children_planning_document()
 
     def validate(self):
+        self.validate_children()
         self.update_children_status()
-        self.update_planning_document()
+
+    def validate_children(self):
+        for childoc in self.missions:
+            childoc.run_method("validate")
+
+            childoc.db_update()
 
     def update_children_status(self):
         status = self.status
@@ -51,9 +61,44 @@ class PlanningDocument(Document):
 
         return True
 
-    def update_planning_document(self):
-        for childoc in self.missions:
-            childoc.planning_document = self.name
+    def update_percentage_completed(self):
+        self.percent_complete = self.get_percentage_completed()
+
+        self.db_update()
+
+    def get_percentage_completed(self):
+        percent = self.get_total_weight_completed() \
+            / self.get_total_weight()
+
+        return percent * 100.000
+
+    def get_total_weight_completed(self):
+        return sum([
+            flt(mission.weight)
+            for mission in self.missions
+            if mission.status == "Completed"
+        ])
+
+    def get_total_weight(self):
+        return sum([
+            flt(mission.weight)
+            for mission in self.missions
+        ])
+
+    def update_children_description(self):
+        for mission in self.missions:
+            if mission.description:
+                continue
+
+            mission.description = mission.subjet
+
+            mission.db_update()
+
+    def update_children_planning_document(self):
+        for mission in self.missions:
+            mission.planning_document = self.name
+
+            mission.db_update()
 
     def load_planning_template(self, planning_template=None):
         if not planning_template:
@@ -69,7 +114,7 @@ class PlanningDocument(Document):
         self.set_onload(key, value)
 
     def get_planning_template(self):
-        errmsg = translate("Missing value for Planning Template")
+        errmsg = translate("Missing Value for Planning Template field")
         if not self.planning_template:
             frappe.throw(errmsg)
 

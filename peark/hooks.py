@@ -11,6 +11,56 @@ app_color = "#343443"
 app_email = "yefritavarez@gmail.com"
 app_license = "MIT"
 
+# Fixtures
+# ------------------
+fixtures = {
+    "Custom Field": {
+        "filters": {
+            "name": [
+                "in", [
+                    "Employee-department_1",
+                    "Employee-department_2",
+                    "Employee-department_3",
+                    "Employee-department_4",
+                    "Employee-department_5",
+                    "Employee-employee_id",
+                    "Employee-is_group_1",
+                    "Employee-is_group_2",
+                    "Employee-is_group_3",
+                    "Employee-is_group_4",
+                    "Employee-is_group_5",
+                    "Item Group-item_group_code",
+                    "Item-column_break_109",
+                    "Item-item_group_1",
+                    "Item-item_group_2",
+                    "Item-item_group_3",
+                    "Item-item_group_4",
+                    "Item-ref_childname",
+                    "Item-ref_childtype",
+                    "Item-ref_docname",
+                    "Item-ref_doctype",
+                    "Item-section_break_106",
+                    "Planning Document-expected_delivery_date",
+                    "Planning Document-production_order",
+                    "Quotation-tax_id",
+                    "Sales Invoice-ncf",
+                    "Sales Invoice-return_against_ncf",
+                    "Workstation-department_1",
+                    "Workstation-department_2",
+                    "Workstation-department_3",
+                    "Workstation-department_4",
+                    "Workstation-department_5",
+                    "Workstation-department",
+                    "Workstation-is_group_1",
+                    "Workstation-is_group_2",
+                    "Workstation-is_group_3",
+                    "Workstation-is_group_4",
+                    "Workstation-is_group_5",
+                ],
+            ],
+        },
+    },
+}
 # Includes in <head>
 # ------------------
 
@@ -29,7 +79,9 @@ app_include_js = [
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Department": "public/js/department.js"
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}

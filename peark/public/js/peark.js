@@ -1,3 +1,6 @@
+// Copyright (c) 2020, Yefri Tavarez Nolasco and contributors
+// For license information, please see license.txt
+
 frappe.provide("frappe.socketio");
 jQuery.extend(frappe.socketio, {
 	get_host(port) {

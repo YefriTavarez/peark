@@ -114,6 +114,7 @@ frappe.ui.form.on('Planning Document', {
             fields
                 .filter(({ fieldname }) => !ignore_list.includes(fieldname))
                 .filter(({ fieldtype }) => !no_value_type.includes(fieldtype))
+                .filter(({ read_only }) => !read_only)
                 .map(function (df) {
                     const { fieldname } = df;
                     gridrow.toggle_editable(fieldname, enable_form);
@@ -254,7 +255,11 @@ frappe.ui.form.on('Planning Document', {
                 .filter_dict(workflows, filters);
 
             const html_rendered = frappe
-                .render_template("actions_template", { actions });
+                .render_template("actions_template", {
+                    actions: actions.filter(action => {
+                        return frappe.user.has_role(action.roles);
+                    })
+                });
 
             const wrapper = jQuery(gridrow.wrapper)
                 .find("div[data-fieldname=actions]");
@@ -300,17 +305,14 @@ frappe.ui.form.on('Planning Document', {
         ];
 
         if (!__previous_status) {
-            console.log("!__previous_status");
             return false;
         }
 
         if (status_list.includes(__previous_status)) {
-            console.log("!status_list.includes(__previous_status)");
             return false;
         }
 
         if (!status_list.includes(status)) {
-            console.log("!status_list.includes(status)");
             return false;
         }
 
@@ -350,6 +352,95 @@ frappe.ui.form.on('Planning Document', {
 });
 
 frappe.ui.form.on('Planning Mission', {
+    form_render(frm, doctype, name) {
+        const { parse, stringify } = JSON;
+
+        // const { doc } = frm;
+        const doc = frappe.get_doc(doctype, name);
+
+        const tablefield = frm.get_field("missions");
+        const selector = "div[data-fieldname=data_to_ask_display]";
+
+        // jQuery.map(doc.missions, function (childoc) {
+        // const { name } = childoc;
+        const { grid } = tablefield;
+
+        const gridrow = grid.get_row(name);
+
+        const parent = gridrow
+            .wrapper
+            .find(selector)
+            .get(0);
+
+        if (!parent) {
+            return false;
+        }
+
+        if (!doc.data_to_ask) {
+            doc.data_to_ask = "[{}]";
+        }
+
+        const data_to_ask = parse(doc.data_to_ask);
+
+        let render_input = true;
+
+        if (!data_to_ask || !data_to_ask.length) {
+            render_input = false;
+            return false;
+        }
+
+        if (frm.is_new()) {
+            render_input = false;
+        }
+
+        jQuery.map(data_to_ask, data => {
+            const { source_docfield } = data;
+            const df = source_docfield;
+
+            if (!df) {
+                return false;
+            }
+
+            df.onchange = event => {
+                const { target } = event;
+                const { value } = target;
+
+                // data_to_ask.value = value;
+                df.value = df.default = value;
+
+                doc.data_to_ask = stringify(data_to_ask);
+
+                const event_name = "display_save_button";
+                frm
+                    .script_manager
+                    .trigger(event_name, doctype, name);
+            };
+
+            const control = `Control${df.fieldtype}`;
+
+            const opts = {
+                df,
+                render_input,
+                parent,
+            };
+
+            if (doc.status == "Completed") {
+                df.read_only = true;
+                df.description = __("Reopen to modify");
+            }
+
+            const docfield = new frappe.ui.form[control](opts);
+
+            if (df.value) {
+                // docfield.$input.val(df.value);
+                docfield.set_input(df.value);
+                docfield.set_mandatory(df.value);
+            }
+
+            frappe.flashvals.cur_docfield = docfield;
+        });
+        // });
+    },
     open_form(frm, doctype, name) {
         const view = "Form";
 
@@ -358,13 +449,131 @@ frappe.ui.form.on('Planning Mission', {
         frappe.set_route(view, doctype, name);
     },
     handle_status_change(frm, doctype, name) {
+        const { parse, stringify } = JSON;
+
+        const doc = frappe.get_doc(doctype, name);
+
         const { db, model } = frappe;
 
-        const fieldname = "status";
+        if (!doc.data_to_ask) {
+            doc.data_to_ask = "[{}]";
+        }
+
+
+        const [data_to_ask] = parse(doc.data_to_ask);
+
+        const {
+            source_docfield,
+        } = data_to_ask;
+
         const { status } = frappe.flashvals;
 
-        jQuery.map([db, model], module => {
-            module.set_value(doctype, name, fieldname, status);
-        });
+        if (source_docfield) {
+
+            const { value, label } = source_docfield;
+            const errmsg = repl(__("Missing value for %(label)s"), { label: __(label) });
+            const opts = {
+                message: errmsg,
+                indicator: "red",
+            };
+
+            if (!value && status == "Completed") {
+                frappe.msgprint(opts);
+
+                return false;
+            }
+        }
+
+        const fieldname = "status";
+
+        if (!status) {
+            const errmsg = __("Missing value for status");
+            const opts = {
+                message: errmsg,
+                indicator: "red",
+            };
+
+            frappe.msgprint(opts);
+
+            return false;
+        }
+
+        doc.status = status;
+
+        const after_save = (response) => {
+            if (!response.exc) {
+
+                frappe.utils.play_sound("click");
+
+                frm.reload_doc();
+
+                frm.script_manager.trigger("after_save");
+                frm.script_manager.trigger("missions_on_form_rendered");
+            }
+        };
+
+        frappe.ui.form.save(frm, "Save", after_save, null);
+
+        // jQuery.map([db, model], module => {
+        //     module.set_value(doctype, name, fieldname, status);
+        // });
     },
+    display_save_button(frm, doctype, name) {
+        const { parse, stringify } = JSON;
+        const doc = frappe.get_doc(doctype, name);
+
+        if (!doc.data_to_ask) {
+            doc.data_to_ask = "[{}]";
+        }
+
+        const [data_to_ask] = parse(doc.data_to_ask);
+        const {
+            source_docfield,
+            target_doctype,
+            target_fieldname,
+            docname_field
+        } = data_to_ask;
+
+        const html = `<a class="btn btn-default btn-xs">
+                ${__("Save")} ${__(source_docfield.label)}
+            </a>`;
+
+        const docfield = frappe.flashvals.cur_docfield;
+
+        const after_save = (response) => {
+            if (!response.exc) {
+
+                frappe.utils.play_sound("click");
+
+                frm.reload_doc();
+
+                frm.script_manager.trigger("after_save");
+                frm.script_manager.trigger("missions_on_form_rendered");
+            }
+        };
+
+        if (docfield) {
+            jQuery(html)
+                .appendTo(docfield.$wrapper)
+                .on("click", function (event) {
+                    const { db, model } = frappe;
+
+                    const fieldname = "data_to_ask";
+                    const { value } = doc.data_to_ask;
+
+                    // key part
+                    const target_name = doc[docname_field];
+
+                    model.set_value(doctype, doctype, fieldname, value);
+                    model.set_value(target_doctype, target_name,
+                        target_fieldname, docfield.get_value());
+
+                    frappe.ui.form.save(frm, "Save", after_save, html);
+                });
+
+            // add this button only once
+            delete frappe.flashvals.cur_docfield;
+        }
+
+    }
 });

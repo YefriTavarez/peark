@@ -70,6 +70,10 @@ frappe.ui.form.on('Planning Template', {
         const parent = __("Make");
         const label = __("Planning Document");
 
+        if (frm.is_new()) {
+            return false;
+        }
+
         const action = event => {
             frm.trigger("handle_make_planning_document");
         };
@@ -101,7 +105,7 @@ frappe.ui.form.on('Planning Template', {
                         doc.doctype, doc.name);
                 }
             });
-    },
+    }
 });
 
 
