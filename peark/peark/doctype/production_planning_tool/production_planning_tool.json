@@ -1,18 +1,20 @@
 {
+ "autoname": "naming_series:",
  "creation": "2020-10-26 12:13:32.759388",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "posting_date",
   "company",
   "section_break_3",
   "from_date",
   "to_date",
-  "sales_order",
-  "column_break_7",
-  "item_code",
   "customer",
+  "column_break_7",
+  "sales_order",
+  "item_code",
   "section_break_10",
   "fetch_planning_documents",
   "planning_documents",
@@ -44,7 +46,8 @@
   },
   {
    "fieldname": "section_break_3",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Filters"
   },
   {
    "fieldname": "from_date",
@@ -80,8 +83,7 @@
   },
   {
    "fieldname": "section_break_10",
-   "fieldtype": "Section Break",
-   "label": "Filters"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "fetch_planning_documents",
@@ -134,9 +136,16 @@
    "fieldname": "make_production_orders",
    "fieldtype": "Button",
    "label": "Make Production Orders"
+  },
+  {
+   "default": "PROD-PL-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "PROD-PL-"
   }
  ],
- "modified": "2020-10-26 12:15:29.014777",
+ "modified": "2020-10-26 19:34:10.240383",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Planning Tool",

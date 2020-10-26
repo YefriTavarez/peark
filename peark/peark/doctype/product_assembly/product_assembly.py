@@ -45,6 +45,7 @@ class ProductAssembly(Document):
         self.validate_paperboard()
         self.validate_backboard()
 
+        self.validate_printing_feature()
         self.validate_control_feature()
         self.validate_cutting_feature()
         self.validate_gluing_feature()
@@ -95,6 +96,7 @@ class ProductAssembly(Document):
         self.horizontal_margin = .000
         self.vertical_margin = .000
 
+        self.printing_feature = None
         self.control_feature = None
         self.cutting_feature = None
         self.gluing_feature = None
@@ -202,6 +204,10 @@ class ProductAssembly(Document):
 
     def validate_backboard(self):
         self.validate_field_value("backboard", "backboards", "paperboard")
+
+    def validate_printing_feature(self):
+        self.validate_field_value(
+            "printing_feature", "printing_features", "product_feature")
 
     def validate_control_feature(self):
         self.validate_field_value(
@@ -477,6 +483,7 @@ class ProductAssembly(Document):
 
     def get_product_options(self):
         values = (
+            self.printing_feature,
             self.control_feature,
             self.cutting_feature,
             self.gluing_feature,
@@ -580,6 +587,7 @@ class ProductAssembly(Document):
             "pantone_colors",
             "back_colors",
             "pantone_back_colors",
+            "printing_feature",
             "control_feature",
             "cutting_feature",
             "gluing_feature",
@@ -605,6 +613,7 @@ class ProductAssembly(Document):
     pantone_colors = 0
     back_colors = 0
     pantone_back_colors = 0
+    printing_feature = None
     control_feature = None
     cutting_feature = None
     gluing_feature = None

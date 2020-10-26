@@ -31,6 +31,7 @@
   "column_break_19",
   "pantone_back_colors",
   "section_break_21",
+  "printing_feature",
   "control_feature",
   "cutting_feature",
   "gluing_feature",
@@ -151,6 +152,12 @@
    "fieldtype": "Int",
    "label": "Cantidad Colores Pantone Retiro",
    "reqd": 1
+  },
+  {
+   "fieldname": "printing_feature",
+   "fieldtype": "Link",
+   "label": "Opciones de Impresión",
+   "options": "Product Feature"
   },
   {
    "fieldname": "control_feature",
@@ -285,7 +292,7 @@
    "label": "Compound Product"
   }
  ],
- "modified": "2020-10-25 18:57:17.901312",
+ "modified": "2020-10-25 18:57:17.901314",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Assembly",

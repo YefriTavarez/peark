@@ -30,6 +30,7 @@ frappe.ui.form.on('Product Assembly', {
             () => frm.trigger("set_dimension_query"),
             () => frm.trigger("set_paperboard_query"),
             () => frm.trigger("set_backboard_query"),
+            () => frm.trigger("set_printing_query"),
             () => frm.trigger("set_control_query"),
             () => frm.trigger("set_cutting_query"),
             () => frm.trigger("set_gluing_query"),
@@ -153,6 +154,28 @@ frappe.ui.form.on('Product Assembly', {
         };
 
         frm.set_query("backboard", query);
+    },
+
+    set_printing_query(frm) {
+        const query = () => {
+            const {
+                doc: {
+                    __onload = {}
+                }
+            } = frm;
+            const product_profile_doc = __onload.product_profile_doc || {};
+
+            const features = product_profile_doc
+                .printing_features
+                .map(d => d.product_feature);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query("printing_feature", query);
     },
 
     set_control_query(frm) {
@@ -391,6 +414,7 @@ frappe.ui.form.on('Product Assembly', {
             ["backboard_name", null],
             ["horizontal_margin", .000],
             ["vertical_margin", .000],
+            ["printing_feature", null],
             ["control_feature", null],
             ["cutting_feature", null],
             ["gluing_feature", null],
@@ -422,6 +446,7 @@ frappe.ui.form.on('Product Assembly', {
             "item_group_2",
             "item_group_3",
             "item_group_4",
+            "printing_feature",
             "control_feature",
             "cutting_feature",
             "gluing_feature",
@@ -461,6 +486,7 @@ frappe.ui.form.on('Product Assembly', {
             ["pantone_colors", 0],
             ["back_colors", 0],
             ["pantone_back_colors", 0],
+            ["printing_feature", null],
             ["control_feature", null],
             ["cutting_feature", null],
             ["gluing_feature", null],
@@ -518,6 +544,7 @@ frappe.ui.form.on('Product Assembly', {
             ["pantone_colors", "allow_printing", d => !!d],
             ["back_colors", "double_sided", d => !!d],
             ["pantone_back_colors", "double_sided", d => !!d],
+            ["printing_feature", "printing_features", d => !!d.length],
             ["control_feature", "control_features", d => !!d.length],
             ["cutting_feature", "cutting_features", d => !!d.length],
             ["gluing_feature", "gluing_features", d => !!d.length],
