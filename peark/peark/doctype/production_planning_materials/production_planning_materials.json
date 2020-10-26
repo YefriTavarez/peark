@@ -1,0 +1,91 @@
+{
+ "creation": "2020-10-26 12:10:43.452772",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item",
+  "item_specs",
+  "qty",
+  "uom",
+  "warehouse",
+  "request_type",
+  "planning_document",
+  "expected_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.description",
+   "fetch_if_empty": 1,
+   "fieldname": "item_specs",
+   "fieldtype": "HTML Editor",
+   "in_list_view": 1,
+   "label": "Item Specs",
+   "reqd": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "item.stock_uom",
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Unit of Measure",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Target Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "default": "Purchase",
+   "fieldname": "request_type",
+   "fieldtype": "Select",
+   "label": "Request Type",
+   "options": "Purchase\nMaterial Transfer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "planning_document",
+   "fieldtype": "Link",
+   "label": "Planning Document",
+   "options": "Planning Document",
+   "read_only": 1
+  },
+  {
+   "fieldname": "expected_on",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Expected On",
+   "reqd": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-10-26 12:19:25.936342",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Production Planning Materials",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

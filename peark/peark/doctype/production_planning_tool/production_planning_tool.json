@@ -1,0 +1,185 @@
+{
+ "creation": "2020-10-26 12:13:32.759388",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "posting_date",
+  "company",
+  "section_break_3",
+  "from_date",
+  "to_date",
+  "sales_order",
+  "column_break_7",
+  "item_code",
+  "customer",
+  "section_break_10",
+  "fetch_planning_documents",
+  "planning_documents",
+  "section_break_13",
+  "warehouse",
+  "section_break_15",
+  "fetch_materials",
+  "planning_materials",
+  "section_break_18",
+  "make_material_requests",
+  "make_production_orders"
+ ],
+ "fields": [
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Posting Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break",
+   "label": "Filters"
+  },
+  {
+   "fieldname": "fetch_planning_documents",
+   "fieldtype": "Button",
+   "label": "Fetch Planning Documents"
+  },
+  {
+   "fieldname": "planning_documents",
+   "fieldtype": "Table",
+   "label": "Production Planning Documents",
+   "options": "Production Planning Documents"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Default Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "fetch_materials",
+   "fieldtype": "Button",
+   "label": "Fetch Material to Request"
+  },
+  {
+   "fieldname": "planning_materials",
+   "fieldtype": "Table",
+   "label": "Production Planning Materials",
+   "options": "Production Planning Materials"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "make_material_requests",
+   "fieldtype": "Button",
+   "label": "Make Material Requests"
+  },
+  {
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "make_production_orders",
+   "fieldtype": "Button",
+   "label": "Make Production Orders"
+  }
+ ],
+ "modified": "2020-10-26 12:15:29.014777",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Production Planning Tool",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Manufacturing Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Director de Producci\u00f3n",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
