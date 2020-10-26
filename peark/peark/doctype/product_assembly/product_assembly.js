@@ -244,12 +244,11 @@ frappe.ui.form.on('Product Assembly', {
     },
 
     set_protection_query(frm) {
-        const tablename = "protection_features";
-        const fieldname = "product_feature";
+        const fieldname = "protection_features";
         const { get_available_list } = frappe.events.product_assembly;
 
         const query = () => {
-            const features = get_available_list(tablename);
+            const features = get_available_list(fieldname);
 
             const filters = {
                 name: ["in", features.join(",")],
@@ -257,16 +256,15 @@ frappe.ui.form.on('Product Assembly', {
             return { filters };
         };
 
-        frm.set_query(fieldname, tablename, query);
+        frm.set_query(fieldname, query);
     },
 
     set_utils_query(frm) {
-        const tablename = "utils_features";
-        const fieldname = "product_feature";
+        const fieldname = "utils_features";
         const { get_available_list } = frappe.events.product_assembly;
 
         const query = () => {
-            const features = get_available_list(tablename);
+            const features = get_available_list(fieldname);
 
             const filters = {
                 name: ["in", features.join(",")],
@@ -274,16 +272,15 @@ frappe.ui.form.on('Product Assembly', {
             return { filters };
         };
 
-        frm.set_query(fieldname, tablename, query);
+        frm.set_query(fieldname, query);
     },
 
     set_texture_query(frm) {
-        const tablename = "texture_features";
-        const fieldname = "product_feature";
+        const fieldname = "texture_features";
         const { get_available_list } = frappe.events.product_assembly;
 
         const query = () => {
-            const features = get_available_list(tablename);
+            const features = get_available_list(fieldname);
 
             const filters = {
                 name: ["in", features.join(",")],
@@ -291,7 +288,7 @@ frappe.ui.form.on('Product Assembly', {
             return { filters };
         };
 
-        frm.set_query(fieldname, tablename, query);
+        frm.set_query(fieldname, query);
     },
 
     add_view_items_button(frm) {
@@ -510,14 +507,17 @@ frappe.ui.form.on('Product Assembly', {
         const product_profile_doc = __onload.product_profile_doc || {};
 
         const fields_list = [
-            ["dimension", "dimension", d => !!d],
-            ["paperboard", "paperboard", d => !!d],
-            ["paperboard_name", "paperboard_name", d => !!d],
+            ["horizontal_margin", "allow_printing", d => !!d],
+            ["vertical_margin", "allow_printing", d => !!d],
+            ["front_colors", "allow_printing", d => !!d],
+            ["dimension", "dimensions", d => !!d],
+            ["paperboard", "paperboards", d => !!d],
+            ["paperboard_name", "paperboards", d => !!d],
             ["backboard", "has_backboard", d => !!d],
-            ["front_colors", "oneside", d => !!d],
-            ["pantone_colors", "oneside", d => !!d],
-            ["back_colors", "backprinted", d => !!d],
-            ["pantone_back_colors", "backprinted", d => !!d],
+            ["front_colors", "allow_printing", d => !!d],
+            ["pantone_colors", "allow_printing", d => !!d],
+            ["back_colors", "double_sided", d => !!d],
+            ["pantone_back_colors", "double_sided", d => !!d],
             ["control_feature", "control_features", d => !!d.length],
             ["cutting_feature", "cutting_features", d => !!d.length],
             ["gluing_feature", "gluing_features", d => !!d.length],

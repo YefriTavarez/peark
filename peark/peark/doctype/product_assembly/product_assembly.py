@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
+from frappe import bold
 from frappe import db as database
 from frappe import _ as translate
 from frappe import _dict as pydict
@@ -35,10 +36,10 @@ class ProductAssembly(Document):
         self.generate_hash_and_validate()
 
         self.validate_front_colors()  # onside
-        self.validate_pantone_colors()  # oneside
+        self.validate_pantone_colors()  # allow_printing
 
-        self.validate_back_colors()  # backprinted
-        self.validate_pantone_back_colors()  # backprinted
+        self.validate_back_colors()  # double_sided
+        self.validate_pantone_back_colors()  # double_sided
 
         self.validate_dimension()
         self.validate_paperboard()
@@ -53,11 +54,11 @@ class ProductAssembly(Document):
         self.validate_texture_features()
 
     def update_specs(self):
-        # if not self.flags.dont_update_full_specifications:
-        self.full_specifications = self.get_full_specifications()
+        self.full_specifications = \
+            self.get_full_specifications()
 
-        # todo: get for compound products
-        self.product_options = self.get_full_product_options()
+        self.product_options = \
+            self.get_full_product_options()
 
         self.db_update()
 
@@ -123,7 +124,7 @@ class ProductAssembly(Document):
         )
 
         err_msg = """
-            Valor para el campo <strong>{0}</strong> 
+            Valor para el campo {0}
                 debe estar en el rango (0-4)
         """
 
@@ -138,38 +139,42 @@ class ProductAssembly(Document):
 
             translated_label = translate(label)
 
-            frappe.throw(err_msg.format(translated_label))
+            frappe.throw(err_msg
+                .format(
+                bold(translated_label)
+                )
+            )
 
     def validate_front_colors(self):
-        oneside = self.product_profile_doc \
-            .get("oneside") \
+        allow_printing = self.product_profile_doc \
+            .get("allow_printing") \
             and self.is_compound_product
 
-        if not oneside:
+        if not allow_printing:
             self.front_colors = 0
 
     def validate_pantone_colors(self):
-        oneside = self.product_profile_doc \
-            .get("oneside") \
+        allow_printing = self.product_profile_doc \
+            .get("allow_printing") \
             and self.is_compound_product
 
-        if not oneside:
+        if not allow_printing:
             self.pantone_colors = 0
 
     def validate_back_colors(self):
-        backprinted = self.product_profile_doc \
-            .get("backprinted")  \
+        double_sided = self.product_profile_doc \
+            .get("double_sided")  \
             and self.is_compound_product
 
-        if not backprinted:
+        if not double_sided:
             self.back_colors = 0
 
     def validate_pantone_back_colors(self):
-        backprinted = self.product_profile_doc \
-            .get("backprinted") \
+        double_sided = self.product_profile_doc \
+            .get("double_sided") \
             and self.is_compound_product
 
-        if not backprinted:
+        if not double_sided:
             self.pantone_back_colors = 0
 
     def validate_dimension(self):
@@ -183,9 +188,14 @@ class ProductAssembly(Document):
             return True
 
         err_msg = translate(
-            "The selected Dimension <strong>{}</strong> is not defined in the Product Profile. Please check!")
+            "The selected Dimension {} is not defined in the "
+            "Product Profile. Please check!")
 
-        frappe.throw(err_msg.format(self.dimension))
+        frappe.throw(err_msg
+            .format(
+            bold(self.dimension)
+            )
+        )
 
     def validate_paperboard(self):
         self.validate_field_value("paperboard", "paperboards", "paperboard")
@@ -221,7 +231,9 @@ class ProductAssembly(Document):
         self.validate_field_value("texture_features", "texture_features",
                                   "product_feature", istable=True)
 
-    def validate_field_value(self, fieldname, datasource, childfieldname, istable=False):
+    def validate_field_value(self, fieldname, datasource,
+                             childfieldname, istable=False):
+
         value = self.get(fieldname)
 
         if not value:
@@ -251,17 +263,23 @@ class ProductAssembly(Document):
         translated_label = translate(label)
 
         err_msg = translate(
-            "The selected {} <strong>{}</strong> is not defined in the Product Profile. Please check!")
+            "The selected {} {} is not defined in the "
+            "Product Profile. Please check!")
 
-        frappe.throw(err_msg.format(translated_label, value))
+        frappe.throw(err_msg
+            .format(translated_label,
+                bold(value)
+            )
+        )
+        
 
     def generate_hash_and_validate(self):
 
         # don't validate for compound products
-        unique_hash = self.generate_hash()
+        unique_hash=self.generate_hash()
 
-        doctype = self.doctype
-        filters = {
+        doctype=self.doctype
+        filters={
             "unique_hash": unique_hash,
         }
 

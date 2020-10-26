@@ -32,6 +32,9 @@ class ProductProfile(Document):
         self.remove_duplicated_dimensions()
         self.sort_dimensions()
 
+        self.remove_duplicated_printing_features()
+        self.sort_printing_features()
+
         self.remove_duplicated_control_features()
         self.sort_control_features()
 
@@ -56,6 +59,7 @@ class ProductProfile(Document):
         self.validate_paperboard_items()
         self.validate_backboard_items()
 
+        self.validate_printing_features_items()
         self.validate_control_features_items()
         self.validate_cut_features_items()
         self.validate_gluing_features_items()
@@ -111,6 +115,24 @@ class ProductProfile(Document):
                 opts = d.as_dict()
 
                 opts.update({"tablename": translate("Backboard")})
+
+                frappe.throw(err_msg.format(**opts))
+
+    def validate_printing_features_items(self):
+        doctype = "Product Feature"
+        fieldname = "product_feature_type"
+        err_msg = translate("{product_feature} Feature cannot be in the"
+                            " {tablename} table at Row #{idx}. Please check!")
+
+        for d in self.printing_features:
+            docname = d.product_feature
+            product_feature_type = frappe.get_value(
+                doctype, docname, fieldname)
+
+            if product_feature_type != "Printing":
+                opts = d.as_dict()
+
+                opts.update({"tablename": translate("Printing")})
 
                 frappe.throw(err_msg.format(**opts))
 
@@ -257,6 +279,12 @@ class ProductProfile(Document):
 
     def remove_duplicated_backboards(self):
         self.remove_duplicated_items("paperboard", "backboards")
+
+    def remove_duplicated_printing_features(self):
+        self.remove_duplicated_items("product_feature", "printing_features")
+
+    def sort_printing_features(self):
+        self.sort_items("product_feature", "printing_features")
 
     def remove_duplicated_control_features(self):
         self.remove_duplicated_items("product_feature", "control_features")
@@ -431,6 +459,7 @@ class ProductProfile(Document):
     oneside = True
     backprinted = False
     dimensions = list()
+    printing_features = list()
     control_features = list()
     cutting_features = list()
     gluing_features = list()

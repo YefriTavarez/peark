@@ -1,68 +1,113 @@
 {
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:product_feature",
- "creation": "2020-08-18 17:05:00.737696",
+ "autoname": "field:workstation_name",
+ "creation": "2020-10-26 08:56:05.009787",
  "doctype": "DocType",
- "editable_grid": 1,
+ "document_type": "Setup",
  "engine": "InnoDB",
  "field_order": [
-  "product_feature",
-  "product_feature_type",
-  "default_work_station",
-  "section_break_4",
+  "workstation_name",
+  "description",
+  "section_break_3",
+  "hour_rate_electricity",
+  "hour_rate_consumable",
+  "column_break_6",
+  "hour_rate_rent",
+  "hour_rate_labour",
+  "hour_rate",
+  "section_break_10",
   "department",
   "department_1",
   "is_group_1",
   "department_2",
   "is_group_2",
-  "column_break_10",
+  "column_break_16",
   "department_3",
   "is_group_3",
   "department_4",
   "is_group_4",
   "department_5",
   "is_group_5",
-  "section_break_17",
-  "materials"
+  "section_break_23",
+  "holiday_list",
+  "working_hours"
  ],
  "fields": [
   {
-   "allow_in_quick_entry": 1,
-   "bold": 1,
-   "fieldname": "product_feature",
+   "fieldname": "workstation_name",
    "fieldtype": "Data",
-   "in_preview": 1,
-   "label": "Product Feature",
+   "in_list_view": 1,
+   "label": "Workstation Name",
+   "oldfieldname": "workstation_name",
+   "oldfieldtype": "Data",
    "reqd": 1,
    "unique": 1
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "product_feature_type",
-   "fieldtype": "Select",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
    "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Product Feature Type",
-   "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
-   "reqd": 1,
-   "translatable": 1
+   "label": "Description",
+   "oldfieldname": "description",
+   "oldfieldtype": "Text",
+   "width": "300px"
   },
   {
-   "fieldname": "materials",
+   "description": "per hour",
+   "fieldname": "hour_rate_electricity",
+   "fieldtype": "Currency",
+   "label": "Electricity Cost",
+   "oldfieldname": "hour_rate_electricity",
+   "oldfieldtype": "Currency"
+  },
+  {
+   "description": "per hour",
+   "fieldname": "hour_rate_consumable",
+   "fieldtype": "Currency",
+   "label": "Consumable Cost",
+   "oldfieldname": "hour_rate_consumable",
+   "oldfieldtype": "Currency"
+  },
+  {
+   "description": "per hour",
+   "fieldname": "hour_rate_rent",
+   "fieldtype": "Currency",
+   "label": "Rent Cost",
+   "oldfieldname": "hour_rate_rent",
+   "oldfieldtype": "Currency"
+  },
+  {
+   "description": "Wages per hour",
+   "fieldname": "hour_rate_labour",
+   "fieldtype": "Currency",
+   "label": "Wages",
+   "oldfieldname": "hour_rate_labour",
+   "oldfieldtype": "Currency"
+  },
+  {
+   "description": "per hour",
+   "fieldname": "hour_rate",
+   "fieldtype": "Currency",
+   "label": "Net Hour Rate",
+   "oldfieldname": "hour_rate",
+   "oldfieldtype": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "working_hours",
    "fieldtype": "Table",
-   "label": "List of Materials",
-   "options": "List of Materials"
+   "label": "Working Hours",
+   "options": "Workstation Working Hour"
   },
   {
-   "fieldname": "default_work_station",
+   "fieldname": "holiday_list",
    "fieldtype": "Link",
-   "label": "Default Work Station",
-   "options": "Work Station"
+   "label": "Holiday List",
+   "options": "Holiday List"
   },
   {
-   "fieldname": "section_break_4",
+   "fieldname": "section_break_10",
    "fieldtype": "Section Break"
   },
   {
@@ -103,7 +148,7 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_10",
+   "fieldname": "column_break_16",
    "fieldtype": "Column Break"
   },
   {
@@ -155,44 +200,44 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_17",
-   "fieldtype": "Section Break"
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break",
+   "label": "Operating Costs",
+   "oldfieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_23",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Working Hours"
   }
  ],
- "modified": "2020-10-26 09:36:45.046632",
+ "icon": "icon-wrench",
+ "modified": "2020-10-26 09:47:00.472537",
  "modified_by": "Administrator",
  "module": "peark",
- "name": "Product Feature",
- "owner": "yefritavarez@gmail.com",
+ "name": "Work Station",
+ "owner": "Administrator",
  "permissions": [
   {
    "create": 1,
    "delete": 1,
    "email": 1,
-   "export": 1,
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Sales User",
+   "role": "Manufacturing User",
    "share": 1,
    "write": 1
   }
  ],
  "quick_entry": 1,
- "show_preview_popup": 1,
+ "show_name_in_global_search": 1,
  "sort_field": "modified",
- "sort_order": "DESC",
+ "sort_order": "ASC",
  "track_changes": 1
 }

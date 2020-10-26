@@ -21,12 +21,15 @@
    "fieldname": "product_feature_type",
    "fieldtype": "Select",
    "label": "Product Feature Type",
-   "options": "Control\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
-   "read_only": 1
+   "no_copy": 1,
+   "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
+   "print_hide": 1,
+   "read_only": 1,
+   "report_hide": 1
   }
  ],
  "istable": 1,
- "modified": "2020-08-20 09:17:36.952703",
+ "modified": "2020-10-25 18:42:00.728745",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Features",

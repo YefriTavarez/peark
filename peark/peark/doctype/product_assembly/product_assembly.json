@@ -74,6 +74,7 @@
    "label": "Margen Vertical"
   },
   {
+   "depends_on": "eval:!doc.is_compound_product",
    "fetch_from": "product_profile.parent_item_group",
    "fieldname": "item_group_1",
    "fieldtype": "Link",
@@ -81,7 +82,7 @@
    "options": "Item Group"
   },
   {
-   "depends_on": "item_group_1",
+   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_1",
    "fetch_from": "product_profile.item_group",
    "fieldname": "item_group_2",
    "fieldtype": "Link",
@@ -89,14 +90,14 @@
    "options": "Item Group"
   },
   {
-   "depends_on": "item_group_2",
+   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_2",
    "fieldname": "item_group_3",
    "fieldtype": "Link",
    "label": "Categoria 3",
    "options": "Item Group"
   },
   {
-   "depends_on": "item_group_3",
+   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_3",
    "fieldname": "item_group_4",
    "fieldtype": "Link",
    "label": "Categoria 4",
@@ -177,19 +178,19 @@
   },
   {
    "fieldname": "protection_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Proteccion",
    "options": "Product Features"
   },
   {
    "fieldname": "utils_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Utilidad",
    "options": "Product Features"
   },
   {
    "fieldname": "texture_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Textura",
    "options": "Product Features"
   },
@@ -226,6 +227,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "depends_on": "eval:!doc.is_compound_product",
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
   },
@@ -277,11 +279,14 @@
    "description": "When checked all data will be fetched through the Compound Product module",
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Compound Product"
   }
  ],
- "modified": "2020-10-13 16:16:17.601557",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-10-25 18:57:17.901312",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Assembly",
  "owner": "yefritavarez@gmail.com",

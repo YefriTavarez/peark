@@ -18,17 +18,30 @@
   "has_backboard",
   "paperboards",
   "backboards",
-  "section_break_12",
-  "oneside",
-  "column_break_14",
-  "backprinted",
-  "section_break_16",
+  "section_break_13",
+  "allow_printing",
+  "printing_features",
+  "double_sided",
+  "section_break_17",
+  "allow_control",
   "control_features",
+  "section_break_20",
+  "allow_cutting",
   "cutting_features",
+  "section_break_23",
+  "allow_gluing",
   "gluing_features",
+  "section_break_26",
+  "allow_folding",
   "folding_features",
+  "section_break_29",
+  "allow_protection",
   "protection_features",
+  "section_break_32",
+  "allow_utils",
   "utils_features",
+  "section_break_35",
+  "allow_texture",
   "texture_features",
   "supported_dimensions_section",
   "dimensions"
@@ -88,62 +101,57 @@
    "options": "Supported Paperboards"
   },
   {
-   "default": "1",
-   "fieldname": "oneside",
-   "fieldtype": "Check",
-   "label": "Tiro"
-  },
-  {
-   "default": "0",
-   "fieldname": "backprinted",
-   "fieldtype": "Check",
-   "label": "Re-tiro"
-  },
-  {
+   "depends_on": "allow_control",
    "fieldname": "control_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Control",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_cutting",
    "fieldname": "cutting_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Corte",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_gluing",
    "fieldname": "gluing_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Empalme",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_folding",
    "fieldname": "folding_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Plegado",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_protection",
    "fieldname": "protection_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Proteccion",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_utils",
    "fieldname": "utils_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Utilidad",
    "options": "Product Features"
   },
   {
+   "depends_on": "allow_texture",
    "fieldname": "texture_features",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Opciones de Textura",
    "options": "Product Features"
   },
   {
    "fieldname": "dimensions",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "options": "Supported Dimensions"
   },
   {
@@ -169,26 +177,108 @@
    "label": "Supported Dimensions"
   },
   {
-   "fieldname": "section_break_12",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_14",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_16",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
    "label": "Compound Product"
+  },
+  {
+   "depends_on": "allow_printing",
+   "fieldname": "printing_features",
+   "fieldtype": "Table MultiSelect",
+   "label": "Opciones de Impresi\u00f3n",
+   "options": "Product Features"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_printing",
+   "fieldtype": "Check",
+   "label": "Allow Printing?"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_printing",
+   "fieldname": "double_sided",
+   "fieldtype": "Check",
+   "label": "Double Sided?"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_control",
+   "fieldtype": "Check",
+   "label": "Allow Control?"
+  },
+  {
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_cutting",
+   "fieldtype": "Check",
+   "label": "Allow Cutting?"
+  },
+  {
+   "fieldname": "section_break_23",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_gluing",
+   "fieldtype": "Check",
+   "label": "Allow Gluing?"
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_folding",
+   "fieldtype": "Check",
+   "label": "Allow Folding?"
+  },
+  {
+   "fieldname": "section_break_29",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_protection",
+   "fieldtype": "Check",
+   "label": "Allow Protection?"
+  },
+  {
+   "fieldname": "section_break_32",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_utils",
+   "fieldtype": "Check",
+   "label": "Allow Utils?"
+  },
+  {
+   "fieldname": "section_break_35",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_texture",
+   "fieldtype": "Check",
+   "label": "Allow Texture?"
   }
  ],
- "modified": "2020-10-12 09:47:19.004930",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-10-25 18:14:08.045545",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Profile",
  "owner": "yefritavarez@gmail.com",

@@ -6,6 +6,7 @@ frappe.ui.form.on('Product Profile', {
 		frappe.run_serially([
 			() => frm.trigger("set_custom_queries"),
 			() => frm.trigger("add_custom_buttons"),
+			() => frm.trigger("toggle_reqd_fields"),
 			() => frm.trigger("toggle_read_only_fields"),
 		]);
 	},
@@ -21,6 +22,7 @@ frappe.ui.form.on('Product Profile', {
 			() => frm.trigger("set_paperboard_query"),
 			() => frm.trigger("set_backboard_query"),
 			() => frm.trigger("set_dimensions_query"),
+			() => frm.trigger("set_printing_query"),
 			() => frm.trigger("set_control_query"),
 			() => frm.trigger("set_cut_query"),
 			() => frm.trigger("set_gluing_query"),
@@ -85,11 +87,106 @@ frappe.ui.form.on('Product Profile', {
 
 		frm.set_query(fieldname, tablename, query);
 	},
+	toggle_reqd_fields(frm) {
+		frappe.run_serially([
+			() => frm.trigger("toggle_reqd_printing_fields"),
+			() => frm.trigger("toggle_reqd_control_fields"),
+			() => frm.trigger("toggle_reqd_cutting_fields"),
+			() => frm.trigger("toggle_reqd_gluing_fields"),
+			() => frm.trigger("toggle_reqd_folding_fields"),
+			() => frm.trigger("toggle_reqd_protection_fields"),
+			() => frm.trigger("toggle_reqd_utils_fields"),
+			() => frm.trigger("toggle_reqd_texture_fields"),
+		]);
+	},
+
 	toggle_read_only_fields(frm) {
 		frappe.run_serially([
 			() => frm.trigger("toggle_read_only_item_group"),
 		]);
 	},
+
+	toggle_reqd_printing_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_printing;
+		const fields = [
+			"printing_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_control_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_control;
+		const fields = [
+			"control_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_cutting_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_cutting;
+		const fields = [
+			"cutting_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_gluing_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_gluing;
+		const fields = [
+			"gluing_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_folding_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_folding;
+		const fields = [
+			"folding_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_protection_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_protection;
+		const fields = [
+			"protection_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_utils_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_utils;
+		const fields = [
+			"utils_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_texture_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_texture;
+		const fields = [
+			"texture_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+
 	toggle_read_only_item_group(frm) {
 		frm.toggle_enable("item_group", frm.is_new());
 	},
@@ -110,12 +207,31 @@ frappe.ui.form.on('Product Profile', {
 			return opts;
 		};
 
-		frm.set_query("dimension", "dimensions", callback);
+		frm.set_query("dimension", callback);
+	},
+
+	set_printing_query(frm) {
+		const fieldname = "printing_features";
+
+		const query = function () {
+			const { doc } = frm;
+			const chosen_printing_features = jQuery
+				.map(doc.printing_features, d => d.product_feature)
+				.join(",");
+
+			return {
+				filters: {
+					"product_feature_type": "Printing",
+					"name": ["not in", chosen_printing_features],
+				}
+			};
+		};
+
+		frm.set_query(fieldname, query);
 	},
 
 	set_control_query(frm) {
-		const tablename = "control_features";
-		const fieldname = "product_feature";
+		const fieldname = "control_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -131,11 +247,11 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
+
 	set_cut_query(frm) {
-		const tablename = "cutting_features";
-		const fieldname = "product_feature";
+		const fieldname = "cutting_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -151,11 +267,10 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_gluing_query(frm) {
-		const tablename = "gluing_features";
-		const fieldname = "product_feature";
+		const fieldname = "gluing_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -171,11 +286,10 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_folding_query(frm) {
-		const tablename = "folding_features";
-		const fieldname = "product_feature";
+		const fieldname = "folding_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -191,11 +305,10 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_protection_query(frm) {
-		const tablename = "protection_features";
-		const fieldname = "product_feature";
+		const fieldname = "protection_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -211,11 +324,10 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_utils_query(frm) {
-		const tablename = "utils_features";
-		const fieldname = "product_feature";
+		const fieldname = "utils_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -231,11 +343,10 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_texture_query(frm) {
-		const tablename = "texture_features";
-		const fieldname = "product_feature";
+		const fieldname = "texture_features";
 
 		const query = function () {
 			const { doc } = frm;
@@ -251,7 +362,7 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	add_view_product_assemblies_button(frm) {
 		if (frm.is_new()) {
@@ -268,5 +379,29 @@ frappe.ui.form.on('Product Profile', {
 		};
 
 		frm.add_custom_button(label, action, parent);
-	}
+	},
+	allow_printing(frm) {
+		frm.trigger("toggle_reqd_printing_fields");
+	},
+	allow_control(frm) {
+		frm.trigger("toggle_reqd_control_fields");
+	},
+	allow_cutting(frm) {
+		frm.trigger("toggle_reqd_cutting_fields");
+	},
+	allow_gluing(frm) {
+		frm.trigger("toggle_reqd_gluing_fields");
+	},
+	allow_folding(frm) {
+		frm.trigger("toggle_reqd_folding_fields");
+	},
+	allow_protection(frm) {
+		frm.trigger("toggle_reqd_protection_fields");
+	},
+	allow_utils(frm) {
+		frm.trigger("toggle_reqd_utils_fields");
+	},
+	allow_texture(frm) {
+		frm.trigger("toggle_reqd_texture_fields");
+	},
 });
