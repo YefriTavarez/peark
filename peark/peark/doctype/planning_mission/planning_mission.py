@@ -15,10 +15,10 @@ class PlanningMission(Document):
 
     def on_change(self):
         self.update_percentage_completed()
+        self.validate_planning_document()
 
     def validate(self):
         self.update_completed_by()
-        self.validate_planning_document()
         self.update_parent_with_planning_template()
         self.set_description_if_missing()
 
@@ -51,6 +51,9 @@ class PlanningMission(Document):
         self.parenttype = "Planning Document"
 
         self.parent = self.planning_document
+        
+        if self.is_new():
+            return False
 
         self.db_update()
 

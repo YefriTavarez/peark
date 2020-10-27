@@ -21,15 +21,17 @@ class PlanningDocument(Document):
     def on_change(self):
         self.update_percentage_completed()
         # self.update_children_description()
-        self.update_children_planning_document()
 
     def validate(self):
         self.validate_children()
+        self.update_children_planning_document()
         self.update_children_status()
 
     def validate_children(self):
         for childoc in self.missions:
             childoc.run_method("validate")
+            if childoc.is_new():
+                continue
 
             childoc.db_update()
 
@@ -91,12 +93,18 @@ class PlanningDocument(Document):
                 continue
 
             mission.description = mission.subjet
+            
+            if mission.is_new():
+                continue
 
             mission.db_update()
 
     def update_children_planning_document(self):
         for mission in self.missions:
             mission.planning_document = self.name
+            
+            if mission.is_new():
+                continue
 
             mission.db_update()
 
