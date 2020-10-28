@@ -16,6 +16,12 @@ frappe.ui.form.on('Production Planning Tool', {
     refresh(frm) {
         frappe.run_serially([
             () => frm.trigger("set_queries"),
+            () => frappe.timeout(.5),
+        ]);
+    },
+    after_save(frm) {
+        frappe.run_serially([
+            () => frm.trigger("toggle_display_make_buttons"),
         ]);
     },
     set_queries(frm) {
@@ -120,10 +126,38 @@ frappe.ui.form.on('Production Planning Tool', {
     },
 
     show_hint_alert(frm) {
+        const { doc } = frm;
+
+        if (!frm.is_dirty()) {
+            return false;
+        }
+
+        const {
+            planning_documents,
+            planning_materials,
+        } = doc;
+
+        if (!planning_documents) {
+            doc.planning_documents = new Array();
+        }
+
+        if (!planning_materials) {
+            doc.planning_materials = new Array();
+        }
+
+        if (
+            planning_materials
+                .every(d => !d.__islocal)
+
+            && planning_documents
+                .every(d => !d.__islocal)
+        ) {
+            return false;
+        }
+
         const msg = __("Save to Continue");
 
         frappe.run_serially([
-            () => frappe.timeout(2),
             () => frappe.show_alert(msg),
         ]);
     },
@@ -167,7 +201,8 @@ frappe.ui.form.on('Production Planning Tool', {
             return false;
         }
 
-        frm.call("on_fetch_planning_documents");
+        frm.call("on_fetch_planning_documents")
+            .then(() => frm.dirty());
     },
     fetch_materials(frm) {
         // const { doc } = frm;
@@ -182,11 +217,171 @@ frappe.ui.form.on('Production Planning Tool', {
 
         frappe.run_serially([
             () => frm.call("on_fetch_materials"),
+            () => frm.dirty(),
+            () => frappe.timeout(2),
             () => frm.trigger("show_hint_alert"),
+            () => frm.trigger("toggle_display_make_buttons"), ,
         ]);
-
     },
 
+    make_material_requests(frm) {
+        if (frm.is_dirty()) {
+            frm.trigger("show_hint_alert");
+
+            frappe.run_serially([
+                () => frm.trigger("show_hint_alert"),
+                () => frappe.timeout(.5),
+                () => frm.trigger("toggle_display_make_buttons"), ,
+            ]);
+
+            return false;
+        }
+
+        frm.call("make_material_requests")
+            .then((response) => {
+                const { show_alert } = frappe;
+
+                const delay = 30;
+                const indicator = "green";
+
+                if (!response.message) {
+                    const indicator = "red";
+                    const message = __("There was an error");
+
+                    show_alert({ message, indicator });
+
+                    return false;
+                }
+
+                const doclist = response.message;
+
+                const linklist = doclist.map(d => {
+                    return `<a 
+                        href=\"/desk#Form/Material Request/${d}\">
+                            ${d}
+                        </a>`;
+                }).join("<br>");
+
+                const message = __(
+                    `Material Requests: <br>
+                        {0}<br>
+                        created succesfully`,
+                    [linklist]
+                );
+
+                const body = `<table class="table">
+                    <tr>
+                        <td>
+                            <button class="btn btn-link" data-action="view">
+                                ${__("View")}
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-link" data-action="submit">
+                                ${__("Submit")}
+                            </button>
+                        </td>
+                    </tr>
+                </table>`;
+
+                const content = {
+                    message,
+                    indicator,
+                    body,
+                };
+
+                const actions = {};
+
+                jQuery.extend(actions, {
+                    "view": function (event) {
+                        frappe.route_options = {
+                            "name": ["in", doclist.join(",")],
+                        };
+                        frappe.set_route("List", "Material Request", "List");
+                    },
+                    "submit": function (event) {
+                        frappe.call({
+                            method: "frappe.desk.doctype.bulk_update.bulk_update.submit_cancel_or_update_docs",
+                            args: {
+                                doctype: "Material Request",
+                                action: "submit",
+                                docnames: doclist,
+                            },
+                            callback: () => {
+                                const [view, doctype, name] = frappe.get_route();
+
+                                if (cur_frm && cur_frm.docname == name) {
+
+                                    frappe.run_serially([
+                                        () => frappe.timeout(1.5),
+                                        () => cur_frm.reload_doc(),
+                                    ]);
+
+                                    return false;
+                                }
+
+                                frappe.run_serially([
+                                    () => frappe.timeout(1.5),
+                                    () => actions.view(event),
+                                ]);
+                            },
+                        });
+                    },
+                });
+
+                show_alert(content, delay, actions);
+            });
+    },
+    make_production_orders(frm) {
+        // todo: create production orders and display them
+    },
+    toggle_display_make_buttons(frm) {
+        const { doc } = frm;
+
+        const {
+            planning_documents,
+            planning_materials,
+        } = doc;
+
+        const fields = [
+            "make_material_requests",
+            "make_production_orders",
+        ];
+
+        let display = true;
+
+        if (frm.is_new()) {
+            console.log("explain: frm.is_new()");
+            display = false;
+        }
+
+        if (frm.is_dirty()) {
+            console.log("explain: frm.is_dirty()");
+            display = false;
+        }
+
+
+        if (!planning_documents) {
+            doc.planning_documents = new Array();
+        }
+
+        if (!planning_materials) {
+            doc.planning_materials = new Array();
+        }
+
+        if (
+            planning_materials
+                .some(d => d.__islocal)
+
+            && planning_documents
+                .some(d => d.__islocal)
+        ) {
+            console.log("explain: other");
+            display = false;
+        }
+
+        frm.toggle_display(fields, display);
+    },
     sales_order(frm) {
         const { doc } = frm;
 

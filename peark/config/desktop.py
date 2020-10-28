@@ -12,13 +12,11 @@ def get_data():
             "module_name": 'Dimension',
             "category": "Places",
             "label": _('Dimensions'),
-            # "icon": "fa fa-cubes",
             "icon": "fa fa-object-ungroup",
             "type": 'link',
             "link": '#List/Dimension/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Dimension", raise_exception=False)
         },
         {
@@ -30,7 +28,6 @@ def get_data():
             "link": '#List/Product Assembly/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Product Assembly", raise_exception=False)
         },
         {
@@ -42,7 +39,6 @@ def get_data():
             "link": '#List/Product Profile/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Product Profile", raise_exception=False)
         },
         {
@@ -54,7 +50,6 @@ def get_data():
             "link": '#List/Paperboard/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Paperboard", raise_exception=False)
         },
         {
@@ -66,7 +61,6 @@ def get_data():
             "link": '#List/Cost Estimation/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Cost Estimation", raise_exception=False)
         },
         {
@@ -78,7 +72,6 @@ def get_data():
             "link": '#List/Compound Product/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Compound Product", raise_exception=False)
         },
         {
@@ -90,7 +83,6 @@ def get_data():
             "link": '#List/Planning Document/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Planning Document", raise_exception=False)
         },
         {
@@ -102,7 +94,17 @@ def get_data():
             "link": '#List/Planning Mission/List',
             "color": '#FF4136',
             'standard': 1,
-            # "description": "Para imprimir etiquetas a las paletas",
             "condition": has_permission(doctype="Planning Mission", raise_exception=False)
+        },
+        {
+            "module_name": 'Production Planning Tool',
+            "category": "Places",
+            "label": _('Production Planning Tool'),
+            "icon": "fa fa-text-height",
+            "type": 'link',
+            "link": '#List/Production Planning Tool/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Production Planning Tool", raise_exception=False)
         },
     ]

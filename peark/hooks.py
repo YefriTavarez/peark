@@ -41,10 +41,15 @@ fixtures = [
                     "Item-ref_docname",
                     "Item-ref_doctype",
                     "Item-section_break_106",
+                    "Material Request Item-planning_document",
+                    "Material Request-production_planning_tool",
                     "Planning Document-expected_delivery_date",
                     "Planning Document-production_order",
+                    "Purchase Order Item-planning_document",
                     "Quotation-tax_id",
+                    "Sales Invoice Item-planning_document",
                     "Sales Invoice-ncf",
+                    "Sales Invoice-planning_document",
                     "Sales Invoice-return_against_ncf",
                     "Workstation-department_1",
                     "Workstation-department_2",
@@ -149,6 +154,10 @@ doc_events = {
     "Employee": {
         "autoname": "peark.controllers.erpnext.employee.autoname",
         "on_update": "peark.controllers.erpnext.employee.on_update",
+    },
+    "Material Request": {
+        "on_change": "peark.controllers.erpnext.material_request.on_change",
+        "on_cancel": "peark.controllers.erpnext.material_request.on_cancel",
     },
 
     # app events

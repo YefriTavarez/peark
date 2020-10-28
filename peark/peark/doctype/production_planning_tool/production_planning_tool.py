@@ -12,6 +12,8 @@ from frappe import _dict as pydict
 from frappe import _ as translate
 from frappe import db as database
 
+from frappe.utils import today, cstr
+
 
 class ProductionPlanningTool(Document):
     def validate(self):
@@ -21,7 +23,103 @@ class ProductionPlanningTool(Document):
         pass
 
     def make_material_requests(self):
-        pass
+        from erpnext.stock.get_item_details import get_item_details
+
+        def get_grouped_by_request_type():
+            material_groups = pydict()
+            for material in self.planning_materials:
+                if not material_groups.get(material.request_type):
+                    material_groups[material.request_type] = list()
+
+                material_groups.get(material.request_type) \
+                    .append(material)
+
+            return material_groups
+
+        # args = {
+        #     "item_code": "015900000001",
+        #     "doctype": "Material Request",
+        #     "buying_price_list": "Compra estándar",
+        #     "currency": "DOP",
+        #     "name": self,
+        #     "qty": 1,
+        #     "company": self.company,
+        #     "conversion_rate": 1,
+        #     "material_request_type": "Purchase",
+        #     "plc_conversion_rate": 1,
+        #     "rate": 0
+        # }
+
+        doclist = list()
+
+        doctype = "Material Request"
+        material_groups = get_grouped_by_request_type()
+        for request_type in material_groups.keys():
+            doc = frappe.new_doc(doctype)
+
+            doc.update({
+                "company": self.company,
+                "production_planning_tool": self.name,
+                "material_request_type": request_type,
+                "transaction_date": today(),
+            })
+
+            def get_schedule_date(newdate):
+                newdate = cstr(newdate)
+                nowdate = today()
+
+                if nowdate > newdate:
+                    return nowdate
+
+                return newdate
+
+            def update_parent_date(newdate):
+                newdate = cstr(newdate)
+                olddate = cstr(doc.schedule_date)
+
+                newdate = get_schedule_date(newdate)
+
+                if newdate > olddate:
+                    doc.schedule_date = newdate
+
+            for material in material_groups[request_type]:
+
+                args = {
+                    "item_code": material.item,
+                    "company": self.company,
+                    "doctype": "Material Request",
+                    "qty": material.qty,
+                }
+
+                material_request_item = get_item_details(args)
+                material_request_item.update({
+                    "schedule_date": get_schedule_date(material.expected_on),
+                    "description": material.item_specs,
+                    "item_name": material.item_specs[0:45],
+                    "planning_document": material.planning_document,
+                })
+
+                update_parent_date(material.expected_on)
+
+                doc.append("items", material_request_item)
+
+            if not len(doc.items):
+                continue
+
+            doc.save(ignore_permissions=True)
+
+            doclist.append(doc.name)
+
+        return doclist
+        # source fields
+        # "item",
+        # "item_specs",
+        # "qty",
+        # "uom",
+        # "warehouse",
+        # "request_type",
+        # "planning_document",
+        # "expected_on"
 
     def make_production_orders(self):
         pass
@@ -153,16 +251,13 @@ class ProductionPlanningTool(Document):
         filters = pydict()
 
         if from_date and to_date:
-            filters.expected_start_date = \
-                ["Between", [from_date, to_date]]
+            filters.expected_start_date = ["Between", [from_date, to_date]]
 
         if from_date and not to_date:
-            filters.expected_start_date = \
-                [">=", from_date]
+            filters.expected_start_date = [">=", from_date]
 
         if not from_date and to_date:
-            filters.expected_start_date = \
-                ["<=", to_date]
+            filters.expected_start_date = ["<=", to_date]
 
         if sales_order:
             filters.sales_order = sales_order
