@@ -18,6 +18,7 @@ frappe.ui.form.on('Planning Document', {
             () => frm.trigger("set_queries"),
             () => frm.trigger("should_enable_form"),
             () => frm.trigger("toggle_reqd_sales_order"),
+            () => frm.trigger("add_indicators"),
             () => frm.trigger("toggle_reqd_template_planning_fields"),
         ]);
     },
@@ -38,6 +39,45 @@ frappe.ui.form.on('Planning Document', {
             () => frm.trigger("set_sales_order_query"),
             () => frm.trigger("set_status_query"),
         ]);
+    },
+    add_indicators(frm) {
+        setTimeout(() => {
+
+            // let's prepare the repayment table's apereance for the customer
+            let fields = $("[data-fieldname=missions] \
+                [data-fieldname=status] > .static-area.ellipsis");
+
+            // ok, now let's iterate over map row
+            $.map(fields, (value) => {
+
+                let color = "grey";
+                let field = $(value);
+                // let's remove the previous css class
+                clear_class(field);
+
+                if (__("Completed") == field.text()) {
+                    color = "green";
+                } else if (__("Working") == field.text()) {
+                    color = "blue";
+                } else if (__("In Review") == field.text()) {
+                    color = "purple";
+                } else if (__("Paused") == field.text()) {
+                    color = "grey";
+                } else if ([__("Pending"), __("Delayed")].includes(field.text())) {
+                    color = "orange";
+                } else if ([__("Open"), __("Stopped"), __("Cancelled")].includes(field.text())) {
+                    color = "red";
+                }
+
+                field.addClass(__("indicator {0}", [color]));
+            });
+        });
+
+        let clear_class = (field) => {
+            $.map(["green", "blue", "orange", "red"], (css_class) => {
+                field.removeClass(__("indicator {0}", [css_class]));
+            });
+        }
     },
     should_enable_form(frm) {
         const { doc } = frm;
