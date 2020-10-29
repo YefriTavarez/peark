@@ -190,7 +190,7 @@ frappe.ui.form.on('Production Order', {
             };
 
             frappe.db
-                .get_value(doctype, product_feature, fieldname, callback);
+                .get_value(doctype, name, fieldname, callback);
         };
 
         frappe.prompt(fields, callback, title, primary_label);
