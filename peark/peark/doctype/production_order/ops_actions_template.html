@@ -3,12 +3,42 @@
 		class="btn btn-primary dropdown-toggle" 
 		type="button" 
 		data-toggle="dropdown"
-	>{{ __("Actions") }}
+	>
+		{{ __("Actions") }}
 		<span class="caret"></span>
 	</button>
 	<ul class="dropdown-menu dropdown-menu-right">
-		<li><a data-action="insert_above" href="#">{{ __("Insert Above") }}</a></li>
-		<li><a data-action="insert_below" href="#">{{ __("Insert Below") }}</a></li>
-		<li><a data-action="switch_view" href="#">{{ __("Switch View") }}</a></li>
+		<li>
+			<a 
+				data-action="insert_above"
+				href="#"
+			>
+				{{ __("Insert Above") }}
+			</a>
+		</li>
+		<li>
+			<a 
+				data-action="insert_below"
+				href="#"
+			>
+				{{ __("Insert Below") }}
+			</a>
+		</li>
+		<li>
+			<a 
+				data-action="switch_view"
+				href="#"
+			>
+				{{ __("Switch View") }}
+			</a>
+		</li>
+		<li>
+			<a 
+				data-action="render_operations"
+				href="#"
+			>
+				{{ __("Refresh Operations") }}
+			</a>
+		</li>
 	</ul>
 </div><br>

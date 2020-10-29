@@ -74,6 +74,7 @@ fixtures = [
 # app_include_css = "/assets/peark/css/peark.css"
 app_include_js = [
     "/assets/peark/js/peark.js",
+    "/assets/peark/js/barcodescan.js",
     "/assets/peark/js/jmask.min.js",
 ]
 
@@ -86,7 +87,7 @@ app_include_js = [
 
 # include js in doctype views
 doctype_js = {
-    "Department": "public/js/department.js"
+    "Department": "public/js/doctype/department.js"
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}

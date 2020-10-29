@@ -44,26 +44,34 @@ frappe.ui.form.on('Production Order', {
 
     get_employee_query(frm, doctype, name) {
         const doc = frappe.get_doc(doctype, name);
-        const filters = {
+        let filters = {
             "department": [
                 "in", [
                     doc.department, doc.parent_department
                 ],
             ],
         };
+
+        if (!doc.department || !doc.parent_department) {
+            filters = new Object();
+        }
 
         return { filters };
     },
 
     get_workstation_query(frm, doctype, name) {
         const doc = frappe.get_doc(doctype, name);
-        const filters = {
+        let filters = {
             "department": [
                 "in", [
                     doc.department, doc.parent_department
                 ],
             ],
         };
+
+        if (!doc.department || !doc.parent_department) {
+            filters = new Object();
+        }
 
         return { filters };
     },
@@ -99,13 +107,26 @@ frappe.ui.form.on('Production Order', {
 
         frappe.run_serially([
             () => frm.trigger("render_operations"),
-            // () => frm.trigger("switch_view"),
             () => events.prompt_for_product_feature(frm, childoc),
         ]);
     },
 
     insert_below(frm) {
-        const { doc } = frm;
+        const { doc, events } = frm;
+        const { model } = frappe;
+
+        const doctype = "Production Order Ops";
+        const parentfield = "operations";
+
+        const childoc = model
+            .get_new_doc(doctype, doc, parentfield);
+
+        childoc.product_feature = new String();
+
+        frappe.run_serially([
+            () => frm.trigger("render_operations"),
+            () => events.prompt_for_product_feature(frm, childoc),
+        ]);
 
 
     },
@@ -284,12 +305,16 @@ frappe.ui.form.on('Production Order', {
             layout.refresh(operation);
         });
 
-        if (!isvisible && doc.__rendered_operations) {
+        const opselector =
+            "div[data-fieldtype=Table][data-fieldname=operations]";
+        const opstable_visible = jQuery(opselector)
+            .is(":visible");
+
+
+        if (!isvisible && opstable_visible) {
             jQuery(innerselector)
                 .hide();
         }
-
-        doc.__rendered_operations = true;
     },
     fetch_item(frm) {
         const { doc } = frm;
@@ -408,9 +433,10 @@ frappe.ui.form.on('Production Order', {
         frm.dirty();
     },
 
-    additional_information(frm, doctype, name) {
+    remarks(frm, doctype, name) {
         const doc = frappe.get_doc(doctype, name);
-        additional_information
+        // remarks
+        frm.dirty();
     },
 
 });

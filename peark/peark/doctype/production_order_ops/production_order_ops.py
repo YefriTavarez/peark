@@ -30,7 +30,7 @@ class ProductionOrderOps(Document):
     work_station = None
     employee = None
     employee_name = None
-    additional_information = None
+    remarks = None
 
     # std fields
     parenttype = None
