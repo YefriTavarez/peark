@@ -3,8 +3,15 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-# import frappe
+
+import frappe
 from frappe.model.document import Document
 
+
 class ProductionPlanningDocuments(Document):
-	pass
+    planning_document = None
+    product_name = None
+    item = None
+    item_specs = None
+    qty = .000
+    warehouse = None

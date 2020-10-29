@@ -14,7 +14,7 @@ def get_data():
             },
             {
                 'label': _('Production Orders'),
-                'items': []
+                'items': ["Production Order"]
             },
         ]
     }

@@ -333,7 +333,23 @@ frappe.ui.form.on('Production Planning Tool', {
             });
     },
     make_production_orders(frm) {
-        // todo: create production orders and display them
+        const { doc } = frm;
+
+        const { planning_documents } = doc;
+        if (!planning_documents) {
+            doc.planning_documents = new Array();
+        }
+
+        if (planning_documents.length) {
+            frm.call("make_production_orders");
+
+            return true;
+        }
+
+        const errmsg = __("You need to have at least one Planning "
+            + "Document on the table to continue");
+
+        frappe.throw(errmsg);
     },
     toggle_display_make_buttons(frm) {
         const { doc } = frm;

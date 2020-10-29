@@ -6,15 +6,19 @@
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
+  "production_planning_tool",
   "planning_document",
   "section_break_3",
   "status",
   "customer",
+  "product_name",
   "sales_order",
   "column_break_7",
   "product_profile",
   "product_assembly",
   "item",
+  "item_specs",
+  "qty",
   "section_break_11",
   "expected_start_date",
   "expected_end_date",
@@ -22,8 +26,8 @@
   "actual_start_date",
   "actual_end_date",
   "section_break_17",
-  "operations",
-  "operations_display"
+  "operations_display",
+  "operations"
  ],
  "fields": [
   {
@@ -33,12 +37,14 @@
    "options": "Open\nStarted\nDelayed\nStopped\nCancelled\nCompleted"
   },
   {
+   "fetch_from": "planning_document.sales_order",
    "fieldname": "sales_order",
    "fieldtype": "Link",
    "label": "Sales Order",
    "options": "Sales Order"
   },
   {
+   "fetch_from": "sales_order.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
@@ -90,6 +96,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "product_assembly.product_profile",
    "fieldname": "product_profile",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -138,9 +145,35 @@
    "fieldname": "section_break_17",
    "fieldtype": "Section Break",
    "label": "Production Order Ops"
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "product_assembly.full_specifications",
+   "fieldname": "item_specs",
+   "fieldtype": "Small Text",
+   "label": "Item Specs",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "fieldname": "production_planning_tool",
+   "fieldtype": "Link",
+   "label": "Production Planning Tool",
+   "options": "Production Planning Tool",
+   "read_only": 1
   }
  ],
- "modified": "2020-10-27 21:56:48.500529",
+ "modified": "2020-10-28 17:52:16.648690",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Order",

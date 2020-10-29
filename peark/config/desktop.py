@@ -107,4 +107,15 @@ def get_data():
             'standard': 1,
             "condition": has_permission(doctype="Production Planning Tool", raise_exception=False)
         },
+        {
+            "module_name": 'Production Order',
+            "category": "Places",
+            "label": _('Production Order'),
+            "icon": "fa fa-cog",
+            "type": 'link',
+            "link": '#List/Production Order/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Production Order", raise_exception=False)
+        },
     ]

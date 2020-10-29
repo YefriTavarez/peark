@@ -36,25 +36,29 @@ class ProductionPlanningTool(Document):
 
             return material_groups
 
-        # args = {
-        #     "item_code": "015900000001",
-        #     "doctype": "Material Request",
-        #     "buying_price_list": "Compra estándar",
-        #     "currency": "DOP",
-        #     "name": self,
-        #     "qty": 1,
-        #     "company": self.company,
-        #     "conversion_rate": 1,
-        #     "material_request_type": "Purchase",
-        #     "plc_conversion_rate": 1,
-        #     "rate": 0
-        # }
-
         doclist = list()
 
-        doctype = "Material Request"
+        def get_schedule_date(newdate):
+            newdate = cstr(newdate)
+            nowdate = today()
+
+            if nowdate > newdate:
+                return nowdate
+
+            return newdate
+
+        def update_parent_date(doc, newdate):
+            newdate = cstr(newdate)
+            olddate = cstr(doc.schedule_date)
+
+            newdate = get_schedule_date(newdate)
+
+            if newdate > olddate:
+                doc.schedule_date = newdate
+
         material_groups = get_grouped_by_request_type()
         for request_type in material_groups.keys():
+            doctype = "Material Request"
             doc = frappe.new_doc(doctype)
 
             doc.update({
@@ -63,24 +67,6 @@ class ProductionPlanningTool(Document):
                 "material_request_type": request_type,
                 "transaction_date": today(),
             })
-
-            def get_schedule_date(newdate):
-                newdate = cstr(newdate)
-                nowdate = today()
-
-                if nowdate > newdate:
-                    return nowdate
-
-                return newdate
-
-            def update_parent_date(newdate):
-                newdate = cstr(newdate)
-                olddate = cstr(doc.schedule_date)
-
-                newdate = get_schedule_date(newdate)
-
-                if newdate > olddate:
-                    doc.schedule_date = newdate
 
             for material in material_groups[request_type]:
 
@@ -99,7 +85,7 @@ class ProductionPlanningTool(Document):
                     "planning_document": material.planning_document,
                 })
 
-                update_parent_date(material.expected_on)
+                update_parent_date(doc, material.expected_on)
 
                 doc.append("items", material_request_item)
 
@@ -111,18 +97,56 @@ class ProductionPlanningTool(Document):
             doclist.append(doc.name)
 
         return doclist
-        # source fields
-        # "item",
-        # "item_specs",
-        # "qty",
-        # "uom",
-        # "warehouse",
-        # "request_type",
-        # "planning_document",
-        # "expected_on"
 
     def make_production_orders(self):
-        pass
+        # source docfield
+        # planning_document = None
+        # product_name = None
+        # item = None
+        # item_specs = None
+        # qty = .000
+        # warehouse = None
+
+        def create_production_order(args):
+            doctype = "Production Order"
+            doc = frappe.new_doc(doctype)
+
+            # target docfield
+            # planning_document = None
+            # status = None
+            # customer = None
+            # sales_order = None
+            # product_profile = None
+            # product_assembly = None
+            # item = None
+            # expected_start_date = None
+            # expected_end_date = None
+            # actual_start_date = None
+            # actual_end_date = None
+
+            doc.update({
+                "planning_document": args.planning_document,
+                "product_name": args.product_name,
+                "item_specs": args.item_specs,
+                "qty": args.qty,
+            })
+
+            doc.set_item()
+            doc.set_product_name()
+            doc.set_qty()
+            doc.set_customer()
+            doc.set_sales_order()
+            doc.set_product_profile()
+            doc.set_product_assembly()
+
+            doc.set_operations()
+
+            doc.flags.ignore_mandatory = True
+
+            doc.save(ignore_permissions=True)
+
+        for planning in self.planning_documents:
+            create_production_order(planning)
 
     def on_fetch_materials(self):
         self.on_fetch_materials_prevalidate()
