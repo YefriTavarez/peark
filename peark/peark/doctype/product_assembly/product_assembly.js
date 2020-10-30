@@ -44,6 +44,10 @@ frappe.ui.form.on('Product Assembly', {
     add_custom_buttons(frm) {
 
         if (frm.is_new()) {
+            frappe.run_serially([
+                () => frm.trigger("add_reload_product_profile_button"),
+            ]);
+
             return false;
         }
 
@@ -314,6 +318,21 @@ frappe.ui.form.on('Product Assembly', {
         frm.set_query(fieldname, query);
     },
 
+    add_reload_product_profile_button(frm) {
+        const { doc } = frm;
+        const label = __("Product Profile");
+        const parent = __("Reload");
+
+        if (!doc.product_profile) {
+            return false;
+        }
+
+        const action = event => {
+            frm.trigger("fetch_product_profile_details");
+        };
+
+        frm.add_custom_button(label, action, parent);
+    },
     add_view_items_button(frm) {
         const label = __("Item");
         const parent = __("View");
@@ -594,7 +613,10 @@ frappe.ui.form.on('Product Assembly', {
         const { doc } = frm;
 
         if (doc.product_profile) {
-            frm.trigger("fetch_product_profile_details");
+            frappe.run_serially([
+                () => frm.trigger("fetch_product_profile_details"),
+                () => frm.trigger("add_reload_product_profile_button"),
+            ]);
         }
     },
 
