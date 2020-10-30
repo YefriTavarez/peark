@@ -90,10 +90,11 @@ class ProductionOrder(Document):
 
         self.product_assembly = doc.name
 
-    def set_operations(self):
+    def set_operations(self, assembly=None):
         self.operations = list()
 
-        assembly = self.get_product_assembly()
+        if not assembly:
+            assembly = self.get_product_assembly()
 
         errmsg = \
             translate("Product Assembly: {} is marked as a Compound Product "

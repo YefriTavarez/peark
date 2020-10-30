@@ -107,7 +107,15 @@ class ProductionPlanningTool(Document):
         # qty = .000
         # warehouse = None
 
-        def create_production_order(args):
+        def get_product_assembly(args):
+            doctype = "Planning Document"
+            name = args.planning_document
+
+            doc = frappe.get_doc(doctype, name)
+
+            return doc.get_product_assembly()
+
+        def create_production_order(planning, product_assembly, part):
             doctype = "Production Order"
             doc = frappe.new_doc(doctype)
 
@@ -125,10 +133,10 @@ class ProductionPlanningTool(Document):
             # actual_end_date = None
 
             doc.update({
-                "planning_document": args.planning_document,
-                "product_name": args.product_name,
-                "item_specs": args.item_specs,
-                "qty": args.qty,
+                "planning_document": planning.planning_document,
+                "product_name": planning.product_name,
+                "item_specs": product_assembly.get_full_name(),
+                "qty": planning.qty,
             })
 
             doc.set_item()
@@ -136,17 +144,38 @@ class ProductionPlanningTool(Document):
             doc.set_qty()
             doc.set_customer()
             doc.set_sales_order()
-            doc.set_product_profile()
-            doc.set_product_assembly()
+            # doc.set_product_profile()
+            # doc.set_product_assembly()
 
-            doc.set_operations()
+            # hack
+            doc.product_profile = product_assembly.product_profile
+            doc.product_assembly = product_assembly.name
+
+            doc.set_operations(product_assembly)
 
             doc.flags.ignore_mandatory = True
 
             doc.save(ignore_permissions=True)
 
         for planning in self.planning_documents:
-            create_production_order(planning)
+            product_assembly_parent = get_product_assembly(planning)
+
+            if not product_assembly_parent.is_compound_product:
+                create_production_order(
+                    planning, product_assembly_parent, None)
+                continue
+
+            compound_product = product_assembly_parent.get_compound_product()
+
+            for part in compound_product.parts:
+                doctype = part.meta.get_field("product_assembly") \
+                    .options
+
+                name = part.product_assembly
+
+                product_assembly = frappe.get_doc(doctype, name)
+
+                create_production_order(planning, product_assembly, part)
 
     def on_fetch_materials(self):
         self.on_fetch_materials_prevalidate()

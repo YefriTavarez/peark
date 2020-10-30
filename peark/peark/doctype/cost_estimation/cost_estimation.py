@@ -28,6 +28,7 @@ class CostEstimation(Document):
 
     def on_change(self):
         self.calculate_totals()
+        self.db_update()
 
     def update_status(self):
         valid_until = cstr(self.valid_until)
@@ -207,6 +208,7 @@ class CostEstimation(Document):
     def calculate_totals(self):
         self.set_sub_total()
         self.set_commission_amount()
+        self.set_margin_amount()
         self.set_grand_total()
         self.set_rate_per_unit()
 
@@ -240,14 +242,20 @@ class CostEstimation(Document):
 
     def get_grand_total(self):
         commission_amount = self.get_commission_amount()
+        margin_amount = self.get_margin_amount()
         sub_total = self.get_sub_total()
 
-        return commission_amount + sub_total
+        return commission_amount + margin_amount + sub_total
 
     def set_commission_amount(self):
         commission_amount = self.get_commission_amount()
 
         self.commission_amount = commission_amount
+
+    def set_margin_amount(self):
+        margin_amount = self.get_margin_amount()
+
+        self.margin_amount = margin_amount
 
     def get_commission_rate(self):
         return flt(self.commission_rate)
@@ -264,6 +272,21 @@ class CostEstimation(Document):
 
         return commission_amount
 
+    def get_margin_rate(self):
+        return flt(self.margin_rate)
+
+    def get_margin_amount(self):
+        margin_amount = .000
+
+        sub_total = flt(self.sub_total)
+
+        if sub_total:
+            margin_rate = self.get_margin_rate() / 100.000
+
+            margin_amount = sub_total * margin_rate
+
+        return margin_amount
+
     def get_total_fixed_costs(self):
         fixed_costs = [flt(d.rate) for d in self.fixed_costs]
 
@@ -273,7 +296,7 @@ class CostEstimation(Document):
         for child in self.variable_costs:
             child.update_amount(self.qty_to_produce)
 
-        variable_costs = [flt(d.rate) for d in self.variable_costs]
+        variable_costs = [flt(d.amount) for d in self.variable_costs]
 
         return sum(variable_costs)
 
@@ -294,6 +317,8 @@ class CostEstimation(Document):
     fixed_costs = list()
     variable_costs = list()
     sales_person = None
+    margin_rate = .000
+    margin_amount = .000
     commission_rate = .000
     commission_amount = .000
     rate_per_unit = .000

@@ -93,7 +93,7 @@ class PlanningDocument(Document):
                 continue
 
             mission.description = mission.subjet
-            
+
             if mission.is_new():
                 continue
 
@@ -102,7 +102,7 @@ class PlanningDocument(Document):
     def update_children_planning_document(self):
         for mission in self.missions:
             mission.planning_document = self.name
-            
+
             if mission.is_new():
                 continue
 
@@ -154,6 +154,11 @@ class PlanningDocument(Document):
 
         doctype = item_doc.ref_doctype
         name = item_doc.ref_docname
+
+        errmsg = translate("Product Assembly not found for Item: {}")
+        if not database \
+                .exists(doctype, name):
+            frappe.throw(errmsg.format(item_doc.name))
 
         return frappe.get_doc(doctype, name)
 

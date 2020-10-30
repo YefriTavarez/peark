@@ -235,7 +235,7 @@ frappe.ui.form.on("Cost Estimation", {
         frm.trigger("calculate_commission_amount");
     },
 
-    comission_amount(frm) {
+    commission_amount(frm) {
         const { doc } = frm;
 
         if (!doc.commission_rate) {
@@ -243,6 +243,30 @@ frappe.ui.form.on("Cost Estimation", {
         }
 
         frm.trigger("calculate_commission_amount");
+
+    },
+
+    margin_rate(frm) {
+        const { doc } = frm;
+
+
+        if (!doc.margin_rate) {
+            if (typeof doc.margin_rate == "string") {
+                return false;
+            }
+        }
+
+        frm.trigger("calculate_margin_amount");
+    },
+
+    margin_amount(frm) {
+        const { doc } = frm;
+
+        if (!doc.margin_rate) {
+            return false;
+        }
+
+        frm.trigger("calculate_margin_amount");
 
     },
 
@@ -274,6 +298,13 @@ frappe.ui.form.on("Cost Estimation", {
 
     calculate_commission_amount(frm) {
         frm.call("set_commission_amount")
+            .then(() => {
+                frm.trigger("calculate_sub_total");
+            });
+    },
+
+    calculate_margin_amount(frm) {
+        frm.call("set_margin_amount")
             .then(() => {
                 frm.trigger("calculate_sub_total");
             });

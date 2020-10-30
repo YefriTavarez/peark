@@ -9,35 +9,39 @@
   "cost_estimation_type",
   "cost_estimation_validity_days",
   "status",
-  "column_break_4",
+  "column_break_5",
   "generated_on",
   "valid_until",
   "currency",
-  "section_break_8",
+  "product_details_section",
   "product_profile",
   "is_compound_product",
   "product_assembly",
-  "column_break_12",
+  "column_break_13",
   "product_assembly_specification",
-  "section_break_12",
+  "section_break_15",
   "qty_to_produce",
   "units_per_sheet",
-  "column_break_16",
+  "dimensions_column",
   "supplier_dimension",
   "sheet_dimension",
   "final_dimension",
-  "section_break_16",
+  "section_break_22",
   "fixed_costs",
-  "section_break_18",
+  "section_break_24",
   "variable_costs",
-  "section_break_20",
+  "section_break_26",
   "sales_person",
   "commission_rate",
-  "column_break_23",
+  "column_break_29",
   "commission_amount",
-  "section_break_25",
+  "section_break_31",
+  "margin_rate",
+  "column_break_33",
+  "margin_amount",
+  "section_break_35",
   "rate_per_unit",
-  "column_break_27",
+  "column_break_37",
   "sub_total",
   "grand_total"
  ],
@@ -186,48 +190,11 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_8",
-   "fieldtype": "Section Break",
-   "label": "Product Details"
-  },
-  {
-   "fieldname": "section_break_12",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_16",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_18",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_20",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_25",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "rate_per_unit",
    "fieldtype": "Currency",
    "label": "Rate per Unit",
    "precision": "6",
    "read_only": 1
-  },
-  {
-   "fieldname": "column_break_27",
-   "fieldtype": "Column Break"
   },
   {
    "fetch_from": "cost_estimation_type.cost_estimation_validity_days",
@@ -245,15 +212,6 @@
    "options": "Dimension"
   },
   {
-   "fieldname": "column_break_16",
-   "fieldtype": "Column Break",
-   "label": "Dimensions"
-  },
-  {
-   "fieldname": "column_break_12",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "final_dimension",
    "fieldtype": "Link",
    "label": "Final Dimension",
@@ -266,10 +224,78 @@
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
    "label": "Compound Product"
+  },
+  {
+   "default": "10",
+   "description": "%",
+   "fieldname": "margin_rate",
+   "fieldtype": "Data",
+   "label": "Margin Rate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "product_details_section",
+   "fieldtype": "Section Break",
+   "label": "Product Details"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_15",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "dimensions_column",
+   "fieldtype": "Column Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_24",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_29",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_31",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_33",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "margin_amount",
+   "fieldtype": "Currency",
+   "label": "Margin Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_35",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
   }
  ],
- "modified": "2020-10-14 16:20:24.552602",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-10-30 10:09:26.671604",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",
  "owner": "yefritavarez@gmail.com",
