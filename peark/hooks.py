@@ -87,7 +87,8 @@ app_include_js = [
 
 # include js in doctype views
 doctype_js = {
-    "Department": "public/js/doctype/department.js"
+    "Department": "public/js/doctype/department.js",
+    "Sales Invoice": "public/js/doctype/sales_invoice.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}

@@ -227,6 +227,11 @@ class ProductionPlanningTool(Document):
                 for material in get_list_of_materials(feature):
                     add_material(material, feature, planning_document)
 
+        infomsg = translate("Didn't find any Product Feature with "
+                            "Materials specified on it")
+        if not self.planning_materials:
+            frappe.msgprint(infomsg)
+
     def on_fetch_materials_prevalidate(self):
         planning_documents = self.planning_documents
 

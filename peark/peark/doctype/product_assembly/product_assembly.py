@@ -150,7 +150,7 @@ class ProductAssembly(Document):
     def validate_front_colors(self):
         allow_printing = self.product_profile_doc \
             .get("allow_printing") \
-            and self.is_compound_product
+            and not self.is_compound_product
 
         if not allow_printing:
             self.front_colors = 0
@@ -158,7 +158,7 @@ class ProductAssembly(Document):
     def validate_pantone_colors(self):
         allow_printing = self.product_profile_doc \
             .get("allow_printing") \
-            and self.is_compound_product
+            and not self.is_compound_product
 
         if not allow_printing:
             self.pantone_colors = 0
@@ -166,7 +166,7 @@ class ProductAssembly(Document):
     def validate_back_colors(self):
         double_sided = self.product_profile_doc \
             .get("double_sided")  \
-            and self.is_compound_product
+            and not self.is_compound_product
 
         if not double_sided:
             self.back_colors = 0
@@ -174,7 +174,7 @@ class ProductAssembly(Document):
     def validate_pantone_back_colors(self):
         double_sided = self.product_profile_doc \
             .get("double_sided") \
-            and self.is_compound_product
+            and not self.is_compound_product
 
         if not double_sided:
             self.pantone_back_colors = 0
