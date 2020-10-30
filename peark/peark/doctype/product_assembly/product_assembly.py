@@ -35,7 +35,7 @@ class ProductAssembly(Document):
         self.validate_colors()
         self.generate_hash_and_validate()
 
-        self.validate_front_colors()  # onside
+        self.validate_front_colors()  # allow_printing
         self.validate_pantone_colors()  # allow_printing
 
         self.validate_back_colors()  # double_sided
