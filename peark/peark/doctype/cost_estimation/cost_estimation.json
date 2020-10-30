@@ -58,8 +58,7 @@
    "fieldtype": "Link",
    "label": "Cost Estimation Type",
    "options": "Cost Estimation Type",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "default": "Today",
@@ -294,7 +293,7 @@
    "fieldtype": "Column Break"
   }
  ],
- "modified": "2020-10-30 10:09:26.671604",
+ "modified": "2020-10-30 16:55:15.024257",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",
