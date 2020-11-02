@@ -39,19 +39,21 @@ frappe.provide("peark.barcodescan.actions");
 })(jQuery);
 
 jQuery(document).on("barcodescan", (event, barcode) => {
-    const uniquehash = hash();
+    const uniquehash = peark.utils.hash();
+    const table_template = frappe.render_template("barcode_actions_template");
+    // ${__("Barcorde has been scanned")}: 
+    // ${__("What do you want to with it?")}
     const title = `
-        ${__("Barcorde has been scanned")}: 
+        ${__("Un código de barra ha sido escaneado")}<br>
             <input
                 data-fieldname="barcode"
                 id="${uniquehash}"
                 type="text" value="${barcode}"
                 style="border: none;
                 outline: none;
-                background-color: white;"
+                background-color: transparent;"
             />
-            <br>
-        ${__("What do you want to with it?")}
+        ${__("¿Que desea hacer?")}
     `;
 
     const dialog = frappe.msgprint(`
@@ -161,21 +163,3 @@ jQuery.extend(peark.barcodescan.actions, {
         }, 1000);
     }
 });
-
-const table_template = `
-<table data-fieldname="actions_table" class="table">
-    <tbody>
-        <tr>
-            <td>
-                <button data-action="open" type="button" class="btn btn-link">${__("Open")}</button>
-            </td>
-            <td>
-                <button data-action="copy" type="button" class="btn btn-link">${__("Copy to Clipboard")}</button>
-            </td>
-            <td>
-                <button data-action="searchwebcopy" type="button" class="btn btn-link">${__("Search Online")}</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-`;

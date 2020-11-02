@@ -9,6 +9,24 @@ frappe.ui.form.on('Production Order', {
             () => frm.trigger("enable_child_fields"),
         ]);
     },
+    before_save(frm) {
+        frappe.run_serially([
+            () => frm.trigger("clear_production_order"),
+        ]);
+    },
+    clear_production_order(frm) {
+        const { doc } = frm;
+        const { operations } = doc;
+
+        if (frm.is_new()) {
+            operations.map(({ doctype, name }) => {
+                const doc = frappe.get_doc(doctype, name);
+                doc.production_order = null;
+
+                return doc;
+            });
+        }
+    },
     set_queries(frm) {
         frappe.run_serially([
             () => frm.trigger("set_sales_order_query"),

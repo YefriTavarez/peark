@@ -18,8 +18,9 @@ frappe.ui.form.on('Planning Document', {
             () => frm.trigger("set_queries"),
             () => frm.trigger("should_enable_form"),
             () => frm.trigger("toggle_reqd_sales_order"),
-            () => frm.trigger("add_indicators"),
             () => frm.trigger("toggle_reqd_template_planning_fields"),
+            () => frappe.timeout(.5),
+            () => frm.trigger("add_indicators"),
         ]);
     },
     onload_post_render(frm) {
@@ -41,43 +42,38 @@ frappe.ui.form.on('Planning Document', {
         ]);
     },
     add_indicators(frm) {
-        setTimeout(() => {
-
-            // let's prepare the repayment table's apereance for the customer
-            let fields = $("[data-fieldname=missions] \
+        const fields = jQuery("[data-fieldname=missions] \
                 [data-fieldname=status] > .static-area.ellipsis");
 
-            // ok, now let's iterate over map row
-            $.map(fields, (value) => {
 
-                let color = "grey";
-                let field = $(value);
-                // let's remove the previous css class
-                clear_class(field);
-
-                if (__("Completed") == field.text()) {
-                    color = "green";
-                } else if (__("Working") == field.text()) {
-                    color = "blue";
-                } else if (__("In Review") == field.text()) {
-                    color = "purple";
-                } else if (__("Paused") == field.text()) {
-                    color = "grey";
-                } else if ([__("Pending"), __("Delayed")].includes(field.text())) {
-                    color = "orange";
-                } else if ([__("Open"), __("Stopped"), __("Cancelled")].includes(field.text())) {
-                    color = "red";
-                }
-
-                field.addClass(__("indicator {0}", [color]));
-            });
-        });
-
-        let clear_class = (field) => {
-            $.map(["green", "blue", "orange", "red"], (css_class) => {
+        const clear_class = (field) => {
+            jQuery.map(["green", "blue", "orange", "red"], (css_class) => {
                 field.removeClass(__("indicator {0}", [css_class]));
             });
-        }
+        };
+
+        jQuery.map(fields, (value) => {
+
+            let color = "grey";
+            let field = jQuery(value);
+            // let's remove the previous css class
+            clear_class(field);
+
+            if (__("Completed") == field.text()) {
+                color = "green";
+            } else if ([__("Working"), __("Pending"), __("In Review")].includes(field.text())) {
+                color = "orange";
+            } else if ([__("Paused"), __("Open")].includes(field.text())) {
+                color = "grey";
+            } else if ([__("Delayed")].includes(field.text())) {
+                color = "red";
+            } else if ([__("Stopped"), __("Cancelled")].includes(field.text())) {
+                color = "darkgrey";
+            }
+
+            field.addClass(__("indicator {0}", [color]));
+        });
+
     },
     should_enable_form(frm) {
         const { doc } = frm;
@@ -312,6 +308,7 @@ frappe.ui.form.on('Planning Document', {
 
             jQuery(htmlobj)
                 .find("li>a")
+                .off("click")
                 .on("click", event => {
                     event.preventDefault();
 
@@ -417,7 +414,7 @@ frappe.ui.form.on('Planning Mission', {
         }
 
         if (!doc.data_to_ask) {
-            doc.data_to_ask = "[{}]";
+            doc.data_to_ask = "[]";
         }
 
         const data_to_ask = parse(doc.data_to_ask);
@@ -496,15 +493,17 @@ frappe.ui.form.on('Planning Mission', {
         const { db, model } = frappe;
 
         if (!doc.data_to_ask) {
-            doc.data_to_ask = "[{}]";
+            doc.data_to_ask = "[]";
         }
 
 
-        const [data_to_ask] = parse(doc.data_to_ask);
+        let [data_to_ask] = parse(doc.data_to_ask);
 
-        const {
-            source_docfield,
-        } = data_to_ask;
+        if (!data_to_ask) {
+            data_to_ask = new Object();
+        }
+
+        const { source_docfield } = data_to_ask;
 
         const { status } = frappe.flashvals;
 
@@ -524,7 +523,6 @@ frappe.ui.form.on('Planning Mission', {
             }
         }
 
-        const fieldname = "status";
 
         if (!status) {
             const errmsg = __("Missing value for status");
@@ -538,6 +536,7 @@ frappe.ui.form.on('Planning Mission', {
             return false;
         }
 
+        const fieldname = "status";
         doc.status = status;
 
         const after_save = (response) => {
@@ -555,7 +554,8 @@ frappe.ui.form.on('Planning Mission', {
         frappe.ui.form.save(frm, "Save", after_save, null);
 
         // jQuery.map([db, model], module => {
-        //     module.set_value(doctype, name, fieldname, status);
+        //     module
+        //        .set_value(doctype, name, fieldname, status);
         // });
     },
     display_save_button(frm, doctype, name) {
@@ -595,6 +595,7 @@ frappe.ui.form.on('Planning Mission', {
         if (docfield) {
             jQuery(html)
                 .appendTo(docfield.$wrapper)
+                .off("click")
                 .on("click", function (event) {
                     const { db, model } = frappe;
 
@@ -614,6 +615,5 @@ frappe.ui.form.on('Planning Mission', {
             // add this button only once
             delete frappe.flashvals.cur_docfield;
         }
-
     }
 });

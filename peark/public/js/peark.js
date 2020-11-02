@@ -37,12 +37,15 @@ jQuery.extend(frappe.socketio, {
 	});
 })();
 
-function hash(length) {
-	if (typeof length == "undefined") {
-		length = 10;
-	}
-	var charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".match(/./g);
-	var text = "";
-	for (var i = 0; i < length; i++) text += charset[Math.floor(Math.random() * charset.length)];
-	return text;
-}
+frappe.provide("peark.utils");
+jQuery.extend(peark.utils, {
+	hash(length) {
+		if (typeof length == "undefined") {
+			length = 10;
+		}
+		var charset = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".match(/./g);
+		var text = "";
+		for (var i = 0; i < length; i++) text += charset[Math.floor(Math.random() * charset.length)];
+		return text;
+	},
+});

@@ -263,9 +263,9 @@ frappe.ui.form.on('Production Planning Tool', {
                 }).join("<br>");
 
                 const message = __(
-                    `Material Requests: <br>
+                    `${__("Material Requests")}: <br>
                         {0}<br>
-                        created succesfully`,
+                        ${__("successfully created")}`,
                     [linklist]
                 );
 
@@ -335,13 +335,81 @@ frappe.ui.form.on('Production Planning Tool', {
     make_production_orders(frm) {
         const { doc } = frm;
 
+        if (frm.is_dirty()) {
+            frm.trigger("show_hint_alert");
+
+            frappe.run_serially([
+                () => frm.trigger("show_hint_alert"),
+                () => frappe.timeout(.5),
+                () => frm.trigger("toggle_display_make_buttons"), ,
+            ]);
+
+            return false;
+        }
+
+
         const { planning_documents } = doc;
         if (!planning_documents) {
             doc.planning_documents = new Array();
         }
 
         if (planning_documents.length) {
-            frm.call("make_production_orders");
+            frm.call("make_production_orders")
+                .then((response) => {
+                    const { show_alert } = frappe;
+    
+                    const delay = 30;
+                    const indicator = "green";
+    
+                    if (!response.message) {
+                        const indicator = "red";
+                        const message = __("There was an error");
+    
+                        show_alert({ message, indicator });
+    
+                        return false;
+                    }
+    
+                    const doclist = response.message;
+    
+                    const linklist = doclist.map(d => {
+                        return `<a 
+                            href=\"/desk#Form/Production Order/${d}\">
+                                ${d}
+                            </a>`;
+                    }).join("<br>");
+    
+                    const message = __(
+                        `${__("Production Orders")}: <br>
+                            {0}<br>
+                            ${__("successfully created")}`,
+                        [linklist]
+                    );
+    
+                    const body = `
+                        <button class="btn btn-link" data-action="view">
+                            ${__("View Production Orders")}
+                        </button>`;
+    
+                    const content = {
+                        message,
+                        indicator,
+                        body,
+                    };
+    
+                    const actions = {};
+    
+                    jQuery.extend(actions, {
+                        "view": function (event) {
+                            frappe.route_options = {
+                                "name": ["in", doclist.join(",")],
+                            };
+                            frappe.set_route("List", "Production Order", "List");
+                        },
+                    });
+    
+                    show_alert(content, delay, actions);
+                });
 
             return true;
         }

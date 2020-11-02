@@ -11,8 +11,13 @@ from frappe import db as database
 from frappe import _ as translate
 from frappe import _dict as pydict
 
-
 class ProductionOrder(Document):
+    def before_print(self):
+        self.set_paperboard_name()
+        self.set_allow_printing()
+        self.set_printing_sides()
+        self.set_repeated_work_in_words()
+
     def on_change(self):
         self.update_indexes()
 
@@ -34,6 +39,33 @@ class ProductionOrder(Document):
         if field.options != ref_doctype \
                 or self.product_assembly != ref_docname:
             frappe.throw(errmsg.format(name, self.product_assembly))
+
+    def set_paperboard_name(self):
+        doctype = "Product Assembly"
+        name = self.product_assembly
+        fieldname = "paperboard_name"
+
+        self.paperboard_name = database.get_value(doctype, name, fieldname)
+
+    def set_allow_printing(self):
+        doctype = "Product Profile"
+        name = self.product_profile
+        fieldname = "allow_printing"
+
+        self.allow_printing = database.get_value(doctype, name, fieldname)
+
+    def set_printing_sides(self):
+        doctype = "Product Profile"
+        name = self.product_profile
+        fieldname = "double_sided"
+
+        self.double_sided = database.get_value(doctype, name, fieldname)
+        self.printing_sides = translate("One Side") \
+            if not self.double_sided else translate("Two Sides")
+
+    def set_repeated_work_in_words(self):
+        self.repeated_work_in_words = translate("Yes") \
+            if self.get("repeated_work") else translate("No")
 
     def set_item(self):
         doctype = "Planning Document"

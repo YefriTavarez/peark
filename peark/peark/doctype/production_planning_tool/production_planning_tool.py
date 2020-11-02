@@ -133,6 +133,7 @@ class ProductionPlanningTool(Document):
             # actual_end_date = None
 
             doc.update({
+                "production_planning_tool": self.name,
                 "planning_document": planning.planning_document,
                 "product_name": planning.product_name,
                 "item_specs": product_assembly.get_full_name(),
@@ -157,12 +158,16 @@ class ProductionPlanningTool(Document):
 
             doc.save(ignore_permissions=True)
 
+            return doc.name
+
+        doclist = list()
         for planning in self.planning_documents:
             product_assembly_parent = get_product_assembly(planning)
 
             if not product_assembly_parent.is_compound_product:
-                create_production_order(
+                newname = create_production_order(
                     planning, product_assembly_parent, None)
+                doclist.append(newname)
                 continue
 
             compound_product = product_assembly_parent.get_compound_product()
@@ -175,7 +180,12 @@ class ProductionPlanningTool(Document):
 
                 product_assembly = frappe.get_doc(doctype, name)
 
-                create_production_order(planning, product_assembly, part)
+                newname = create_production_order(
+                    planning, product_assembly, part)
+
+                doclist.append(newname)
+
+        return doclist
 
     def on_fetch_materials(self):
         self.on_fetch_materials_prevalidate()

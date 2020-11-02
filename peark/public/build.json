@@ -1,0 +1,10 @@
+{
+	"js/peark.min.js": [
+		"public/js/peark.js",
+		"public/js/barcodescan.js",
+		"public/js/templates/barcode_actions_template.html"
+	],
+	"js/jmask.min.js": [
+		"public/js/jmask.min.js"
+	]
+}

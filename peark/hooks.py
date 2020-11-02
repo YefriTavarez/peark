@@ -73,9 +73,8 @@ fixtures = [
 # include js, css files in header of desk.html
 # app_include_css = "/assets/peark/css/peark.css"
 app_include_js = [
-    "/assets/peark/js/peark.js",
-    "/assets/peark/js/barcodescan.js",
-    "/assets/peark/js/jmask.min.js",
+    "/assets/js/jmask.min.js",
+    "/assets/js/peark.min.js",
 ]
 
 # include js, css files in header of web template
