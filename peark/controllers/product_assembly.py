@@ -9,6 +9,8 @@ from frappe import db as database
 from peark.controllers.erpnext.item import get_item_doc
 from peark.controllers.erpnext.item import set_naming_series
 
+from peark.controllers.erpnext.item_group import get_item_group_root
+
 
 def on_update(doc, method):
     create_item_based_on_product_assembly(doc)
@@ -18,15 +20,36 @@ def create_item_based_on_product_assembly(doc):
     stock_uom = database \
         .get_single_value("Stock Settings", "stock_uom")
 
+    fieldlist = [
+        "item_group_0",
+        "item_group_1",
+        "item_group_2",
+        "item_group_3",
+        "item_group_4",
+        "item_group_5",
+    ]
+
+    root_item_group = get_item_group_root()
+    item_group_count = len(doc.item_groups)
+
     item_doc = get_item_doc(
         doc.doctype, doc.name)
 
+    for idx, fieldname in enumerate(fieldlist):
+        if idx >= item_group_count:
+            item_doc.set(fieldname, None)
+            continue
+
+        row = doc.item_groups[idx]
+        item_group = row.item_group
+
+        if item_group == root_item_group:
+            continue
+
+        item_doc.set(fieldname, item_group)
+
     item_doc.update({
         "item_name": doc.product_profile,
-        "item_group_1": doc.item_group_1,
-        "item_group_2": doc.item_group_2,
-        "item_group_3": doc.item_group_3,
-        "item_group_4": doc.item_group_4,
         "item_group": doc.get_item_group(),
         "stock_uom": stock_uom,
         "disabled": 0,
@@ -42,8 +65,6 @@ def create_item_based_on_product_assembly(doc):
         "asset_naming_series": None,
         "over_delivery_receipt_allowance": 100,
         "over_billing_allowance": 100,
-        # "description": get_compact_title(doc, item_doc, as_html=True),
-        # "description": get_item_name(doc),
         "description": doc.get_full_specifications(),
         "default_material_request_type": "Manufacture",
         "valuation_method": "FIFO",
@@ -67,8 +88,6 @@ def create_item_based_on_product_assembly(doc):
         "is_sales_item": True,
         "ref_doctype": doc.doctype,
         "ref_docname": doc.name,
-        # "ref_childtype": child.doctype,
-        # "ref_childname": child.name,
     })
 
     item_doc.flags.ignore_mandatory = True

@@ -9,6 +9,8 @@ from frappe import db as database
 from peark.controllers.erpnext.item import get_item_doc
 from peark.controllers.erpnext.item import set_naming_series
 
+from peark.controllers.erpnext.item_group import get_item_group_root
+
 
 def on_update(doc, method):
     create_item_based_on_paperboard(doc)
@@ -18,17 +20,37 @@ def create_item_based_on_paperboard(doc):
     stock_uom = database \
         .get_single_value("Stock Settings", "stock_uom")
 
+    item_groups = [
+        "item_group_0",
+        "item_group_1",
+        "item_group_2",
+        "item_group_3",
+        "item_group_4",
+        "item_group_5",
+    ]
+
+    root_item_group = get_item_group_root()
+    item_group_count = len(doc.item_groups)
+
     for child in doc.dimensions:
         item_doc = get_item_doc(
             doc.doctype, doc.name, child.doctype, child.name)
 
+        for idx, fieldname in enumerate(item_groups):
+            if idx >= item_group_count:
+                item_doc.set(fieldname, None)
+                continue
+
+            row = doc.item_groups[idx]
+            item_group = row.item_group
+
+            if item_group == root_item_group:
+                continue
+
+            item_doc.set(fieldname, item_group)
+
         item_doc.update({
-            # "item_code": get_new_item_code(doc),
             "item_name": get_item_name(doc, child),
-            "item_group_1": doc.item_group_1,
-            "item_group_2": doc.item_group_2,
-            "item_group_3": doc.item_group_3,
-            "item_group_4": doc.item_group_4,
             "item_group": doc.get_item_group(),
             "stock_uom": stock_uom,
             "disabled": 0,
@@ -44,7 +66,6 @@ def create_item_based_on_paperboard(doc):
             "asset_naming_series": None,
             "over_delivery_receipt_allowance": 100,
             "over_billing_allowance": 100,
-            # "description": get_compact_title(doc, child, item_doc, as_html=True),
             "description": get_item_name(doc, child),
             "default_material_request_type": "Purchase",
             "valuation_method": "FIFO",
