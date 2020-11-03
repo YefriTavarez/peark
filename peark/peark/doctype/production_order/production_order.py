@@ -11,9 +11,10 @@ from frappe import db as database
 from frappe import _ as translate
 from frappe import _dict as pydict
 
+
 class ProductionOrder(Document):
     def before_print(self):
-        self.set_paperboard_name()
+        self.set_paperboard()
         self.set_allow_printing()
         self.set_printing_sides()
         self.set_repeated_work_in_words()
@@ -40,12 +41,12 @@ class ProductionOrder(Document):
                 or self.product_assembly != ref_docname:
             frappe.throw(errmsg.format(name, self.product_assembly))
 
-    def set_paperboard_name(self):
+    def set_paperboard(self):
         doctype = "Product Assembly"
         name = self.product_assembly
-        fieldname = "paperboard_name"
+        fieldname = "paperboard"
 
-        self.paperboard_name = database.get_value(doctype, name, fieldname)
+        self.paperboard = database.get_value(doctype, name, fieldname)
 
     def set_allow_printing(self):
         doctype = "Product Profile"
