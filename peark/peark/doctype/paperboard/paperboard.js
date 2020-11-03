@@ -19,10 +19,7 @@ frappe.ui.form.on('Paperboard', {
 			() => frm.trigger("set_supported_techniques_query"),
 			() => frm.trigger("set_weights_query"),
 			() => frm.trigger("set_dimensions_query"),
-			() => frm.trigger("set_item_group_1_query"),
-			() => frm.trigger("set_item_group_2_query"),
-			() => frm.trigger("set_item_group_3_query"),
-			() => frm.trigger("set_item_group_4_query"),
+			() => frm.trigger("set_item_groups_query"),
 		]);
 	},
 	add_custom_buttons(frm) {
@@ -64,7 +61,7 @@ frappe.ui.form.on('Paperboard', {
 			return opts;
 		};
 
-		frm.set_query("paperboard_weight", "weights", callback);
+		frm.set_query("paperboard_weight", callback);
 	},
 	set_dimensions_query(frm) {
 
@@ -82,43 +79,34 @@ frappe.ui.form.on('Paperboard', {
 			return opts;
 		};
 
-		frm.set_query("dimension", "dimensions", callback);
+		frm.set_query("dimension", callback);
 	},
-	set_item_group_1_query(frm) {
-		const { root_item_group } = frappe.boot;
 
-		frm.set_query("item_group_1", {
-			filters: {
-				"parent_item_group": root_item_group,
-			},
-		});
-	},
-	set_item_group_2_query(frm) {
-		frm.set_query("item_group_2", doc => {
-			return {
-				filters: {
-					"parent_item_group": doc.item_group_1,
-				}
+	set_item_groups_query(frm) {
+		const { doc } = frm;
+
+		const get_query = function () {
+			const { item_groups } = doc;
+
+			let last_item_group = item_groups[item_groups.length - 1];
+
+			let filters;
+
+			if (!last_item_group) {
+				filters = {
+					"name": frappe.boot.root_item_group,
+				};
+			} else {
+				filters = {
+					parent_item_group: last_item_group.item_group,
+				};
+
 			}
-		});
-	},
-	set_item_group_3_query(frm) {
-		frm.set_query("item_group_3", doc => {
-			return {
-				filters: {
-					"parent_item_group": doc.item_group_2,
-				}
-			}
-		});
-	},
-	set_item_group_4_query(frm) {
-		frm.set_query("item_group_4", doc => {
-			return {
-				filters: {
-					"parent_item_group": doc.item_group_3,
-				}
-			}
-		});
+
+			return { filters };
+		};
+
+		frm.set_query("item_groups", get_query);
 	},
 	add_view_items_button(frm) {
 		const label = __("Items");
