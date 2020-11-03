@@ -56,6 +56,9 @@ class ProductProfile(Document):
         self.remove_duplicated_texture_features()
         self.sort_texture_features()
 
+        self.remove_duplicated_packing_features()
+        self.sort_packing_features()
+
         self.validate_paperboard_items()
         self.validate_backboard_items()
 
@@ -67,17 +70,13 @@ class ProductProfile(Document):
         self.validate_protection_features_items()
         self.validate_utils_features_items()
         self.validate_texture_features_items()
+        self.validate_packing_features_items()
 
     def before_rename(self, old, new, merge=False):
         pass
 
     def after_rename(self, old, new, merge=False):
         self.shall_rename_item_group()
-
-    def on_update(self):
-        self.create_item_group()
-
-        self.db_update()
 
     def on_trash(self):
         self.delete_item_group()
@@ -262,6 +261,24 @@ class ProductProfile(Document):
 
                 frappe.throw(err_msg.format(**opts))
 
+    def validate_packing_features_items(self):
+        doctype = "Product Feature"
+        fieldname = "product_feature_type"
+        err_msg = translate("{product_feature} Feature cannot be in the"
+                            " {tablename} table at Row #{idx}. Please check!")
+
+        for d in self.packing_features:
+            docname = d.product_feature
+            product_feature_type = frappe.get_value(
+                doctype, docname, fieldname)
+
+            if product_feature_type != "Packing":
+                opts = d.as_dict()
+
+                opts.update({"tablename": translate("Packing")})
+
+                frappe.throw(err_msg.format(**opts))
+
     def sort_paperboards(self):
         self.sort_items("material_name", "paperboards")
 
@@ -327,6 +344,12 @@ class ProductProfile(Document):
 
     def sort_texture_features(self):
         self.sort_items("product_feature", "texture_features")
+
+    def remove_duplicated_packing_features(self):
+        self.remove_duplicated_items("product_feature", "packing_features")
+
+    def sort_packing_features(self):
+        self.sort_items("product_feature", "packing_features")
 
     def remove_duplicated_items(self, fieldname, tablename):
         found_list = list()
@@ -467,3 +490,4 @@ class ProductProfile(Document):
     protection_features = list()
     utils_features = list()
     texture_features = list()
+    packing_features = list()

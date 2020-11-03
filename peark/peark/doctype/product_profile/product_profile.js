@@ -18,7 +18,7 @@ frappe.ui.form.on('Product Profile', {
 	},
 	set_custom_queries(frm) {
 		frappe.run_serially([
-			() => frm.trigger("set_item_group_query"),
+			() => frm.trigger("set_item_groups_query"),
 			() => frm.trigger("set_paperboard_query"),
 			() => frm.trigger("set_backboard_query"),
 			() => frm.trigger("set_dimensions_query"),
@@ -30,6 +30,7 @@ frappe.ui.form.on('Product Profile', {
 			() => frm.trigger("set_protection_query"),
 			() => frm.trigger("set_utils_query"),
 			() => frm.trigger("set_texture_query"),
+			() => frm.trigger("set_packing_query"),
 		]);
 	},
 	add_custom_buttons(frm) {
@@ -37,15 +38,31 @@ frappe.ui.form.on('Product Profile', {
 			() => frm.trigger("add_view_product_assemblies_button"),
 		]);
 	},
-	set_item_group_query(frm) {
+	set_item_groups_query(frm) {
 		const { doc } = frm;
-		const opts = {
-			filters: {
-				parent_item_group: doc.parent_item_group,
+
+		const get_query = function () {
+			const { item_groups } = doc;
+
+			let last_item_group = item_groups[item_groups.length - 1];
+
+			let filters;
+
+			if (!last_item_group) {
+				filters = {
+					"name": frappe.boot.root_item_group,
+				};
+			} else {
+				filters = {
+					parent_item_group: last_item_group.item_group,
+				};
+
 			}
+
+			return { filters };
 		};
 
-		frm.set_query("item_group", opts);
+		frm.set_query("item_groups", get_query);
 	},
 	set_paperboard_query(frm) {
 		const tablename = "paperboards";
@@ -65,7 +82,7 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	set_backboard_query(frm) {
 		const tablename = "backboards";
@@ -85,7 +102,7 @@ frappe.ui.form.on('Product Profile', {
 			};
 		};
 
-		frm.set_query(fieldname, tablename, query);
+		frm.set_query(fieldname, query);
 	},
 	toggle_reqd_fields(frm) {
 		frappe.run_serially([
@@ -181,6 +198,16 @@ frappe.ui.form.on('Product Profile', {
 		const reqd = doc.allow_texture;
 		const fields = [
 			"texture_features",
+		];
+
+		frm.toggle_reqd(fields, reqd);
+	},
+
+	toggle_reqd_packing_fields(frm) {
+		const { doc } = frm;
+		const reqd = doc.allow_packing;
+		const fields = [
+			"packing_features",
 		];
 
 		frm.toggle_reqd(fields, reqd);
@@ -364,6 +391,25 @@ frappe.ui.form.on('Product Profile', {
 
 		frm.set_query(fieldname, query);
 	},
+	set_packing_query(frm) {
+		const fieldname = "packing_features";
+
+		const query = function () {
+			const { doc } = frm;
+			const chosen_packing_features = jQuery
+				.map(doc.packing_features, d => d.product_feature)
+				.join(",");
+
+			return {
+				filters: {
+					"product_feature_type": "Packing",
+					"name": ["not in", chosen_packing_features],
+				}
+			};
+		};
+
+		frm.set_query(fieldname, query);
+	},
 	add_view_product_assemblies_button(frm) {
 		if (frm.is_new()) {
 			return false;
@@ -403,5 +449,8 @@ frappe.ui.form.on('Product Profile', {
 	},
 	allow_texture(frm) {
 		frm.trigger("toggle_reqd_texture_fields");
+	},
+	allow_packing(frm) {
+		frm.trigger("toggle_reqd_packing_fields");
 	},
 });
