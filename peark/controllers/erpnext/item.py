@@ -8,6 +8,7 @@ from frappe import get_doc
 from frappe import db as database
 
 from frappe.utils import cstr
+from frappe import _ as translate
 
 from frappe.model.naming import make_autoname
 
@@ -25,13 +26,24 @@ def on_update(doc, method):
     update_item_group(doc)
 
 
+def validate(doc, method):
+    # update_item_group
+    pass
+
+
 def update_item_group(doc):
-    item_group = doc.item_group_4 \
+    item_group = doc.item_group_5 \
+        or doc.item_group_4 \
         or doc.item_group_3 \
         or doc.item_group_2 \
         or doc.item_group_1
 
+    errmsg = translate("Missing Item Group on Item {}: {}")
+    if not item_group:
+        frappe.throw(errmsg.format(doc.name, doc.item_name))
+
     doc.item_group = item_group
+    doc.db_update()
 
 
 def set_new_item_code(doc):
@@ -52,7 +64,7 @@ def set_naming_series(doc):
 def get_item_code_naming_serie(doc):
     serie = str()
 
-    padding_char = "0"
+    # padding_char = "0"
     placeholder = "####"
 
     for item_group in (doc.item_group_1, doc.item_group_2,
@@ -60,15 +72,17 @@ def get_item_code_naming_serie(doc):
         code = get_item_group_code(item_group)
 
         # concatenate
-        serie = "{serie}{code}".format(code=code, serie=serie)
+        serie = "{serie}{code}" \
+            .format(code=code, serie=serie) \
+            .upper()
 
     # right padding
-    serie = serie.ljust(8, padding_char)
+    # serie = serie.ljust(8, padding_char)
     return ".".join((serie, placeholder))
 
 
 def get_item_group_code(item_group):
-    return cstr(item_group).split(" - ")[0]
+    return cstr(item_group)[:2]
 
 
 def get_item_doc(doctype, docname, cdt=None, cdn=None):
