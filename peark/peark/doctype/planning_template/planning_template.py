@@ -25,6 +25,9 @@ class PlanningTemplate(Document):
         self.update_children_description()
         self.update_children_planning_template()
 
+    def on_trash(self):
+        self.unlink_children()
+
     def make_planning_document(self, target_doc=None):
         return make_planning_document(self.name, target_doc=target_doc)
 
@@ -53,6 +56,11 @@ class PlanningTemplate(Document):
         }
 
         frappe.throw(errmsg.format(opts))
+
+    def unlink_children(self):
+        for childoc in self.missions:
+            childoc.planning_document = None
+            childoc.db_update()
 
     def update_children_description(self):
         for mission in self.missions:
