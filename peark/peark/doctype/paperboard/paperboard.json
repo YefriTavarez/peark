@@ -1,9 +1,11 @@
 {
+ "allow_rename": 1,
  "creation": "2020-08-07 10:00:15.688295",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title",
   "enabled",
   "backboard",
   "material_name",
@@ -14,10 +16,7 @@
   "section_break_7",
   "supported_techniques",
   "column_break_9",
-  "item_group_1",
-  "item_group_2",
-  "item_group_3",
-  "item_group_4",
+  "item_groups",
   "section_break_14",
   "caliper",
   "caliper_uom",
@@ -26,7 +25,6 @@
   "form_settings_section",
   "include_uom_in_title",
   "column_break_22",
-  "title",
   "purchase_info_section",
   "last_purchase_rate",
   "section_break_24",
@@ -71,33 +69,6 @@
    "options": "\nMatte\nGloss\nSemi-Gloss"
   },
   {
-   "fieldname": "item_group_1",
-   "fieldtype": "Link",
-   "label": "Categor\u00eda 1",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "item_group_1",
-   "fieldname": "item_group_2",
-   "fieldtype": "Link",
-   "label": "Categor\u00eda 2",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "item_group_2",
-   "fieldname": "item_group_3",
-   "fieldtype": "Link",
-   "label": "Categor\u00eda 3",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "item_group_3",
-   "fieldname": "item_group_4",
-   "fieldtype": "Link",
-   "label": "Categor\u00eda 4",
-   "options": "Item Group"
-  },
-  {
    "fieldname": "supported_techniques",
    "fieldtype": "Table MultiSelect",
    "label": "T\u00e9cnicas de Impresi\u00f3n",
@@ -123,7 +94,7 @@
   },
   {
    "fieldname": "dimensions",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "options": "Supported Dimensions"
   },
   {
@@ -179,7 +150,7 @@
   },
   {
    "fieldname": "weights",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Weights",
    "options": "Paperboard Weights"
   },
@@ -188,10 +159,17 @@
    "fieldname": "section_break_24",
    "fieldtype": "Section Break",
    "label": "Supported Dimensions"
+  },
+  {
+   "fieldname": "item_groups",
+   "fieldtype": "Table MultiSelect",
+   "label": "Item Groups",
+   "options": "Item Groups",
+   "reqd": 1
   }
  ],
- "modified": "2020-08-24 10:07:27.148338",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-11-02 18:00:56.456886",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Paperboard",
  "owner": "yefritavarez@gmail.com",
