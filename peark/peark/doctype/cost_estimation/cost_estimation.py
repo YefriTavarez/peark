@@ -28,7 +28,9 @@ class CostEstimation(Document):
 
     def on_change(self):
         self.calculate_totals()
-        self.db_update()
+
+        if not self.is_new():
+            self.db_update()
 
     def update_status(self):
         valid_until = cstr(self.valid_until)
@@ -288,9 +290,12 @@ class CostEstimation(Document):
         return margin_amount
 
     def get_total_fixed_costs(self):
-        fixed_costs = [flt(d.rate) for d in self.fixed_costs]
+        for child in self.fixed_costs:
+            child.update_amount()
 
-        return sum(fixed_costs)
+        variable_costs = [flt(d.amount) for d in self.fixed_costs]
+
+        return sum(variable_costs)
 
     def get_total_variable_costs(self):
         for child in self.variable_costs:

@@ -1,10 +1,11 @@
 {
- "autoname": "COST-SHEET-.#####",
+ "autoname": "naming_series:",
  "creation": "2020-10-08 12:02:05.432995",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "customer",
   "cost_estimation_type",
   "cost_estimation_validity_days",
@@ -18,13 +19,14 @@
   "is_compound_product",
   "product_assembly",
   "column_break_13",
+  "paperboard",
   "product_assembly_specification",
   "section_break_15",
   "qty_to_produce",
   "units_per_sheet",
   "dimensions_column",
-  "supplier_dimension",
   "sheet_dimension",
+  "dimension_for_press",
   "final_dimension",
   "section_break_22",
   "fixed_costs",
@@ -120,7 +122,6 @@
    "reqd": 1
   },
   {
-   "description": "Dimension for the Press",
    "fieldname": "sheet_dimension",
    "fieldtype": "Link",
    "label": "Sheet Dimension",
@@ -205,12 +206,6 @@
    "report_hide": 1
   },
   {
-   "fieldname": "supplier_dimension",
-   "fieldtype": "Link",
-   "label": "Supplier Dimension",
-   "options": "Dimension"
-  },
-  {
    "fieldname": "final_dimension",
    "fieldtype": "Link",
    "label": "Final Dimension",
@@ -291,9 +286,30 @@
   {
    "fieldname": "column_break_37",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dimension_for_press",
+   "fieldtype": "Link",
+   "label": "Dimension for the Press",
+   "options": "Dimension"
+  },
+  {
+   "fetch_from": "product_assembly.paperboard",
+   "fieldname": "paperboard",
+   "fieldtype": "Link",
+   "label": "Paperboard",
+   "options": "Paperboard",
+   "read_only": 1
+  },
+  {
+   "default": "COST-SHEET-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "COST-SHEET-.#####"
   }
  ],
- "modified": "2020-10-30 16:55:15.024257",
+ "modified": "2020-11-03 10:52:08.919418",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",
