@@ -45,7 +45,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Product Feature Type",
-   "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture",
+   "options": "Printing\nControl\nCut\nGluing\nFolding\nProtection\nUtils\nTexture\nPacking",
    "reqd": 1,
    "translatable": 1
   },
@@ -159,7 +159,7 @@
    "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-10-26 09:36:45.046632",
+ "modified": "2020-11-03 13:29:05.721274",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Feature",
