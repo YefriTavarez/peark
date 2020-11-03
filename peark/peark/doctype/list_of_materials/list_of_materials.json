@@ -6,9 +6,10 @@
  "field_order": [
   "item",
   "item_name",
+  "column_break_3",
   "qty",
-  "uom",
-  "allow_alternative_item"
+  "fixed_qty",
+  "uom"
  ],
  "fields": [
   {
@@ -16,8 +17,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "description": "Qty or Fraction",
@@ -37,22 +37,27 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fieldname": "allow_alternative_item",
-   "fieldtype": "Check",
-   "label": "Allow Alternative Item"
-  },
-  {
    "fetch_from": "item.item_name",
    "fetch_if_empty": 1,
    "fieldname": "item_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Item Name"
+   "label": "Item Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "fixed_qty",
+   "fieldtype": "Check",
+   "label": "Fixed Qty?"
   }
  ],
  "istable": 1,
- "modified": "2020-10-25 19:32:30.326001",
+ "modified": "2020-11-03 13:34:56.933610",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "List of Materials",
