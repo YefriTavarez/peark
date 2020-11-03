@@ -135,7 +135,8 @@ jQuery.extend(peark.barcodescan.actions, {
         frappe.call({ method, callback });
     },
     show_not_found_msg(event, olddialog, opts) {
-        const infomsg = __("We didn't find what you were looking for.");
+        // const infomsg = __("We didn't find what you were looking for.");
+        const infomsg = __("No pudimos encontrar lo que estaba buscando.");
         const dialog = frappe.msgprint(infomsg);
 
         let counter = 10000;
@@ -148,9 +149,10 @@ jQuery.extend(peark.barcodescan.actions, {
             counter -= 1000;
 
             const timeleft = (counter / 1000) + 1;
+            // ${__("Will hide in {0} seconds", [timeleft])}
             const html = `
                 <span>
-                    ${__("Will hide in {0} seconds", [timeleft])}
+                    ${__("Se ocultará en {0} segundos", [timeleft])}
                 </span>
             `;
 
