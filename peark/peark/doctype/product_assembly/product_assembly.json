@@ -14,14 +14,10 @@
   "is_compound_product",
   "section_break_6",
   "paperboard",
-  "paperboard_name",
   "backboard",
   "backboard_name",
   "column_break_11",
-  "item_group_1",
-  "item_group_2",
-  "item_group_3",
-  "item_group_4",
+  "item_groups",
   "section_break_13",
   "front_colors",
   "column_break_15",
@@ -75,47 +71,10 @@
    "label": "Margen Vertical"
   },
   {
-   "depends_on": "eval:!doc.is_compound_product",
-   "fetch_from": "product_profile.parent_item_group",
-   "fieldname": "item_group_1",
-   "fieldtype": "Link",
-   "label": "Categoria 1",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_1",
-   "fetch_from": "product_profile.item_group",
-   "fieldname": "item_group_2",
-   "fieldtype": "Link",
-   "label": "Categoria 2",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_2",
-   "fieldname": "item_group_3",
-   "fieldtype": "Link",
-   "label": "Categoria 3",
-   "options": "Item Group"
-  },
-  {
-   "depends_on": "eval:!doc.is_compound_product&&doc.item_group_3",
-   "fieldname": "item_group_4",
-   "fieldtype": "Link",
-   "label": "Categoria 4",
-   "options": "Item Group"
-  },
-  {
    "fieldname": "paperboard",
    "fieldtype": "Link",
    "label": "Materiales",
    "options": "Paperboard"
-  },
-  {
-   "fetch_from": "paperboard.title",
-   "fieldname": "paperboard_name",
-   "fieldtype": "Data",
-   "label": "Material de Impresi\u00f3n",
-   "read_only": 1
   },
   {
    "default": "0",
@@ -156,7 +115,7 @@
   {
    "fieldname": "printing_feature",
    "fieldtype": "Link",
-   "label": "Opciones de Impresión",
+   "label": "Opciones de Impresi\u00f3n",
    "options": "Product Feature"
   },
   {
@@ -290,9 +249,16 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Compound Product"
+  },
+  {
+   "fieldname": "item_groups",
+   "fieldtype": "Table MultiSelect",
+   "label": "Item Groups",
+   "options": "Item Groups",
+   "reqd": 1
   }
  ],
- "modified": "2020-10-25 18:57:17.901314",
+ "modified": "2020-11-02 17:53:32.817164",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Assembly",

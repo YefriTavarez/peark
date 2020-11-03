@@ -25,9 +25,6 @@ class ProductAssembly(Document):
     def onload(self):
         self.add_product_profile_details()
 
-    def on_change(self):
-        self.update_specs()
-
     def validate(self):
         self.load_product_profile_details()
         self.clear_compound_product_fields()
@@ -54,6 +51,8 @@ class ProductAssembly(Document):
         self.validate_utils_features()
         self.validate_texture_features()
 
+        self.update_specs()
+
     def update_specs(self):
         self.full_specifications = \
             self.get_full_specifications()
@@ -61,7 +60,8 @@ class ProductAssembly(Document):
         self.product_options = \
             self.get_full_product_options()
 
-        self.db_update()
+        if not self.is_new():
+            self.db_update()
 
     def generate_autoname(self):
         self.name = self.get_new_name()
@@ -81,10 +81,8 @@ class ProductAssembly(Document):
         return make_autoname(naming_serie.upper())
 
     def get_item_group(self):
-        return self.item_group_4 \
-            or self.item_group_3 \
-            or self.item_group_2 \
-            or self.item_group_1
+        lastrow = self.item_groups[-1]
+        return lastrow.item_group
 
     def clear_compound_product_fields(self):
         if not self.is_compound_product:
@@ -92,7 +90,6 @@ class ProductAssembly(Document):
 
         self.dimension = None
         self.paperboard = None
-        self.paperboard_name = None
         self.horizontal_margin = .000
         self.vertical_margin = .000
 
@@ -142,10 +139,10 @@ class ProductAssembly(Document):
             translated_label = translate(label)
 
             frappe.throw(err_msg
-                .format(
-                bold(translated_label)
-                )
-            )
+                         .format(
+                             bold(translated_label)
+                         )
+                         )
 
     def validate_front_colors(self):
         allow_printing = self.product_profile_doc \
@@ -194,10 +191,10 @@ class ProductAssembly(Document):
             "Product Profile. Please check!")
 
         frappe.throw(err_msg
-            .format(
-            bold(self.dimension)
-            )
-        )
+                     .format(
+                         bold(self.dimension)
+                     )
+                     )
 
     def validate_paperboard(self):
         self.validate_field_value("paperboard", "paperboards", "paperboard")
@@ -273,19 +270,18 @@ class ProductAssembly(Document):
             "Product Profile. Please check!")
 
         frappe.throw(err_msg
-            .format(translated_label,
-                bold(value)
-            )
-        )
-        
+                     .format(translated_label,
+                             bold(value)
+                             )
+                     )
 
     def generate_hash_and_validate(self):
 
         # don't validate for compound products
-        unique_hash=self.generate_hash()
+        unique_hash = self.generate_hash()
 
-        doctype=self.doctype
-        filters={
+        doctype = self.doctype
+        filters = {
             "unique_hash": unique_hash,
         }
 
@@ -464,7 +460,6 @@ class ProductAssembly(Document):
     def get_full_name(self):
         values = (
             self.product_profile,
-            self.paperboard_name,
             self.dimension,
             self.get_front_colors(),
             self.get_pantone_colors(),
@@ -601,14 +596,10 @@ class ProductAssembly(Document):
     dimension = None
     horizontal_margin = 0
     vertical_margin = 0
-    item_group_1 = None
-    item_group_2 = None
-    item_group_3 = None
-    item_group_4 = None
     enabled = True
     is_compound_product = False
     paperboard = None
-    paperboard_name = None
+    item_groups = list()
     front_colors = 0
     pantone_colors = 0
     back_colors = 0
