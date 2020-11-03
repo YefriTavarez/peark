@@ -5,7 +5,9 @@
  "engine": "InnoDB",
  "field_order": [
   "cost_specification",
-  "rate"
+  "qty",
+  "rate",
+  "amount"
  ],
  "fields": [
   {
@@ -23,11 +25,27 @@
    "in_standard_filter": 1,
    "label": "Rate",
    "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "qty",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Qty",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "precision": "6",
+   "read_only": 1
   }
  ],
  "istable": 1,
- "modified": "2020-10-08 12:18:38.783747",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-11-03 11:03:33.352355",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Fixed Cost Estimate",
  "owner": "yefritavarez@gmail.com",
