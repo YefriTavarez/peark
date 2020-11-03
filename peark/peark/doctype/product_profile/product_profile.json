@@ -10,8 +10,7 @@
   "old_item_name",
   "keep_stock",
   "column_break_4",
-  "parent_item_group",
-  "item_group",
+  "item_groups",
   "section_break_7",
   "enabled",
   "is_compound_product",
@@ -43,6 +42,8 @@
   "section_break_35",
   "allow_texture",
   "texture_features",
+  "allow_packing",
+  "packing_features",
   "supported_dimensions_section",
   "dimensions"
  ],
@@ -63,18 +64,6 @@
    "options": "Item"
   },
   {
-   "fieldname": "item_group",
-   "fieldtype": "Link",
-   "label": "Item Group",
-   "options": "Item Group"
-  },
-  {
-   "fieldname": "parent_item_group",
-   "fieldtype": "Link",
-   "label": "Parent Item Group",
-   "options": "Item Group"
-  },
-  {
    "default": "1",
    "depends_on": "eval:!doc.__islocal",
    "fieldname": "enabled",
@@ -89,14 +78,14 @@
   },
   {
    "fieldname": "paperboards",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Materiales",
    "options": "Supported Paperboards"
   },
   {
    "depends_on": "has_backboard",
    "fieldname": "backboards",
-   "fieldtype": "Table",
+   "fieldtype": "Table MultiSelect",
    "label": "Materiales Respaldo",
    "options": "Supported Paperboards"
   },
@@ -275,9 +264,29 @@
    "fieldname": "allow_texture",
    "fieldtype": "Check",
    "label": "Allow Texture?"
+  },
+  {
+   "fieldname": "item_groups",
+   "fieldtype": "Table MultiSelect",
+   "label": "Item Groups",
+   "options": "Item Groups",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_packing",
+   "fieldtype": "Check",
+   "label": "Allow Packing?"
+  },
+  {
+   "depends_on": "allow_packing",
+   "fieldname": "packing_features",
+   "fieldtype": "Table MultiSelect",
+   "label": "Opciones de Empaque",
+   "options": "Product Features"
   }
  ],
- "modified": "2020-10-25 18:14:08.045545",
+ "modified": "2020-11-03 13:36:34.282531",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Profile",
