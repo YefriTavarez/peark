@@ -22,6 +22,9 @@ class PlanningDocument(Document):
         self.update_percentage_completed()
         # self.update_children_description()
 
+    def on_trash(self):
+        self.unlink_children()
+
     def validate(self):
         self.validate_children()
         self.update_children_planning_document()
@@ -33,6 +36,11 @@ class PlanningDocument(Document):
             if childoc.is_new():
                 continue
 
+            childoc.db_update()
+
+    def unlink_children(self):
+        for childoc in self.missions:
+            childoc.planning_document = None
             childoc.db_update()
 
     def update_children_status(self):
