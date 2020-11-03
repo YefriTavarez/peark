@@ -16,7 +16,8 @@ from peark.controllers.utils import s_sanitize, gut
 
 class Paperboard(Document):
     def autoname(self):
-        self.make_name()
+        self.update_title()
+        self.name = self.title
 
     def validate(self):
         self.set_default_caliper()
@@ -69,10 +70,8 @@ class Paperboard(Document):
         return title
 
     def get_item_group(self):
-        return self.item_group_4 \
-            or self.item_group_3 \
-            or self.item_group_2 \
-            or self.item_group_1
+        lastrow = self.item_groups[-1]
+        return lastrow.item_group
 
     def remove_duplicated_weights(self):
         found_list = list()
@@ -136,9 +135,6 @@ class Paperboard(Document):
     title = None
     title_based_on = None
     trademark = ""
-    item_group_1 = None
-    item_group_2 = None
-    item_group_3 = None
-    item_group_4 = None
     weights = list()
     dimensions = list()
+    item_groups = list()
