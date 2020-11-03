@@ -146,11 +146,12 @@ doc_events = {
     "Item": {
         "onload": "peark.controllers.erpnext.item.onload",
         "on_update": "peark.controllers.erpnext.item.on_update",
+        "validate": "peark.controllers.erpnext.item.validate",
         "before_insert": "peark.controllers.erpnext.item.before_insert",
     },
     "Item Group": {
-        "before_rename": "peark.controllers.erpnext.item_group.before_rename",
-        "autoname": "peark.controllers.erpnext.item_group.autoname",
+        # "before_rename": "peark.controllers.erpnext.item_group.before_rename",
+        # "autoname": "peark.controllers.erpnext.item_group.autoname",
     },
     "Employee": {
         "autoname": "peark.controllers.erpnext.employee.autoname",
