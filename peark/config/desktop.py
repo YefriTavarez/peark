@@ -20,6 +20,17 @@ def get_data():
             "condition": has_permission(doctype="Dimension", raise_exception=False)
         },
         {
+            "module_name": 'Product Profile',
+            "category": "Places",
+            "label": _('Product Profiles'),
+            "icon": "fa fa-window-maximize",
+            "type": 'link',
+            "link": '#List/Product Profile/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Product Profile", raise_exception=False)
+        },
+        {
             "module_name": 'Product Assembly',
             "category": "Places",
             "label": _('Product Assemblies'),
@@ -31,15 +42,26 @@ def get_data():
             "condition": has_permission(doctype="Product Assembly", raise_exception=False)
         },
         {
-            "module_name": 'Product Profile',
+            "module_name": 'Item',
             "category": "Places",
-            "label": _('Product Profiles'),
-            "icon": "fa fa-window-maximize",
+            "label": _('Items'),
+            "icon": "fa fa-codepen",
             "type": 'link',
-            "link": '#List/Product Profile/List',
+            "link": '#List/Item/List',
             "color": '#FF4136',
             'standard': 1,
-            "condition": has_permission(doctype="Product Profile", raise_exception=False)
+            "condition": has_permission(doctype="Item", raise_exception=False)
+        },
+        {
+            "module_name": 'Item Group',
+            "category": "Places",
+            "label": _('Item Group'),
+            "icon": "fa fa-indent",
+            "type": 'link',
+            "link": '#Tree/Item Group',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Item Group", raise_exception=False)
         },
         {
             "module_name": 'Paperboard',
