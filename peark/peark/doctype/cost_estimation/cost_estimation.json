@@ -24,10 +24,17 @@
   "section_break_15",
   "qty_to_produce",
   "units_per_sheet",
+  "sheets_qty",
+  "scrap_percentage",
+  "sheets_to_buy",
   "dimensions_column",
   "sheet_dimension",
   "dimension_for_press",
+  "dimension_for_press_width",
+  "dimension_for_press_height",
   "final_dimension",
+  "section_break_29",
+  "ink_usage_detail",
   "section_break_22",
   "fixed_costs",
   "section_break_24",
@@ -110,15 +117,17 @@
   },
   {
    "fieldname": "qty_to_produce",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "label": "Qty to Produce",
+   "precision": "0",
    "reqd": 1
   },
   {
    "default": "1",
    "fieldname": "units_per_sheet",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "label": "Units per sheet",
+   "precision": "0",
    "reqd": 1
   },
   {
@@ -307,9 +316,58 @@
    "fieldtype": "Select",
    "label": "Naming Series",
    "options": "COST-SHEET-.#####"
+  },
+  {
+   "default": "0",
+   "fieldname": "sheets_qty",
+   "fieldtype": "Int",
+   "label": "Sheets Qty",
+   "read_only": 1
+  },
+  {
+   "default": "10",
+   "description": "%",
+   "fieldname": "scrap_percentage",
+   "fieldtype": "Percent",
+   "label": "Scrap Percentage",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "sheets_to_buy",
+   "fieldtype": "Float",
+   "label": "Sheets to Buy",
+   "precision": "0",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "dimension_for_press.width",
+   "fieldname": "dimension_for_press_width",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Width"
+  },
+  {
+   "fetch_from": "dimension_for_press.height",
+   "fieldname": "dimension_for_press_height",
+   "fieldtype": "Float",
+   "hidden": 1,
+   "label": "Height"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_29",
+   "fieldtype": "Section Break",
+   "label": "Ink Calculation"
+  },
+  {
+   "fieldname": "ink_usage_detail",
+   "fieldtype": "Table",
+   "label": "Ink Usage Detail",
+   "options": "Ink Usage Detail"
   }
  ],
- "modified": "2020-11-03 10:52:08.919418",
+ "modified": "2020-11-04 10:58:06.140115",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",

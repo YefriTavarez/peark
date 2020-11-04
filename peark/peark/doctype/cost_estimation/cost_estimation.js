@@ -363,5 +363,40 @@ frappe.ui.form.on("Cost Estimation", {
 
     is_compound_product(frm) {
         frm.set_value("product_assembly", null);
-    }
+    },
+    set_sheets_qty(frm) {
+        const { doc } = frm;
+        const fieldname = "sheets_qty";
+
+        const { qty_to_produce, units_per_sheet } = doc;
+        const value = flt(qty_to_produce) / cint(units_per_sheet);
+
+        frm.set_value(fieldname, value);
+    },
+    units_per_sheet(frm) {
+        const { doc } = frm;
+
+        if (doc.units_per_sheet) {
+            frm.trigger("set_sheets_qty");
+            frm.trigger("scrap_percentage");
+        }
+    },
+    qty_to_produce(frm) {
+        const { doc } = frm;
+
+        if (doc.qty_to_produce) {
+            frm.trigger("set_sheets_qty");
+            frm.trigger("scrap_percentage");
+        }
+    },
+    scrap_percentage(frm) {
+        const { doc } = frm;
+        const fieldname = "sheets_to_buy";
+
+        const { sheets_qty, scrap_percentage } = doc;
+        const sheets_to_buy = flt(sheets_qty) * flt(scrap_percentage) / 100.000;
+        const value = flt(sheets_to_buy) + flt(sheets_qty);
+
+        frm.set_value(fieldname, value);
+    },
 });

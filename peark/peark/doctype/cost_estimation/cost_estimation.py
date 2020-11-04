@@ -221,10 +221,13 @@ class CostEstimation(Document):
         self.sub_total = total_costs
 
     def get_sub_total(self):
+        total_ink_usage = self.get_total_ink_usage()
         total_fixed_costs = self.get_total_fixed_costs()
         total_variable_costs = self.get_total_variable_costs()
 
-        return total_fixed_costs + total_variable_costs
+        return total_ink_usage \
+            + total_fixed_costs \
+            + total_variable_costs
 
     def set_grand_total(self):
         total_costs = self.get_grand_total()
@@ -290,6 +293,17 @@ class CostEstimation(Document):
 
         return margin_amount
 
+    def get_total_ink_usage(self):
+        # self.dimension_for_press
+        width = self.dimension_for_press_width * .0254
+        height = self.dimension_for_press_height * .0254
+        sheets = self.sheets_to_buy
+
+        for child in self.ink_usage_detail:
+            child.set_ink_amount(width, height, sheets)
+
+        return sum(child.ink_amount for child in self.ink_usage_detail)
+
     def get_total_fixed_costs(self):
         for child in self.fixed_costs:
             child.update_amount()
@@ -300,7 +314,7 @@ class CostEstimation(Document):
 
     def get_total_variable_costs(self):
         for child in self.variable_costs:
-            child.update_amount(self.qty_to_produce)
+            child.update_amount(self.sheets_to_buy)
 
         variable_costs = [flt(d.amount) for d in self.variable_costs]
 
@@ -320,6 +334,7 @@ class CostEstimation(Document):
     supplier_dimension = None
     sheet_dimension = None
     final_dimension = None
+    ink_usage_detail = list()
     fixed_costs = list()
     variable_costs = list()
     sales_person = None
@@ -329,4 +344,9 @@ class CostEstimation(Document):
     commission_amount = .000
     rate_per_unit = .000
     sub_total = .000
+    sheets_to_buy = .000
     grand_total = .000
+
+    dimension_for_press = None
+    dimension_for_press_width = 0.000
+    dimension_for_press_height = 0.000

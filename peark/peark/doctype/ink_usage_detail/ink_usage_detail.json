@@ -1,0 +1,94 @@
+{
+ "creation": "2020-11-04 10:56:24.615972",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "material_ink_usage",
+  "ink_coverage",
+  "print_pattern",
+  "column_break_4",
+  "ink_usage",
+  "ink_rate",
+  "ink_amount",
+  "section_break_8",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "default": "2",
+   "description": "gm/m2",
+   "fieldname": "material_ink_usage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Material Ink Usage",
+   "precision": "1",
+   "reqd": 1
+  },
+  {
+   "default": "90",
+   "fieldname": "ink_coverage",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Ink Coverage",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "default": "90",
+   "description": "%",
+   "fieldname": "print_pattern",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Print Pattern",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ink_usage",
+   "fieldtype": "Float",
+   "label": "Ink Usage",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ink_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Ink Rate",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "ink_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Ink Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-11-04 11:08:28.088866",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Ink Usage Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

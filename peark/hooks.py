@@ -149,10 +149,6 @@ doc_events = {
         "validate": "peark.controllers.erpnext.item.validate",
         "before_insert": "peark.controllers.erpnext.item.before_insert",
     },
-    "Item Group": {
-        # "before_rename": "peark.controllers.erpnext.item_group.before_rename",
-        # "autoname": "peark.controllers.erpnext.item_group.autoname",
-    },
     "Employee": {
         "autoname": "peark.controllers.erpnext.employee.autoname",
         "on_update": "peark.controllers.erpnext.employee.on_update",
@@ -169,11 +165,9 @@ doc_events = {
     "Product Assembly": {
         "on_update": "peark.controllers.product_assembly.on_update",
     },
-
     "Payment Entry": {
         "validate": "peark.controllers.erpnext.payment_entry.validate",
     }
-
 }
 
 # Scheduled Tasks
