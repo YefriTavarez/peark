@@ -329,9 +329,17 @@ frappe.ui.form.on("Cost Estimation", {
 
         // const product_options = assembly_options.split(", ");
 
-        assembly_options.map(product_option => {
-            frm.add_child("variable_costs", product_option);
-        });
+        assembly_options
+            .filter(d => d.fixed_qty)
+            .map(product_option => {
+                frm.add_child("fixed_costs", product_option);
+            });
+
+        assembly_options
+            .filter(d => !d.fixed_qty)
+            .map(product_option => {
+                frm.add_child("variable_costs", product_option);
+            });
 
         frm.refresh_fields();
     },

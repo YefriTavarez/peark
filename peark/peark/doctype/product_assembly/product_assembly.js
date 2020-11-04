@@ -23,11 +23,7 @@ frappe.ui.form.on('Product Assembly', {
         }
 
         frappe.run_serially([
-            () => frm.trigger("set_item_groups_query"), ,
-            // () => frm.trigger("set_item_group_1_query"), ,
-            // () => frm.trigger("set_item_group_2_query"), ,
-            // () => frm.trigger("set_item_group_3_query"), ,
-            // () => frm.trigger("set_item_group_4_query"), ,
+            () => frm.trigger("set_item_groups_query"),
             () => frm.trigger("set_dimension_query"),
             () => frm.trigger("set_paperboard_query"),
             () => frm.trigger("set_backboard_query"),
@@ -39,6 +35,7 @@ frappe.ui.form.on('Product Assembly', {
             () => frm.trigger("set_protection_query"),
             () => frm.trigger("set_utils_query"),
             () => frm.trigger("set_texture_query"),
+            () => frm.trigger("set_packing_query"),
         ]);
     },
 
@@ -318,6 +315,22 @@ frappe.ui.form.on('Product Assembly', {
 
         frm.set_query(fieldname, query);
     },
+    
+    set_packing_query(frm) {
+        const fieldname = "packing_features";
+        const { get_available_list } = frappe.events.product_assembly;
+
+        const query = () => {
+            const features = get_available_list(fieldname);
+
+            const filters = {
+                name: ["in", features.join(",")],
+            };
+            return { filters };
+        };
+
+        frm.set_query(fieldname, query);
+    },
 
     add_reload_product_profile_button(frm) {
         const { doc } = frm;
@@ -441,6 +454,7 @@ frappe.ui.form.on('Product Assembly', {
             ["protection_features", []],
             ["utils_features", []],
             ["texture_features", []],
+            ["packing_features", []],
         ];
 
         const clearfunc = ([fieldname, value]) => {
@@ -461,10 +475,6 @@ frappe.ui.form.on('Product Assembly', {
             "horizontal_margin",
             "vertical_margin",
             "is_compound_product",
-            // "item_group_1",
-            // "item_group_2",
-            // "item_group_3",
-            // "item_group_4",
             "printing_feature",
             "control_feature",
             "cutting_feature",
@@ -473,6 +483,7 @@ frappe.ui.form.on('Product Assembly', {
             "protection_features",
             "utils_features",
             "texture_features",
+            "packing_features",
         ];
 
         frm.toggle_display(fields_to_enable, false);
@@ -512,6 +523,7 @@ frappe.ui.form.on('Product Assembly', {
             ["protection_features", new Array()],
             ["utils_features", new Array()],
             ["texture_features", new Array()],
+            ["packing_features", new Array()],
             ["unique_hash", null],
         ];
 
@@ -581,6 +593,7 @@ frappe.ui.form.on('Product Assembly', {
             ["protection_features", "protection_features", d => !!d.length],
             ["utils_features", "utils_features", d => !!d.length],
             ["texture_features", "texture_features", d => !!d.length],
+            ["packing_features", "packing_features", d => !!d.length],
         ];
 
         jQuery.map(fields_list, function ([target, source, condition]) {

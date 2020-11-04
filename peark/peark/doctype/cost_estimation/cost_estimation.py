@@ -187,7 +187,8 @@ class CostEstimation(Document):
         #                 assembly_specifications, update_modified=False)
 
         # temporary update of final_dimension
-        if not self.final_dimension == final_dimension:
+        if not self.final_dimension == final_dimension \
+                and not self.is_new():
             self.db_set("final_dimension",
                         final_dimension, update_modified=False)
 

@@ -50,6 +50,7 @@ class ProductAssembly(Document):
         self.validate_protection_features()
         self.validate_utils_features()
         self.validate_texture_features()
+        self.validate_packing_features()
 
         self.update_specs()
 
@@ -101,6 +102,7 @@ class ProductAssembly(Document):
         self.protection_features = list()
         self.utils_features = list()
         self.texture_features = list()
+        self.packing_features = list()
 
         if not self.flags.dont_update_full_specifications:
             self.full_specifications = None
@@ -234,6 +236,10 @@ class ProductAssembly(Document):
         self.validate_field_value("texture_features", "texture_features",
                                   "product_feature", istable=True)
 
+    def validate_packing_features(self):
+        self.validate_field_value("packing_features", "packing_features",
+                                  "product_feature", istable=True)
+
     def validate_field_value(self, fieldname, datasource,
                              childfieldname, istable=False):
 
@@ -345,6 +351,14 @@ class ProductAssembly(Document):
         items = ""
 
         for item in sorted([opt.product_feature for opt in self.texture_features]):
+            items = "{0}{1}".format(items, "".join(gut(item)))
+
+        return items
+
+    def get_packing_names(self):
+        items = ""
+
+        for item in sorted([opt.product_feature for opt in self.packing_features]):
             items = "{0}{1}".format(items, "".join(gut(item)))
 
         return items
@@ -486,6 +500,7 @@ class ProductAssembly(Document):
             self.get_protections(),
             self.get_utilities(),
             self.get_textures(),
+            self.get_packing(),
         )
 
         return ", ".join([value for value in values if value])
@@ -574,6 +589,10 @@ class ProductAssembly(Document):
         values = (d.product_feature for d in self.texture_features)
         return ", ".join([value for value in values if value])
 
+    def get_packing(self):
+        values = (d.product_feature for d in self.packing_features)
+        return ", ".join([value for value in values if value])
+
     def get_fields(self):
         return [
             "dimension",
@@ -590,6 +609,7 @@ class ProductAssembly(Document):
             # "protection_features",
             # "utils_features",
             # "texture_features",
+            # "packing_features",
         ]
 
     product_profile = None
@@ -612,6 +632,7 @@ class ProductAssembly(Document):
     protection_features = list()
     utils_features = list()
     texture_features = list()
+    packing_features = list()
     unique_hash = None
     full_specifications = None
     product_options = None

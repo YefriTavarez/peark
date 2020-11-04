@@ -170,6 +170,10 @@ doc_events = {
         "on_update": "peark.controllers.product_assembly.on_update",
     },
 
+    "Payment Entry": {
+        "validate": "peark.controllers.erpnext.payment_entry.validate",
+    }
+
 }
 
 # Scheduled Tasks
