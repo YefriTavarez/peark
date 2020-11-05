@@ -47,7 +47,6 @@ def _make_sales_quotation(source_name, target_doc=None, ignore_permissions=False
 
         item_doc = frappe.get_doc(doctype, filters)
 
-
         args = {
             "item_code": item_doc.name,
             "item_name": item_doc.item_name,
@@ -83,19 +82,11 @@ def _make_sales_quotation(source_name, target_doc=None, ignore_permissions=False
         item.update(get_item(source))
         item.rate = flt(source_doc.rate_per_unit)
 
-    def update_item(obj, target, source_parent):
-        target.stock_qty = flt(obj.qty) * flt(obj.conversion_factor)
-
-    doclist = get_mapped_doc(source_doctype, source_name, {
+    _ = get_mapped_doc(source_doctype, source_name, {
         source_doctype: {
             "doctype": "Sales Order",
-            # "validation": {
-            #     "docstatus": ["=", 1]
-            # }
         },
     }, target_doc, set_missing_values, ignore_permissions=ignore_permissions)
-
-    # postprocess: fetch shipping address, set missing values
 
     target_doc.save(ignore_permissions=True)
 
