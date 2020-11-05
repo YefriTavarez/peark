@@ -172,6 +172,7 @@
 "","Product Assembly Dimension","Dimensión del Producto Final"
 "","Product Assembly must be a marked as Compound Product","Ensamblado de Producto ser marcado como Producto Compuesto"
 "","Product Assembly not found for Item: {}","Ensamblado de Producto no encontrado para el Ítem: {}"
+"","Item not found for Product Assembly: {}","Ítem no encontrado para el Ensamblado de Producto: {}"
 "","Product Assembly: {} is marked as a Compound Product and it has not operations available. You should consider creating individual Production Orders foreach part.","El Ensamblado de Producto: {} está marcado como Producto Compuesto y no tiene ninguna operación disponible. Considere crear Ordenes de Producción separadas para cada pieza del producto."
 "","Product Assembly: {} is not a type of Product Profile: {}","Ensamblado de Producto: {} no es un subtipo del Perfíl de Producto: {}"
 "","Product Assembly","Ensamblado de Producto"

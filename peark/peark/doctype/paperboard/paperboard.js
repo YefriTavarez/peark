@@ -86,7 +86,11 @@ frappe.ui.form.on('Paperboard', {
 		const { doc } = frm;
 
 		const get_query = function () {
-			const { item_groups } = doc;
+			let { item_groups } = doc;
+
+			if (!item_groups) {
+				item_groups = new Array();
+			}
 
 			let last_item_group = item_groups[item_groups.length - 1];
 

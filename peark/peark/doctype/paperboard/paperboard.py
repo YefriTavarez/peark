@@ -9,6 +9,7 @@ import copy
 
 from frappe.model.document import Document
 
+from frappe import _ as translate
 from frappe.utils import cstr
 
 from peark.controllers.utils import s_sanitize, gut
@@ -52,20 +53,21 @@ class Paperboard(Document):
         self.title = self.get_full_name()
 
     def get_full_name(self):
-        title = "{} {}".format(self.material_name, self.caliper)
+        # not all paperboard have caliper
+        title = "{}, Calibre {}".format(self.material_name, self.caliper)
 
         if self.include_uom_in_title:
             caliper_uom = self.caliper_uom
 
-            title = "{} {}".format(title, caliper_uom.upper())
+            title = "{}, {}".format(title, caliper_uom.upper())
 
         if self.finish_type:
-            title = "{} {}".format(title, self.finish_type)
+            title = "{}, {}".format(title, translate(self.finish_type))
 
-        title = "{} {}C".format(title, 2 if self.double_sided else 1)
+        title = "{}, {}C".format(title, 2 if self.double_sided else 1)
 
         if self.trademark:
-            title = "{} ({})".format(title, self.trademark)
+            title = "{}, ({})".format(title, self.trademark)
 
         return title
 

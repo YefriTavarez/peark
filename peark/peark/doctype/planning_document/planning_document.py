@@ -100,7 +100,7 @@ class PlanningDocument(Document):
             if mission.description:
                 continue
 
-            mission.description = mission.subjet
+            mission.description = mission.subject
 
             if mission.is_new():
                 continue

@@ -14,6 +14,8 @@ from frappe import _ as translate
 from frappe.utils import today
 from frappe.utils import flt, cint, cstr
 
+from . import make_sales_quotation
+
 
 class CostEstimation(Document):
     def onload(self):
@@ -31,6 +33,9 @@ class CostEstimation(Document):
 
         if not self.is_new():
             self.db_update()
+
+    def make_quotation(self):
+        return make_sales_quotation(self.name)
 
     def update_status(self):
         valid_until = cstr(self.valid_until)

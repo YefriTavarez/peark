@@ -5,6 +5,7 @@ frappe.ui.form.on("Cost Estimation", {
     refresh(frm) {
         frappe.run_serially([
             () => frm.trigger("set_queries"),
+            () => frm.trigger("add_custom_buttons"),
             () => frm.trigger("set_masks"),
         ]);
     },
@@ -14,6 +15,12 @@ frappe.ui.form.on("Cost Estimation", {
             () => frm.trigger("set_product_profile_query"),
             () => frm.trigger("set_product_assembly_query"),
             () => frm.trigger("set_sales_person_query"),
+        ]);
+    },
+
+    add_custom_buttons(frm) {
+        frappe.run_serially([
+            () => frm.trigger("add_custom_make_quotation_button"),
         ]);
     },
 
@@ -52,6 +59,25 @@ frappe.ui.form.on("Cost Estimation", {
         };
 
         frm.set_query("sales_person", { filters });
+    },
+
+    add_custom_make_quotation_button(frm) {
+        const { doc } = frm;
+        if (frm.is_new()) {
+            return false;
+        }
+
+        const label = __("Quotation");
+        const parent = __("Create");
+        const action = () => {
+            if (frm.is_dirty()) {
+                frappe.throw(__("Save changes."));
+            }
+
+            frm.trigger("handle_make_quotation");
+        };
+
+        frm.add_custom_button(label, action, parent);
     },
 
     set_commission_rate_mask(frm) {
@@ -146,6 +172,23 @@ frappe.ui.form.on("Cost Estimation", {
 
             frm.refresh_fields();
         }
+    },
+
+    handle_make_quotation(frm) {
+        // const { doc } = frm;
+        const { model } = frappe;
+
+        const method = "make_quotation";
+
+        frm.call(method)
+            .then(({ message }) => {
+                const view = "Form";
+
+                const [doc] = model.sync(message);
+                const { doctype, name } = doc;
+
+                frappe.set_route(view, doctype, name)
+            });
     },
 
     cost_estimation_type(frm) {

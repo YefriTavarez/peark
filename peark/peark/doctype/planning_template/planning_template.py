@@ -67,7 +67,7 @@ class PlanningTemplate(Document):
             if mission.description:
                 continue
 
-            mission.description = mission.subjet
+            mission.description = mission.subject
 
             mission.db_update()
 

@@ -315,7 +315,7 @@ frappe.ui.form.on('Product Assembly', {
 
         frm.set_query(fieldname, query);
     },
-    
+
     set_packing_query(frm) {
         const fieldname = "packing_features";
         const { get_available_list } = frappe.events.product_assembly;
@@ -616,7 +616,12 @@ frappe.ui.form.on('Product Assembly', {
         const { doc } = frm;
 
         const get_query = function () {
-            const { item_groups } = doc;
+			let { item_groups } = doc;
+
+			if (!item_groups) {
+				item_groups = new Array();
+			}
+
 
             let last_item_group = item_groups[item_groups.length - 1];
 
