@@ -474,18 +474,20 @@ class ProductAssembly(Document):
     def get_full_name(self):
         values = (
             self.product_profile,
+            self.paperboard,
             self.dimension,
             self.get_front_colors(),
             self.get_pantone_colors(),
             self.get_back_colors(),
             self.get_pantone_back_colors(),
             self.control_feature,
-            self.cutting_feature,
-            self.gluing_feature,
-            self.folding_feature,
-            self.get_protections(),
-            self.get_utilities(),
             self.get_textures(),
+            self.get_protections(),
+            self.cutting_feature,
+            self.folding_feature,
+            self.gluing_feature,
+            self.get_utilities(),
+            "."  # final dot
         )
 
         return ", ".join([value for value in values if value])
@@ -494,13 +496,13 @@ class ProductAssembly(Document):
         values = (
             self.printing_feature,
             self.control_feature,
-            self.cutting_feature,
-            self.gluing_feature,
-            self.folding_feature,
-            self.get_protections(),
-            self.get_utilities(),
             self.get_textures(),
-            self.get_packing(),
+            self.get_protections(),
+            self.cutting_feature,
+            self.folding_feature,
+            self.gluing_feature,
+            self.get_utilities(),
+            # self.get_packing(),
         )
 
         return ", ".join([value for value in values if value])

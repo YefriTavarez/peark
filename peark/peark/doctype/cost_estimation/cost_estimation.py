@@ -302,7 +302,7 @@ class CostEstimation(Document):
         # self.dimension_for_press
         width = self.dimension_for_press_width * .0254
         height = self.dimension_for_press_height * .0254
-        sheets = self.sheets_to_buy
+        sheets = flt(self.sheets_to_buy)
 
         for child in self.ink_usage_detail:
             child.set_ink_amount(width, height, sheets)

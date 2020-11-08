@@ -16,11 +16,12 @@ class InkUsageDetail(Document):
 
     def get_ink_usage(self, width, height, sheets):
         return flt(self.material_ink_usage) \
-            * flt(self.ink_coverage) \
-            * flt(self.print_pattern) \
+            * flt(self.ink_coverage) / 100.000 \
+            * flt(self.print_pattern) / 100.000 \
             * flt(width) \
             * flt(height) \
-            * flt(sheets)
+            * flt(sheets) \
+            / 1000.0000
 
     def set_ink_amount(self, width, height, sheets):
         self.set_ink_usage(width, height, sheets)

@@ -397,6 +397,8 @@ class ProductProfile(Document):
         self.shall_rename_item_group()
 
     def shall_rename_item_group(self):
+        return False
+        # to delete
         doctype = "Item Group"
 
         if not self.item_group:

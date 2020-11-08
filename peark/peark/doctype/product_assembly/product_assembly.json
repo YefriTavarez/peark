@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "creation": "2020-08-19 21:33:48.606861",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -10,7 +11,6 @@
   "column_break_3",
   "horizontal_margin",
   "vertical_margin",
-  "enabled",
   "is_compound_product",
   "section_break_6",
   "paperboard",
@@ -46,7 +46,6 @@
   {
    "fieldname": "product_profile",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Product Profile",
    "no_copy": 1,
    "options": "Product Profile",
@@ -55,7 +54,7 @@
   {
    "fieldname": "dimension",
    "fieldtype": "Link",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Dimension",
    "options": "Dimension"
   },
@@ -225,13 +224,6 @@
    "read_only": 1
   },
   {
-   "default": "1",
-   "depends_on": "eval:!doc.__islocal",
-   "fieldname": "enabled",
-   "fieldtype": "Check",
-   "label": "Enabled"
-  },
-  {
    "fieldname": "column_break_36",
    "fieldtype": "Column Break"
   },
@@ -244,6 +236,8 @@
   {
    "fieldname": "full_specifications",
    "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "in_preview": 1,
    "label": "Full Specifications",
    "read_only": 1
   },
@@ -252,7 +246,6 @@
    "description": "When checked all data will be fetched through the Compound Product module",
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Compound Product"
@@ -265,7 +258,7 @@
    "reqd": 1
   }
  ],
- "modified": "2020-11-02 17:53:32.817165",
+ "modified": "2020-11-05 12:05:18.491943",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Assembly",
@@ -287,5 +280,6 @@
  "search_fields": "full_specifications",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "full_specifications",
  "track_changes": 1
 }

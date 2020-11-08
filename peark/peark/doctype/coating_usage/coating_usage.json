@@ -1,0 +1,163 @@
+{
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:coating_name",
+ "beta": 1,
+ "creation": "2020-11-05 18:50:44.554753",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "coating_name",
+  "material_coat_usage",
+  "coating_coverage",
+  "column_break_3",
+  "print_pattern",
+  "coating_rate",
+  "section_break_7",
+  "purchase_rate_based_on",
+  "section_break_9",
+  "item_group",
+  "item",
+  "item_in_purchase",
+  "column_break_9",
+  "purchase_rate",
+  "purchase_uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "coating_name",
+   "fieldtype": "Data",
+   "label": "Coating Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "2",
+   "description": "gm/m2",
+   "fieldname": "material_coat_usage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Material Coat Usage",
+   "precision": "1",
+   "reqd": 1
+  },
+  {
+   "default": "90",
+   "description": "Ink / Protection",
+   "fieldname": "coating_coverage",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Coating Coverage",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "default": "90",
+   "description": "%",
+   "fieldname": "print_pattern",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Print Pattern",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "kg",
+   "fieldname": "coating_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Coating Rate",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break",
+   "label": "Last Purchase Rate Based On"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.purchase_rate_based_on==\"Item\"",
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "depends_on": "eval:doc.purchase_rate_based_on==\"Item Group\"",
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "purchase_rate_based_on",
+   "fieldtype": "Select",
+   "options": "Item\nItem Group",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.purchase_rate_based_on==\"Item Group\"",
+   "fieldname": "item_in_purchase",
+   "fieldtype": "Link",
+   "label": "Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "purchase_rate",
+   "fieldtype": "Currency",
+   "label": "Purchase Rate"
+  },
+  {
+   "fieldname": "purchase_uom",
+   "fieldtype": "Link",
+   "label": "Purchase UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "modified": "2020-11-05 19:33:10.015932",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Coating Usage",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
