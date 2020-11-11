@@ -18,7 +18,7 @@ def make_sales_quotation(source_name, target_doc=None):
     cost_estimation = database.get_value("Cost Estimation", source_name, [
         "generated_on", "valid_until"], as_dict=1)
     if cost_estimation.valid_until and (cost_estimation.valid_until < cost_estimation.generated_on or cost_estimation.valid_until < getdate(nowdate())):
-        frappe.throw(_("Validity period of this quotation has ended."))
+        frappe.throw(translate("Validity period of this quotation has ended."))
     return _make_sales_quotation(source_name, target_doc)
 
 
