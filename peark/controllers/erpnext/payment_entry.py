@@ -16,4 +16,4 @@ def validate(doc, method=None):
 
     if doc.db_get("workflow_state") == "Borrador" \
             and doc.workflow_state == "Pendiente":
-        doc.workflow_state = "Aprobado"
+        doc.db_set("workflow_state", "Aprobado")
