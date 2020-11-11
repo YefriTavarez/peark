@@ -14,12 +14,11 @@
   "finish_type",
   "double_sided",
   "section_break_7",
-  "supported_techniques",
+  "techniques",
   "column_break_9",
   "item_groups",
   "section_break_14",
-  "caliper",
-  "caliper_uom",
+  "calipers",
   "column_break_19",
   "weights",
   "form_settings_section",
@@ -36,13 +35,13 @@
    "depends_on": "eval:!doc.__islocal",
    "fieldname": "enabled",
    "fieldtype": "Check",
-   "label": "Habilitado?"
+   "label": "\u00bfHabilitado?"
   },
   {
    "default": "0",
    "fieldname": "backboard",
    "fieldtype": "Check",
-   "label": "Es Respaldo?"
+   "label": "\u00bfEs Respaldo?"
   },
   {
    "fieldname": "material_name",
@@ -69,28 +68,16 @@
    "options": "\nMatte\nGloss\nSemi-Gloss"
   },
   {
-   "fieldname": "supported_techniques",
-   "fieldtype": "Table MultiSelect",
-   "label": "T\u00e9cnicas de Impresi\u00f3n",
-   "options": "Supported Techniques"
-  },
-  {
-   "fieldname": "caliper",
-   "fieldtype": "Int",
-   "label": "Calibre",
-   "reqd": 1
-  },
-  {
    "default": "0",
    "fieldname": "include_uom_in_title",
    "fieldtype": "Check",
-   "label": "Incluir UdM en T\u00edtulo?"
+   "label": "\u00bfIncluir UdM en T\u00edtulo?"
   },
   {
    "default": "0",
    "fieldname": "double_sided",
    "fieldtype": "Check",
-   "label": "Doble Cara?"
+   "label": "\u00bfDoble Cara?"
   },
   {
    "fieldname": "dimensions",
@@ -123,13 +110,6 @@
   {
    "fieldname": "section_break_14",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "caliper_uom",
-   "fieldtype": "Link",
-   "label": "UdM",
-   "options": "UOM",
-   "reqd": 1
   },
   {
    "fieldname": "form_settings_section",
@@ -166,10 +146,22 @@
    "label": "Item Groups",
    "options": "Item Groups",
    "reqd": 1
+  },
+  {
+   "fieldname": "techniques",
+   "fieldtype": "Table MultiSelect",
+   "label": "T\u00e9cnicas de Impresi\u00f3n",
+   "options": "Supported Techniques"
+  },
+  {
+   "fieldname": "calipers",
+   "fieldtype": "Table MultiSelect",
+   "label": "Paperboard Caliper",
+   "options": "Paperboard Calipers"
   }
  ],
- "modified": "2020-11-02 18:00:56.456886",
- "modified_by": "Administrator",
+ "modified": "2020-11-10 20:04:54.006781",
+ "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Paperboard",
  "owner": "yefritavarez@gmail.com",

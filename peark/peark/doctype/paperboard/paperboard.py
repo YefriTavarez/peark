@@ -10,7 +10,7 @@ import copy
 from frappe.model.document import Document
 
 from frappe import _ as translate
-from frappe.utils import cstr
+from frappe.utils import cstr, cint, flt
 
 from peark.controllers.utils import s_sanitize, gut
 
@@ -21,12 +21,11 @@ class Paperboard(Document):
         self.name = self.title
 
     def validate(self):
-        self.set_default_caliper()
-
         self.update_title()
         self.remove_duplicated_weights()
         self.remove_duplicated_dimensions()
         self.sort_weights()
+        self.sort_calipers()
         self.sort_dimensions()
 
     def make_name(self):
@@ -36,8 +35,8 @@ class Paperboard(Document):
 
         new_name = "".join(gutted)
 
-        if self.caliper:
-            new_name = "{0}{1}".format(new_name, self.caliper)
+        # if self.caliper:
+        #     new_name = "{0}{1}".format(new_name, self.caliper)
 
         if self.finish_type:
             new_name = "{}{}".format(new_name, self.finish_type[0])
@@ -54,12 +53,12 @@ class Paperboard(Document):
 
     def get_full_name(self):
         # not all paperboard have caliper
-        title = "{}, Calibre {}".format(self.material_name, self.caliper)
+        title = self.material_name
 
-        if self.include_uom_in_title:
-            caliper_uom = self.caliper_uom
+        # if self.include_uom_in_title:
+        #     caliper_uom = self.caliper_uom
 
-            title = "{}, {}".format(title, caliper_uom.upper())
+        #     title = "{}, {}".format(title, caliper_uom.upper())
 
         if self.finish_type:
             title = "{}, {}".format(title, translate(self.finish_type))
@@ -104,13 +103,40 @@ class Paperboard(Document):
     def sort_weights(self):
         weights = copy.deepcopy(self.weights)
 
+        for weight in weights:
+            doctype = "Paperboard Weight"
+            name = weight.paperboard_weight
+            fieldname = "weight"
+
+            value = frappe.get_value(doctype, name, fieldname)
+            weight.weight = value
+
         weights \
-            .sort(reverse=False, key=lambda d: d.weight)
+            .sort(reverse=False, key=lambda d: flt(d.weight))
 
         for idx, obj in enumerate(weights):
             obj.set("idx", idx + 1)
 
         self.weights = weights
+
+    def sort_calipers(self):
+        calipers = copy.deepcopy(self.calipers)
+
+        for caliper in calipers:
+            doctype = "Paperboard Caliper"
+            name = caliper.paperboard_caliper
+            fieldname = "caliper"
+
+            value = frappe.get_value(doctype, name, fieldname)
+            caliper.caliper = value
+
+        calipers \
+            .sort(reverse=False, key=lambda d: cint(d.caliper))
+
+        for idx, obj in enumerate(calipers):
+            obj.set("idx", idx + 1)
+
+        self.calipers = calipers
 
     def sort_dimensions(self):
         dimensions = copy.deepcopy(self.dimensions)
@@ -123,12 +149,6 @@ class Paperboard(Document):
 
         self.dimensions = dimensions
 
-    def set_default_caliper(self):
-        if not self.caliper:
-            self.caliper = 0
-
-    caliper = 0
-    caliper_uom = None
     double_sided = None
     finish_type = ""
     include_uom_in_title = False
@@ -138,5 +158,6 @@ class Paperboard(Document):
     title_based_on = None
     trademark = ""
     weights = list()
+    calipers = list()
     dimensions = list()
     item_groups = list()

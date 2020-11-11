@@ -1,0 +1,90 @@
+{
+ "allow_rename": 1,
+ "creation": "2020-11-10 16:15:17.232094",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "caliper",
+  "capliper_uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "caliper",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Caliper",
+   "reqd": 1
+  },
+  {
+   "fieldname": "capliper_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Capliper UOM",
+   "options": "UOM",
+   "reqd": 1
+  }
+ ],
+ "modified": "2020-11-10 19:32:06.766028",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "peark",
+ "name": "Paperboard Caliper",
+ "owner": "ytavarez@igcaribe.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

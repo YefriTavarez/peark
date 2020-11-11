@@ -16,7 +16,8 @@ frappe.ui.form.on('Paperboard', {
 	},
 	set_custom_queries(frm) {
 		frappe.run_serially([
-			() => frm.trigger("set_supported_techniques_query"),
+			() => frm.trigger("set_techniques_query"),
+			() => frm.trigger("set_calipers_query"),
 			() => frm.trigger("set_weights_query"),
 			() => frm.trigger("set_dimensions_query"),
 			() => frm.trigger("set_item_groups_query"),
@@ -27,12 +28,12 @@ frappe.ui.form.on('Paperboard', {
 			() => frm.trigger("add_view_items_button"),
 		]);
 	},
-	set_supported_techniques_query(frm) {
+	set_techniques_query(frm) {
 
 		const callback = doc => {
-			const { supported_techniques } = doc;
+			const { techniques } = doc;
 
-			const ignore_list = jQuery.map(supported_techniques, row => row.printing_technique);
+			const ignore_list = jQuery.map(techniques, row => row.printing_technique);
 
 			const opts = {
 				filters: {
@@ -43,7 +44,25 @@ frappe.ui.form.on('Paperboard', {
 			return opts;
 		};
 
-		frm.set_query("supported_techniques", callback);
+		frm.set_query("techniques", callback);
+	},
+	set_calipers_query(frm) {
+
+		const callback = doc => {
+			const { calipers } = doc;
+
+			const ignore_list = jQuery.map(calipers, row => row.paperboard_caliper);
+
+			const opts = {
+				filters: {
+					name: ["not in", ignore_list.join(",")],
+				}
+			};
+
+			return opts;
+		};
+
+		frm.set_query("calipers", callback);
 	},
 	set_weights_query(frm) {
 
@@ -61,7 +80,7 @@ frappe.ui.form.on('Paperboard', {
 			return opts;
 		};
 
-		frm.set_query("paperboard_weight", callback);
+		frm.set_query("weights", callback);
 	},
 	set_dimensions_query(frm) {
 
