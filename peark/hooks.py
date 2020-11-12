@@ -11,6 +11,9 @@ app_color = "#343443"
 app_email = "yefritavarez@gmail.com"
 app_license = "MIT"
 
+# use frappe logo
+app_logo_url = "/assets/frappe/images/frappe-framework-logo.png"
+
 # Fixtures
 # ------------------
 fixtures = [
@@ -167,6 +170,12 @@ doc_events = {
     },
     "Payment Entry": {
         "validate": "peark.controllers.erpnext.payment_entry.validate",
+    },
+    "Purchase Order": {
+        "validate": [
+            "peark.controllers.coating_usage.update_last_purchase_rate",
+            "peark.controllers.list_of_material.update_last_purchase_rate",
+        ],
     }
 }
 

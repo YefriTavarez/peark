@@ -3,8 +3,16 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-# import frappe
+
+import frappe
 from frappe.model.document import Document
 
-class ListofMaterials(Document):
-	pass
+from frappe.utils import cstr, cint
+
+
+class ListofMaterial(Document):
+    list_of_material_name = None
+    naming_selection = None
+    naming_series = None
+    items = list()
+    item_set = list()

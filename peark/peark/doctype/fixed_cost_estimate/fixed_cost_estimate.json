@@ -6,6 +6,7 @@
  "field_order": [
   "cost_specification",
   "qty",
+  "column_break_3",
   "rate",
   "amount"
  ],
@@ -29,22 +30,27 @@
   {
    "default": "1",
    "fieldname": "qty",
-   "fieldtype": "Int",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Qty",
+   "label": "Qty / Fraction",
    "reqd": 1
   },
   {
    "default": "0",
    "fieldname": "amount",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Amount",
    "precision": "6",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
   }
  ],
  "istable": 1,
- "modified": "2020-11-03 11:03:33.352355",
+ "modified": "2020-11-11 13:06:18.061535",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Fixed Cost Estimate",

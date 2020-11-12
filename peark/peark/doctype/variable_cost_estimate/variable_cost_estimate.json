@@ -5,8 +5,9 @@
  "engine": "InnoDB",
  "field_order": [
   "cost_specification",
-  "rate",
   "qty",
+  "column_break_3",
+  "rate",
   "amount"
  ],
  "fields": [
@@ -31,11 +32,12 @@
   },
   {
    "columns": 2,
+   "default": "1",
    "description": "ex: If you need 5 units of item A to produce 1,000 units of product B; then you need 0.005 units of A to make 1 of B.",
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Qty or Fraction",
+   "label": "Qty / Fraction",
    "precision": "9",
    "reqd": 1
   },
@@ -47,11 +49,15 @@
    "label": "Amount",
    "precision": "6",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
   }
  ],
  "istable": 1,
- "modified": "2020-10-09 14:56:57.980306",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-11-11 13:02:42.103754",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Variable Cost Estimate",
  "owner": "yefritavarez@gmail.com",

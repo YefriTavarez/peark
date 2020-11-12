@@ -1,83 +1,71 @@
 {
- "allow_import": 1,
- "allow_rename": 1,
- "autoname": "field:coating_name",
- "creation": "2020-11-05 18:50:44.554753",
+ "creation": "2020-11-08 11:25:25.036496",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "coating_name",
-  "material_coat_usage",
-  "coating_coverage",
+  "supply_specs",
+  "override_item_name",
   "column_break_3",
-  "print_pattern",
-  "coating_rate",
-  "section_break_7",
-  "last_purchase_rate_based_on",
+  "section_break_6",
+  "qty",
+  "fixed_qty",
   "column_break_9",
+  "uom",
+  "section_break_11",
+  "last_purchase_rate_based_on",
+  "column_break_13",
   "item",
   "item_group",
-  "item_set",
-  "section_break_13",
+  "item_set_display",
+  "section_break_17",
   "last_purchase_item",
-  "column_break_15",
+  "column_break_19",
   "last_purchase_rate",
   "last_purchase_uom"
  ],
  "fields": [
   {
-   "fieldname": "coating_name",
+   "fieldname": "supply_specs",
    "fieldtype": "Data",
-   "label": "Coating Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
-   "default": "2",
-   "description": "gm/m2",
-   "fieldname": "material_coat_usage",
-   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Material Coat Usage",
-   "precision": "1",
-   "reqd": 1
-  },
-  {
-   "default": "90",
-   "description": "Ink / Protection",
-   "fieldname": "coating_coverage",
-   "fieldtype": "Percent",
-   "in_list_view": 1,
-   "label": "Coating Coverage",
-   "precision": "2",
-   "reqd": 1
-  },
-  {
-   "default": "90",
-   "description": "%",
-   "fieldname": "print_pattern",
-   "fieldtype": "Percent",
-   "in_list_view": 1,
-   "label": "Print Pattern",
+   "in_preview": 1,
+   "label": "Supply Specs",
    "reqd": 1
   },
   {
    "default": "0",
-   "description": "kg",
-   "fieldname": "coating_rate",
-   "fieldtype": "Currency",
+   "fieldname": "override_item_name",
+   "fieldtype": "Check",
+   "label": "Override Default Item Name"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Coating Rate",
+   "in_preview": 1,
+   "label": "Required Qty / Fraction",
+   "precision": "9",
    "reqd": 1
   },
   {
-   "fieldname": "section_break_7",
-   "fieldtype": "Section Break"
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "label": "Unit of Measure",
+   "options": "UOM",
+   "reqd": 1
   },
   {
-   "fieldname": "column_break_9",
-   "fieldtype": "Column Break"
+   "fieldname": "last_purchase_rate_based_on",
+   "fieldtype": "Select",
+   "label": "Last Purchase Rate Based On",
+   "options": "Item\nItem Group\nItem Set"
   },
   {
    "depends_on": "eval:doc.last_purchase_rate_based_on==\"Item\"",
@@ -94,37 +82,11 @@
    "options": "Item Group"
   },
   {
-   "fieldname": "column_break_3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "last_purchase_rate_based_on",
-   "fieldtype": "Select",
-   "label": "Last Purchase Rate Based On",
-   "options": "Item\nItem Group\nItem Set",
-   "reqd": 1
-  },
-  {
-   "depends_on": "eval:doc.last_purchase_rate_based_on==\"Item Set\"",
-   "fieldname": "item_set",
-   "fieldtype": "Table MultiSelect",
-   "label": "Item Set",
-   "options": "Item Set"
-  },
-  {
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "last_purchase_item",
    "fieldtype": "Link",
    "label": "Last Purchase Item",
    "options": "Item",
    "set_only_once": 1
-  },
-  {
-   "fieldname": "column_break_15",
-   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -135,6 +97,7 @@
    "in_list_view": 1,
    "in_preview": 1,
    "label": "Last Purchase Rate",
+   "precision": "6",
    "reqd": 1,
    "set_only_once": 1
   },
@@ -147,12 +110,48 @@
    "label": "Last Purchase UOM",
    "options": "UOM",
    "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "fixed_qty",
+   "fieldtype": "Check",
+   "label": "Fixed Qty"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.last_purchase_rate_based_on==\"Item Set\"",
+   "fieldname": "item_set_display",
+   "fieldtype": "HTML",
+   "label": "Item Set"
   }
  ],
- "modified": "2020-11-11 12:41:10.865787",
+ "modified": "2020-11-10 08:35:13.991446",
  "modified_by": "Administrator",
  "module": "peark",
- "name": "Coating Usage",
+ "name": "List of Material Detail",
  "owner": "Administrator",
  "permissions": [
   {
@@ -178,6 +177,10 @@
    "role": "Sales Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
   }
  ],
  "sort_field": "modified",

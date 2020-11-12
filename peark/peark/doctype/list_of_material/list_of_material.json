@@ -1,0 +1,102 @@
+{
+ "autoname": "naming_series:",
+ "creation": "2020-10-25 19:27:59.387062",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "list_of_material_name",
+  "column_break_2",
+  "naming_selection",
+  "naming_series",
+  "section_break_5",
+  "items",
+  "item_set"
+ ],
+ "fields": [
+  {
+   "fieldname": "list_of_material_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "List of Material Name",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "naming_selection",
+   "fieldtype": "Select",
+   "label": "Naming Selection",
+   "options": "Naming Series\nList of Material Name",
+   "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.naming_selection==\"Naming Series\"",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "LIST-OF-MAT-",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break",
+   "label": "List of Material Detail"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "options": "List of Material Detail"
+  },
+  {
+   "fieldname": "item_set",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Item Set",
+   "options": "Item Set"
+  }
+ ],
+ "modified": "2020-11-11 19:42:35.640211",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "List of Material",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "All"
+  }
+ ],
+ "search_fields": "list_of_material_name",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "list_of_material_name",
+ "track_changes": 1
+}

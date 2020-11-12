@@ -51,9 +51,9 @@
   },
   {
    "fieldname": "materials",
-   "fieldtype": "Table",
-   "label": "List of Materials",
-   "options": "List of Materials"
+   "fieldtype": "Link",
+   "label": "List of Material",
+   "options": "List of Material"
   },
   {
    "fieldname": "default_work_station",
@@ -159,7 +159,7 @@
    "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-11-03 13:29:05.721274",
+ "modified": "2020-11-08 14:46:24.206722",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Feature",

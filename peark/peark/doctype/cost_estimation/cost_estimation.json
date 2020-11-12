@@ -34,7 +34,7 @@
   "dimension_for_press_height",
   "final_dimension",
   "section_break_29",
-  "ink_usage_detail",
+  "coating_usage_detail",
   "section_break_22",
   "fixed_costs",
   "section_break_24",
@@ -358,16 +358,16 @@
    "collapsible": 1,
    "fieldname": "section_break_29",
    "fieldtype": "Section Break",
-   "label": "Ink Calculation"
+   "label": "Coating Calculation"
   },
   {
-   "fieldname": "ink_usage_detail",
+   "fieldname": "coating_usage_detail",
    "fieldtype": "Table",
-   "label": "Ink Usage Detail",
-   "options": "Ink Usage Detail"
+   "label": "Coating Usage Detail",
+   "options": "Coating Usage Detail"
   }
  ],
- "modified": "2020-11-04 10:58:06.140115",
+ "modified": "2020-11-11 12:47:30.853760",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",

@@ -1,0 +1,94 @@
+{
+ "creation": "2020-11-11 12:21:38.014528",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "coating_usage",
+  "section_break_2",
+  "material_coat_usage",
+  "coating_coverage",
+  "print_pattern",
+  "column_break_6",
+  "coating_rate",
+  "coating_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "coating_usage",
+   "fieldtype": "Link",
+   "label": "Coating Usage",
+   "options": "Coating Usage",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "2",
+   "description": "gm/m2",
+   "fetch_from": "coating_usage.material_coat_usage",
+   "fieldname": "material_coat_usage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Material Coat Usage",
+   "precision": "1",
+   "reqd": 1
+  },
+  {
+   "description": "Ink / Protection",
+   "fetch_from": "coating_usage.coating_coverage",
+   "fetch_if_empty": 1,
+   "fieldname": "coating_coverage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Coating Coverage (%)",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "description": "Ink / Protection",
+   "fetch_from": "coating_usage.print_pattern",
+   "fetch_if_empty": 1,
+   "fieldname": "print_pattern",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Print Pattern (%)",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "kg",
+   "fetch_from": "coating_usage.coating_rate",
+   "fetch_if_empty": 1,
+   "fieldname": "coating_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Coating Rate",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "coating_amount",
+   "fieldtype": "Currency",
+   "label": "Coating Amount",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-11-11 17:50:12.715342",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Coating Usage Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
