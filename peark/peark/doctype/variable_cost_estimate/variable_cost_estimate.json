@@ -8,7 +8,9 @@
   "qty",
   "column_break_3",
   "rate",
-  "amount"
+  "amount",
+  "section_break_6",
+  "list_of_material"
  ],
  "fields": [
   {
@@ -53,11 +55,22 @@
   {
    "fieldname": "column_break_3",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "For Costing Purposes",
+   "fieldname": "list_of_material",
+   "fieldtype": "Link",
+   "label": "List of Material",
+   "options": "List of Material"
   }
  ],
  "istable": 1,
- "modified": "2020-11-11 13:02:42.103754",
- "modified_by": "Administrator",
+ "modified": "2020-11-12 08:24:54.342878",
+ "modified_by": "yefritavarez@tzcode.tech",
  "module": "peark",
  "name": "Variable Cost Estimate",
  "owner": "yefritavarez@gmail.com",
