@@ -172,7 +172,7 @@ doc_events = {
         "validate": "peark.controllers.erpnext.payment_entry.validate",
     },
     "Purchase Order": {
-        "validate": [
+        "on_submit": [
             "peark.controllers.coating_usage.update_last_purchase_rate",
             "peark.controllers.list_of_material.update_last_purchase_rate",
         ],
