@@ -216,19 +216,29 @@ class CostEstimation(Document):
                         cost_estimation_type)
 
     def set_last_purchase_rate(self, cost_estimation_type):
-        for childdoc in cost_estimation_type.variable_costs:
+        for childdoc in cost_estimation_type.default_variable_costs:
             if not childdoc.list_of_material:
                 continue
 
-            doctype = "List of Material"
-            name = childdoc.list_of_material
+            doctype = "List of Material Detail"
+            filters = {
+                "parenttype": "List of Material",
+                "parent": childdoc.list_of_material
+            }
 
             fieldname = "last_purchase_rate"
 
+            # issue: relationship not well managed
             last_purchase_rate = frappe \
-                .get_value(doctype, name, fieldname)
+                .get_value(doctype, filters, fieldname)
 
-            childdoc.last_purchase_rate = last_purchase_rate
+            if not flt(last_purchase_rate):
+                continue
+
+            # childdoc.last_purchase_rate = last_purchase_rate
+            childdoc.rate = flt(last_purchase_rate)
+            childdoc.amount = flt(childdoc.rate) * flt(childdoc.qty)
+
 
     def calculate_totals(self):
         self.set_sub_total()
