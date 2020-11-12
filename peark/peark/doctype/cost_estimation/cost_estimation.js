@@ -289,27 +289,51 @@ frappe.ui.form.on("Cost Estimation", {
 
     },
 
-    margin_rate(frm) {
+    margin_rate_1(frm) {
         const { doc } = frm;
 
 
-        if (!doc.margin_rate) {
-            if (typeof doc.margin_rate == "string") {
+        if (!doc.margin_rate_1) {
+            if (typeof doc.margin_rate_1 == "string") {
                 return false;
             }
         }
 
-        frm.trigger("calculate_margin_amount");
+        frm.trigger("calculate_margin_amount_1");
     },
 
-    margin_amount(frm) {
+    margin_amount_1(frm) {
         const { doc } = frm;
 
-        if (!doc.margin_rate) {
+        if (!doc.margin_rate_1) {
             return false;
         }
 
-        frm.trigger("calculate_margin_amount");
+        frm.trigger("calculate_margin_amount_1");
+
+    },
+
+    margin_rate_2(frm) {
+        const { doc } = frm;
+
+
+        if (!doc.margin_rate_2) {
+            if (typeof doc.margin_rate_2 == "string") {
+                return false;
+            }
+        }
+
+        frm.trigger("calculate_margin_amount_2");
+    },
+
+    margin_amount_2(frm) {
+        const { doc } = frm;
+
+        if (!doc.margin_rate_2) {
+            return false;
+        }
+
+        frm.trigger("calculate_margin_amount_2");
 
     },
 
@@ -346,8 +370,15 @@ frappe.ui.form.on("Cost Estimation", {
             });
     },
 
-    calculate_margin_amount(frm) {
-        frm.call("set_margin_amount")
+    calculate_margin_amount_1(frm) {
+        frm.call("set_margin_amount_1")
+            .then(() => {
+                frm.trigger("calculate_sub_total");
+            });
+    },
+
+    calculate_margin_amount_2(frm) {
+        frm.call("set_margin_amount_2")
             .then(() => {
                 frm.trigger("calculate_sub_total");
             });

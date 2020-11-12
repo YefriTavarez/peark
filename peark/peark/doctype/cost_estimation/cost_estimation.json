@@ -45,12 +45,16 @@
   "column_break_29",
   "commission_amount",
   "section_break_31",
-  "margin_rate",
+  "margin_rate_1",
   "column_break_33",
-  "margin_amount",
+  "margin_amount_1",
   "section_break_35",
-  "rate_per_unit",
+  "margin_rate_2",
   "column_break_37",
+  "margin_amount_2",
+  "section_break_39",
+  "rate_per_unit",
+  "column_break_40",
   "sub_total",
   "grand_total"
  ],
@@ -237,6 +241,22 @@
    "reqd": 1
   },
   {
+   "default": "10",
+   "description": "%",
+   "fieldname": "margin_rate_1",
+   "fieldtype": "Data",
+   "label": "Margin Rate 1",
+   "reqd": 1
+  },
+  {
+   "default": "30",
+   "description": "%",
+   "fieldname": "margin_rate_2",
+   "fieldtype": "Data",
+   "label": "Margin Rate 2",
+   "reqd": 1
+  },
+  {
    "fieldname": "column_break_5",
    "fieldtype": "Column Break"
   },
@@ -283,17 +303,31 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "margin_amount",
-   "fieldtype": "Currency",
-   "label": "Margin Amount",
-   "read_only": 1
-  },
-  {
    "fieldname": "section_break_35",
    "fieldtype": "Section Break"
   },
   {
+   "fieldname": "margin_amount_1",
+   "fieldtype": "Currency",
+   "label": "Margin Amount 1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "margin_amount_2",
+   "fieldtype": "Currency",
+   "label": "Margin Amount 2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_39",
+   "fieldtype": "Section Break"
+  },
+  {
    "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_40",
    "fieldtype": "Column Break"
   },
   {
@@ -367,7 +401,7 @@
    "options": "Coating Usage Detail"
   }
  ],
- "modified": "2020-11-11 12:47:30.853760",
+ "modified": "2020-11-11 12:47:30.853762",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",

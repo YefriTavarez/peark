@@ -216,7 +216,8 @@ class CostEstimation(Document):
     def calculate_totals(self):
         self.set_sub_total()
         self.set_commission_amount()
-        self.set_margin_amount()
+        self.set_margin_amount_1()
+        self.set_margin_amount_2()
         self.set_grand_total()
         self.set_rate_per_unit()
 
@@ -253,20 +254,29 @@ class CostEstimation(Document):
 
     def get_grand_total(self):
         commission_amount = self.get_commission_amount()
-        margin_amount = self.get_margin_amount()
+        margin_amount_1 = self.get_margin_amount_1()
+        margin_amount_2 = self.get_margin_amount_2()
         sub_total = self.get_sub_total()
 
-        return commission_amount + margin_amount + sub_total
+        return commission_amount \
+            + margin_amount_1 \
+            + margin_amount_1 \
+            + sub_total
 
     def set_commission_amount(self):
         commission_amount = self.get_commission_amount()
 
         self.commission_amount = commission_amount
 
-    def set_margin_amount(self):
-        margin_amount = self.get_margin_amount()
+    def set_margin_amount_1(self):
+        margin_amount_1 = self.get_margin_amount_1()
 
-        self.margin_amount = margin_amount
+        self.margin_amount_1 = margin_amount_1
+
+    def set_margin_amount_2(self):
+        margin_amount_2 = self.get_margin_amount_2()
+
+        self.margin_amount_2 = margin_amount_2
 
     def get_commission_rate(self):
         return flt(self.commission_rate)
@@ -283,20 +293,35 @@ class CostEstimation(Document):
 
         return commission_amount
 
-    def get_margin_rate(self):
-        return flt(self.margin_rate)
+    def get_margin_rate_1(self):
+        return flt(self.margin_rate_1)
 
-    def get_margin_amount(self):
-        margin_amount = .000
+    def get_margin_rate_2(self):
+        return flt(self.margin_rate_2)
+
+    def get_margin_amount_1(self):
+        margin_amount_1 = .000
 
         sub_total = flt(self.sub_total)
 
         if sub_total:
-            margin_rate = self.get_margin_rate() / 100.000
+            margin_rate_1 = self.get_margin_rate_1() / 100.000
 
-            margin_amount = sub_total * margin_rate
+            margin_amount_1 = sub_total * margin_rate_1
 
-        return margin_amount
+        return margin_amount_1
+
+    def get_margin_amount_2(self):
+        margin_amount_2 = .000
+
+        sub_total = flt(self.sub_total)
+
+        if sub_total:
+            margin_rate_2 = self.get_margin_rate_2() / 100.000
+
+            margin_amount_2 = sub_total * margin_rate_2
+
+        return margin_amount_2
 
     def get_total_ink_usage(self):
         # self.dimension_for_press
@@ -343,8 +368,10 @@ class CostEstimation(Document):
     fixed_costs = list()
     variable_costs = list()
     sales_person = None
-    margin_rate = .000
-    margin_amount = .000
+    margin_rate_1 = .000
+    margin_amount_1 = .000
+    margin_rate_2 = .000
+    margin_amount_2 = .000
     commission_rate = .000
     commission_amount = .000
     rate_per_unit = .000
