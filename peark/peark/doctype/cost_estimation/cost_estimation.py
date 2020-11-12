@@ -210,8 +210,25 @@ class CostEstimation(Document):
             cost_estimation_type = frappe \
                 .get_doc(doctype, docname)
 
+            self.set_last_purchase_rate(cost_estimation_type)
+
         self.set_onload("cost_estimation_type",
                         cost_estimation_type)
+
+    def set_last_purchase_rate(self, cost_estimation_type):
+        for childdoc in cost_estimation_type.variable_costs:
+            if not childdoc.list_of_material:
+                continue
+
+            doctype = "List of Material"
+            name = childdoc.list_of_material
+
+            fieldname = "last_purchase_rate"
+
+            last_purchase_rate = frappe \
+                .get_value(doctype, name, fieldname)
+
+            childdoc.last_purchase_rate = last_purchase_rate
 
     def calculate_totals(self):
         self.set_sub_total()
