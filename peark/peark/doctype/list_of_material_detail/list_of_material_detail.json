@@ -1,4 +1,6 @@
 {
+ "allow_rename": 1,
+ "autoname": "naming_series:",
  "creation": "2020-11-08 11:25:25.036496",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -7,6 +9,8 @@
   "supply_specs",
   "override_item_name",
   "column_break_3",
+  "naming_selection",
+  "naming_series",
   "section_break_6",
   "qty",
   "fixed_qty",
@@ -146,9 +150,28 @@
    "fieldname": "item_set_display",
    "fieldtype": "HTML",
    "label": "Item Set"
+  },
+  {
+   "default": "Naming Series",
+   "fieldname": "naming_selection",
+   "fieldtype": "Select",
+   "label": "Naming Selection",
+   "options": "Supply Specs\nNaming Series",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "default": "LIST-OF-MATERIAL-DETAIL-",
+   "depends_on": "eval:doc.naming_selection==\"Naming Series\"",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "LIST-OF-MATERIAL-DETAIL-",
+   "reqd": 1,
+   "set_only_once": 1
   }
  ],
- "modified": "2020-11-10 08:35:13.991446",
+ "modified": "2020-11-14 22:02:50.970136",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "List of Material Detail",
