@@ -17,6 +17,7 @@
   {
    "fieldname": "coating_usage",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Coating Usage",
    "options": "Coating Usage",
    "reqd": 1
@@ -82,7 +83,7 @@
   }
  ],
  "istable": 1,
- "modified": "2020-11-11 17:50:12.715342",
+ "modified": "2020-11-13 19:43:31.023628",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Coating Usage Detail",

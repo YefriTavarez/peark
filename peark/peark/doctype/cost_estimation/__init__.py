@@ -31,6 +31,9 @@ def _make_sales_quotation(source_name, target_doc=None, ignore_permissions=False
         target_doctype = "Quotation"
         target_doc = frappe.new_doc(target_doctype)
 
+        # for tracking purposes
+        target_doc.cost_estimation = source_name
+
     def get_item(source_doc):
         ref_doctype = "Product Assembly"
         ref_docname = source_doc.product_assembly

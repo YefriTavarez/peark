@@ -49,6 +49,7 @@ fixtures = [
                     "Planning Document-expected_delivery_date",
                     "Planning Document-production_order",
                     "Purchase Order Item-planning_document",
+                    "Quotation-cost_estimation",
                     "Quotation-tax_id",
                     "Sales Invoice Item-planning_document",
                     "Sales Invoice-ncf",
