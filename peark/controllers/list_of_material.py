@@ -21,8 +21,6 @@ def update_item_reference_by_item(purchase_order_item):
     # get items
     doctype = "List of Material Detail"
     filters = {
-        "parentfield": "items",
-        "parenttype": "List of Material",
         "item": purchased_item_code,
     }
 
@@ -42,8 +40,6 @@ def update_item_reference_by_item_group(purchase_order_item):
     # get items
     doctype = "List of Material Detail"
     filters = {
-        "parentfield": "items",
-        "parenttype": "List of Material",
         "item_group": purchased_item_group,
     }
 
@@ -64,11 +60,11 @@ def update_item_reference_by_item_set(purchase_order_item):
     doctype = "Item Set"
     filters = {
         "parentfield": "item_set",
-        "parenttype": "List of Material",
+        "parenttype": "List of Material Detail",
         "item": purchased_item_code,
     }
 
-    fieldname = "list_of_material_detail"
+    fieldname = "parent"
 
     list_of_material_details = \
         frappe.get_list(doctype, filters,

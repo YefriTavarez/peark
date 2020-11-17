@@ -21,7 +21,7 @@
   "column_break_13",
   "item",
   "item_group",
-  "item_set_display",
+  "item_set",
   "section_break_17",
   "last_purchase_item",
   "column_break_19",
@@ -146,12 +146,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval:doc.last_purchase_rate_based_on==\"Item Set\"",
-   "fieldname": "item_set_display",
-   "fieldtype": "HTML",
-   "label": "Item Set"
-  },
-  {
    "default": "Naming Series",
    "fieldname": "naming_selection",
    "fieldtype": "Select",
@@ -169,9 +163,16 @@
    "options": "LIST-OF-MATERIAL-DETAIL-",
    "reqd": 1,
    "set_only_once": 1
+  },
+  {
+   "depends_on": "eval:doc.last_purchase_rate_based_on==\"Item Set\"",
+   "fieldname": "item_set",
+   "fieldtype": "Table MultiSelect",
+   "label": "Item Set",
+   "options": "Item Set"
   }
  ],
- "modified": "2020-11-14 22:02:50.970136",
+ "modified": "2020-11-14 22:39:19.416465",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "List of Material Detail",

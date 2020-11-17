@@ -1,3 +1,4 @@
 peark.patches.v0.drop_old_planning_mission_template_cols
 peark.patches.v0.add_production_item_column_to_production_order
 peark.patches.v0.set_default_production_item_column_to_production_order
+peark.patches.v0.set_default_value_for_list_of_material_detail

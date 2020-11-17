@@ -177,6 +177,10 @@ doc_events = {
             "peark.controllers.coating_usage.update_last_purchase_rate",
             "peark.controllers.list_of_material.update_last_purchase_rate",
         ],
+        "on_update_after_submit": [
+            "peark.controllers.coating_usage.update_last_purchase_rate",
+            "peark.controllers.list_of_material.update_last_purchase_rate",
+        ],
     }
 }
 

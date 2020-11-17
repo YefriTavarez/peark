@@ -10,7 +10,7 @@
   "rate",
   "amount",
   "section_break_6",
-  "list_of_material"
+  "list_of_material_detail"
  ],
  "fields": [
   {
@@ -62,15 +62,15 @@
   },
   {
    "description": "For Costing Purposes",
-   "fieldname": "list_of_material",
+   "fieldname": "list_of_material_detail",
    "fieldtype": "Link",
-   "label": "List of Material",
-   "options": "List of Material"
+   "label": "List of Material Detail",
+   "options": "List of Material Detail"
   }
  ],
  "istable": 1,
- "modified": "2020-11-12 08:24:54.342878",
- "modified_by": "yefritavarez@tzcode.tech",
+ "modified": "2020-11-15 12:19:57.114856",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Variable Cost Estimate",
  "owner": "yefritavarez@gmail.com",

@@ -51,7 +51,7 @@
   },
   {
    "fieldname": "materials",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "List of Material",
    "options": "List of Material"
   },
@@ -159,7 +159,7 @@
    "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-11-08 14:46:24.206722",
+ "modified": "2020-11-15 12:18:03.079498",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Feature",

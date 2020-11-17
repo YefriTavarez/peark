@@ -235,14 +235,6 @@
   {
    "default": "10",
    "description": "%",
-   "fieldname": "margin_rate",
-   "fieldtype": "Data",
-   "label": "Margin Rate",
-   "reqd": 1
-  },
-  {
-   "default": "10",
-   "description": "%",
    "fieldname": "margin_rate_1",
    "fieldtype": "Data",
    "label": "Margin Rate 1",
@@ -401,7 +393,7 @@
    "options": "Coating Usage Detail"
   }
  ],
- "modified": "2020-11-11 12:47:30.853762",
+ "modified": "2020-11-14 22:33:20.161348",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation",

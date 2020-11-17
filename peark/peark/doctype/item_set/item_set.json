@@ -4,8 +4,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item",
-  "list_of_material_detail"
+  "item"
  ],
  "fields": [
   {
@@ -15,57 +14,15 @@
    "label": "Item",
    "options": "Item",
    "reqd": 1
-  },
-  {
-   "fieldname": "list_of_material_detail",
-   "fieldtype": "Link",
-   "label": "List of Material Detail",
-   "options": "List of Material Detail",
-   "read_only": 1
   }
  ],
- "modified": "2020-11-11 11:54:37.836689",
+ "istable": 1,
+ "modified": "2020-11-14 22:41:28.587600",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Item Set",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Administrator",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Sales Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "All",
-   "share": 1,
-   "write": 1
-  }
- ],
+ "permissions": [],
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -247,6 +247,6 @@
         },
     };
 
-    frappe.ui.form.on('List of Material', ListofMaterial);
-    frappe.ui.form.on("List of Material Detail", ListofMaterialDetail);
+    // frappe.ui.form.on('List of Material', ListofMaterial);
+    // frappe.ui.form.on("List of Material Detail", ListofMaterialDetail);
 })(frappe);

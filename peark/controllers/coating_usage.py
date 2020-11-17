@@ -60,6 +60,8 @@ def update_item_reference_by_item_set(purchase_order_item):
     # get items
     doctype = "Item Set"
     filters = {
+        "parentfield": "item_set",
+        "parenttype": "Coating Usage",
         "item": purchased_item_code,
     }
 
