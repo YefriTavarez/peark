@@ -111,6 +111,44 @@ class CostEstimation(Document):
         self.set_assembly_onload(product_assembly, sub_assemblies)
 
     def set_assembly_onload(self, product_assembly, sub_assemblies=None):
+        def fetch_default_rate(product_option, option, options):
+            doctype = "Product Feature"
+            name = product_option
+            fieldname = "materials"
+
+            if not database.exists(doctype, name):
+                option.rate = 0.0000
+
+                return option.rate
+
+            del options[product_option]
+
+            doc = frappe.get_doc(doctype, name)
+
+            # total = .000
+            for supply in doc.get(fieldname):
+                doctype = "List of Material Detail"
+                name = supply.list_of_material_detail
+                fields = ("last_purchase_rate", "qty", "fixed_qty")
+
+                values = frappe \
+                    .get_value(doctype, name, fields, as_dict=True)
+
+                # total += flt(values.last_purchase_rate) * flt(values.qty)
+
+                if not name in options:
+                    options[name] = pydict(
+                        qty=0, rate=.000)
+
+                option = options[name]
+
+                # option.cost_specification = "{}: {}".format(
+                #     product_option, name)
+                option.cost_specification = cstr(name)
+                option.qty = flt(values.qty)
+                option.rate = flt(values.last_purchase_rate)
+                option.fixed_qty = values.fixed_qty
+
         is_compound_product = product_assembly.is_compound_product
 
         errmsg = \
@@ -139,6 +177,7 @@ class CostEstimation(Document):
                     option = options[product_option]
 
                     option.qty += 1
+                    fetch_default_rate(product_option, option, options)
 
             assembly_options = list()
             for key in options.keys():
@@ -163,6 +202,7 @@ class CostEstimation(Document):
                 option = options[product_option]
 
                 option.qty += 1
+                fetch_default_rate(product_option, option, options)
 
             assembly_options = list()
             for key in options.keys():
@@ -221,16 +261,13 @@ class CostEstimation(Document):
                 continue
 
             doctype = "List of Material Detail"
-            filters = {
-                "parenttype": "List of Material",
-                "parent": childdoc.list_of_material
-            }
+            name = childdoc.list_of_material
 
             fieldname = "last_purchase_rate"
 
             # issue: relationship not well managed
             last_purchase_rate = frappe \
-                .get_value(doctype, filters, fieldname)
+                .get_value(doctype, name, fieldname)
 
             if not flt(last_purchase_rate):
                 continue
@@ -238,7 +275,6 @@ class CostEstimation(Document):
             # childdoc.last_purchase_rate = last_purchase_rate
             childdoc.rate = flt(last_purchase_rate)
             childdoc.amount = flt(childdoc.rate) * flt(childdoc.qty)
-
 
     def calculate_totals(self):
         self.set_sub_total()
