@@ -7,7 +7,11 @@ import frappe
 
 from frappe import db as database
 
+
 def execute():
+    if not database.exists("DocType", "List of Material Detail"):
+        return False
+
     doctype = "List of Material Detail"
     doclist = frappe.get_all(doctype, as_list=True)
 
@@ -15,7 +19,7 @@ def execute():
         doc = frappe.get_doc(doctype, name)
 
         if doc.naming_selection \
-            or doc.naming_series:
+                or doc.naming_series:
             continue
 
         doc.naming_selection = "Naming Series"
