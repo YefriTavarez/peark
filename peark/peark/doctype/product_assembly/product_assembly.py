@@ -425,6 +425,9 @@ class ProductAssembly(Document):
         if not self.is_compound_product:
             return self.get_product_options()
 
+        if self.is_new():
+            return ""
+
         compound_product = self.get_compound_product()
 
         specs = list()
@@ -446,6 +449,9 @@ class ProductAssembly(Document):
     def get_full_specifications(self):
         if not self.is_compound_product:
             return self.get_full_name()
+
+        if self.is_new():
+            return ""
 
         compound_product = self.get_compound_product()
 

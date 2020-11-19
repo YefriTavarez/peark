@@ -49,8 +49,8 @@
    "options": "Variable Cost Estimate"
   }
  ],
- "modified": "2020-10-08 15:00:08.298755",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2020-11-19 12:54:17.441708",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Cost Estimation Type",
  "owner": "yefritavarez@gmail.com",
@@ -92,7 +92,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
