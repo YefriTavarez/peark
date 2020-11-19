@@ -454,12 +454,11 @@
             }
 
             const { assembly_options, product_assembly } = __onload;
-            const { is_compound_product } = product_assembly;
+            // const { is_compound_product } = product_assembly;
 
             if (!assembly_options) {
                 return false;
             }
-
 
             // const product_options = assembly_options.split(", ");
 
@@ -468,10 +467,11 @@
                 .map(product_option => {
                     frm.add_child("fixed_costs", product_option);
                 });
-
+                
             assembly_options
                 .filter(d => !d.fixed_qty)
                 .map(product_option => {
+                    // const { name } = product_option;
                     frm.add_child("variable_costs", product_option);
                 });
 
