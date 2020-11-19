@@ -217,13 +217,13 @@ class CostEstimation(Document):
 
     def set_last_purchase_rate(self, cost_estimation_type):
         for childdoc in cost_estimation_type.default_variable_costs:
-            if not childdoc.list_of_material:
+            if not childdoc.list_of_material_detail:
                 continue
 
             doctype = "List of Material Detail"
             filters = {
-                "parenttype": "List of Material",
-                "parent": childdoc.list_of_material
+                # "parenttype": "List of Material",
+                "name": childdoc.list_of_material_detail
             }
 
             fieldname = "last_purchase_rate"
@@ -238,7 +238,6 @@ class CostEstimation(Document):
             # childdoc.last_purchase_rate = last_purchase_rate
             childdoc.rate = flt(last_purchase_rate)
             childdoc.amount = flt(childdoc.rate) * flt(childdoc.qty)
-
 
     def calculate_totals(self):
         self.set_sub_total()
