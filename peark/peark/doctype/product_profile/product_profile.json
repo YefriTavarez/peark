@@ -11,40 +11,41 @@
   "keep_stock",
   "column_break_4",
   "item_groups",
-  "section_break_7",
+  "section_break_6",
   "enabled",
   "is_compound_product",
   "has_backboard",
   "paperboards",
   "backboards",
-  "section_break_13",
+  "section_break_12",
   "allow_printing",
   "printing_features",
   "double_sided",
-  "section_break_17",
+  "section_break_16",
   "allow_control",
   "control_features",
-  "section_break_20",
+  "section_break_19",
   "allow_cutting",
   "cutting_features",
-  "section_break_23",
+  "section_break_22",
   "allow_gluing",
   "gluing_features",
-  "section_break_26",
+  "section_break_25",
   "allow_folding",
   "folding_features",
-  "section_break_29",
+  "section_break_28",
   "allow_protection",
   "protection_features",
-  "section_break_32",
+  "section_break_31",
   "allow_utils",
   "utils_features",
-  "section_break_35",
+  "section_break_34",
   "allow_texture",
   "texture_features",
+  "section_break_37",
   "allow_packing",
   "packing_features",
-  "supported_dimensions_section",
+  "section_break_40",
   "dimensions"
  ],
  "fields": [
@@ -141,10 +142,11 @@
   {
    "fieldname": "dimensions",
    "fieldtype": "Table MultiSelect",
+   "label": "Supported Dimensions",
    "options": "Supported Dimensions"
   },
   {
-   "default": "0",
+   "default": "1",
    "description": "This will apply only for new Items",
    "fieldname": "keep_stock",
    "fieldtype": "Check",
@@ -156,20 +158,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_7",
-   "fieldtype": "Section Break"
-  },
-  {
-   "collapsible": 1,
-   "fieldname": "supported_dimensions_section",
-   "fieldtype": "Section Break",
-   "label": "Supported Dimensions"
-  },
-  {
    "default": "0",
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
-   "label": "Compound Product"
+   "label": "Allow Compound Product?"
   },
   {
    "depends_on": "allow_printing",
@@ -177,10 +169,6 @@
    "fieldtype": "Table MultiSelect",
    "label": "Opciones de Impresi\u00f3n",
    "options": "Product Features"
-  },
-  {
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
@@ -196,18 +184,10 @@
    "label": "Double Sided?"
   },
   {
-   "fieldname": "section_break_17",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "allow_control",
    "fieldtype": "Check",
    "label": "Allow Control?"
-  },
-  {
-   "fieldname": "section_break_20",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
@@ -216,18 +196,10 @@
    "label": "Allow Cutting?"
   },
   {
-   "fieldname": "section_break_23",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "allow_gluing",
    "fieldtype": "Check",
    "label": "Allow Gluing?"
-  },
-  {
-   "fieldname": "section_break_26",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
@@ -236,28 +208,16 @@
    "label": "Allow Folding?"
   },
   {
-   "fieldname": "section_break_29",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "allow_protection",
    "fieldtype": "Check",
    "label": "Allow Protection?"
   },
   {
-   "fieldname": "section_break_32",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "allow_utils",
    "fieldtype": "Check",
    "label": "Allow Utils?"
-  },
-  {
-   "fieldname": "section_break_35",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
@@ -284,9 +244,54 @@
    "fieldtype": "Table MultiSelect",
    "label": "Opciones de Empaque",
    "options": "Product Features"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_16",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_19",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_25",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_28",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_31",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_34",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_37",
+   "fieldtype": "Section Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-11-19 12:36:44.856466",
+ "modified": "2020-11-19 19:43:15.623416",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Profile",
