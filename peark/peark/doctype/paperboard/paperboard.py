@@ -58,15 +58,15 @@ class Paperboard(Document):
         # if self.include_uom_in_title:
         #     caliper_uom = self.caliper_uom
 
-        #     title = "{}, {}".format(title, caliper_uom.upper())
+        #     title = "{} {}".format(title, caliper_uom.upper())
 
         if self.finish_type:
-            title = "{}, {}".format(title, translate(self.finish_type))
+            title = "{} {}".format(title, translate(self.finish_type))
 
-        title = "{}, {}C".format(title, 2 if self.double_sided else 1)
+        title = "{} {}C".format(title, 2 if self.double_sided else 1)
 
         if self.trademark:
-            title = "{}, ({})".format(title, self.trademark)
+            title = "{} ({})".format(title, self.trademark)
 
         return title
 
