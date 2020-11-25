@@ -1,0 +1,40 @@
+{
+ "creation": "2020-11-20 16:02:15.294663",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "project_template",
+  "department"
+ ],
+ "fields": [
+  {
+   "fieldname": "project_template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Project Template",
+   "options": "Project Template",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "project_template.department",
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Department",
+   "options": "Department",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-11-20 16:04:28.345363",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Project Templates",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

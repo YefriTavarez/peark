@@ -421,7 +421,10 @@ class ProductAssembly(Document):
 
         return frappe.get_doc(doctype, filters)
 
-    def get_full_product_options(self):
+    def get_full_product_options(self, dont_generate=False):
+        if dont_generate:
+            return self.full_specifications
+
         if not self.is_compound_product:
             return self.get_product_options()
 
@@ -446,7 +449,10 @@ class ProductAssembly(Document):
 
         return ", ".join(value for value in specs if value)
 
-    def get_full_specifications(self):
+    def get_full_specifications(self, dont_generate=False):
+        if dont_generate:
+            return self.product_options
+
         if not self.is_compound_product:
             return self.get_full_name()
 

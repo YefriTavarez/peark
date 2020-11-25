@@ -47,7 +47,8 @@ fixtures = [
                     "Material Request Item-planning_document",
                     "Material Request-production_planning_tool",
                     "Planning Document-expected_delivery_date",
-                    "Planning Document-production_order",
+                    # "Planning Document-production_order",
+                    "Project Template Task-user",
                     "Purchase Order Item-planning_document",
                     "Quotation-cost_estimation",
                     "Quotation-tax_id",
@@ -92,6 +93,7 @@ app_include_js = [
 doctype_js = {
     "Department": "public/js/doctype/department.js",
     "Sales Invoice": "public/js/doctype/sales_invoice.js",
+    "Project": "public/js/doctype/project.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -156,6 +158,13 @@ doc_events = {
     "Employee": {
         "autoname": "peark.controllers.erpnext.employee.autoname",
         "on_update": "peark.controllers.erpnext.employee.on_update",
+    },
+    "Project": {
+        "autoname": "peark.controllers.erpnext.project.autoname",
+        "onload": "peark.controllers.erpnext.project.onload",
+        "after_insert": "peark.controllers.erpnext.project.after_insert",
+        "validate": "peark.controllers.erpnext.project.validate",
+        "on_trash": "peark.controllers.erpnext.project.on_trash",
     },
     "Material Request": {
         "on_change": "peark.controllers.erpnext.material_request.on_change",

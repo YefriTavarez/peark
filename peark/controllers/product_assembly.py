@@ -65,7 +65,7 @@ def create_item_based_on_product_assembly(doc):
         "asset_naming_series": None,
         "over_delivery_receipt_allowance": 100,
         "over_billing_allowance": 100,
-        "description": doc.get_full_specifications(),
+        "description": doc.get_full_specifications(dont_generate=True),
         "default_material_request_type": "Manufacture",
         "valuation_method": "FIFO",
         "has_batch_no": True,

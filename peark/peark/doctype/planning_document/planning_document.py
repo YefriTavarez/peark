@@ -33,6 +33,8 @@ class PlanningDocument(Document):
     def validate_children(self):
         for childoc in self.missions:
             childoc.run_method("validate")
+
+            childoc.set_depends_on()
             if childoc.is_new():
                 continue
 
@@ -77,8 +79,13 @@ class PlanningDocument(Document):
         self.db_update()
 
     def get_percentage_completed(self):
+        total_weight = self.get_total_weight()
+        
+        if not total_weight:
+            return .000
+
         percent = self.get_total_weight_completed() \
-            / self.get_total_weight()
+            / total_weight
 
         return percent * 100.000
 

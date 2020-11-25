@@ -22,6 +22,18 @@ class PlanningMission(Document):
         self.update_parent_with_planning_template()
         self.set_description_if_missing()
 
+        self.set_depends_on()
+
+    def set_depends_on(self):
+        doctype = "Planning Mission Template"
+        name = self.planning_mission_template
+
+        doc = frappe.get_doc(doctype, name)
+
+        self.depends_on = list()
+        for child in doc.depends_on:
+            self.append("depends_on", frappe.copy_doc(child))
+
     def set_description_if_missing(self):
         if not self.description:
             self.description = self.subject
@@ -51,7 +63,7 @@ class PlanningMission(Document):
         self.parenttype = "Planning Document"
 
         self.parent = self.planning_document
-        
+
         if self.is_new():
             return False
 

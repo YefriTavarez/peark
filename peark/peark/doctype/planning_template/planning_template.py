@@ -88,6 +88,14 @@ class PlanningTemplate(Document):
     missions = list()
 
 
+def get_depends_on(source, target):
+    source.reload()
+
+    for childdoc in source.get("depends_on", []):
+        depends_on = frappe.copy_doc(childdoc)
+        target.append("depends_on", depends_on)
+
+
 def get_opening_status(doc):
     doc.reload()
 
@@ -162,6 +170,7 @@ def make_planning_document(source_name, target_doc=None, ignore_permissions=Fals
     def update_item(source, target, source_parent):
         target.status = get_opening_status(source)
         target.data_to_ask = get_data_to_ask(source)
+        get_depends_on(source, target)
 
     doclist = get_mapped_doc("Planning Template", source_name, {
         "Planning Template": {

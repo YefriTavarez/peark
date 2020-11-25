@@ -51,14 +51,12 @@ class Paperboard(Document):
     def update_title(self):
         self.title = self.get_full_name()
 
-    def get_full_name(self):
+    def get_full_name(self, weight_or_caliper=None):
         # not all paperboard have caliper
         title = self.material_name
 
-        # if self.include_uom_in_title:
-        #     caliper_uom = self.caliper_uom
-
-        #     title = "{} {}".format(title, caliper_uom.upper())
+        if weight_or_caliper:
+            title = "{} {}".format(title, cstr(weight_or_caliper))
 
         if self.finish_type:
             title = "{} {}".format(title, translate(self.finish_type))
