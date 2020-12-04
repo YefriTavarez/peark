@@ -6,7 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "caliper",
-  "capliper_uom"
+  "caliper_uom"
  ],
  "fields": [
   {
@@ -17,16 +17,16 @@
    "reqd": 1
   },
   {
-   "fieldname": "capliper_uom",
+   "fieldname": "caliper_uom",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Capliper UOM",
+   "label": "Caliper UOM",
    "options": "UOM",
    "reqd": 1
   }
  ],
- "modified": "2020-11-10 19:32:06.766028",
- "modified_by": "ytavarez@igcaribe.com",
+ "modified": "2020-12-04 10:08:24.766706",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Paperboard Caliper",
  "owner": "ytavarez@igcaribe.com",

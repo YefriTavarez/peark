@@ -25,7 +25,7 @@
    "read_only": 1
   },
   {
-   "fetch_from": "paperboard_caliper.capliper_uom",
+   "fetch_from": "paperboard_caliper.caliper_uom",
    "fieldname": "uom",
    "fieldtype": "Link",
    "label": "UOM",
@@ -34,8 +34,8 @@
   }
  ],
  "istable": 1,
- "modified": "2020-11-10 20:02:29.161277",
- "modified_by": "ytavarez@igcaribe.com",
+ "modified": "2020-12-04 10:06:50.759883",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Paperboard Calipers",
  "owner": "ytavarez@igcaribe.com",

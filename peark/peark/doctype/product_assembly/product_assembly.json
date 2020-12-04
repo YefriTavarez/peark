@@ -14,6 +14,7 @@
   "is_compound_product",
   "section_break_6",
   "paperboard",
+  "paperboard_caliper",
   "backboard",
   "backboard_name",
   "column_break_11",
@@ -256,9 +257,15 @@
    "label": "Item Groups",
    "options": "Item Groups",
    "reqd": 1
+  },
+  {
+   "fieldname": "paperboard_caliper",
+   "fieldtype": "Link",
+   "label": "Paperboard Caliper",
+   "options": "Paperboard Caliper"
   }
  ],
- "modified": "2020-11-05 12:05:18.491943",
+ "modified": "2020-11-30 14:46:44.173542",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Product Assembly",
