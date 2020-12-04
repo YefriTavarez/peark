@@ -4,3 +4,4 @@ peark.patches.v0.set_default_production_item_column_to_production_order
 peark.patches.v0.set_default_value_for_list_of_material_detail
 peark.patches.v0.set_title_as_names_in_paperboards
 peark.patches.v0.remove_commas_from_existing_paperboards
+peark.patches.v0.update_caliper_uom_on_paperboard_caliper
