@@ -1,0 +1,219 @@
+{
+ "creation": "2020-12-04 16:00:43.138580",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_name",
+  "section_break_2",
+  "allow_short_description",
+  "short_description",
+  "section_break_5",
+  "allow_material",
+  "material",
+  "section_break_8",
+  "allow_make",
+  "make",
+  "section_break_11",
+  "allow_model",
+  "model",
+  "section_break_14",
+  "allow_color",
+  "color",
+  "section_break_17",
+  "allow_dimension",
+  "height",
+  "heigt_uom",
+  "column_break_21",
+  "width",
+  "width_uom",
+  "column_break_24",
+  "allow_depth",
+  "depth",
+  "depth_uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_short_description",
+   "fieldtype": "Check",
+   "label": "Allow Short Description?"
+  },
+  {
+   "depends_on": "allow_short_description",
+   "fieldname": "short_description",
+   "fieldtype": "Data",
+   "label": "Short Description"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_material",
+   "fieldtype": "Check",
+   "label": "Allow Material?"
+  },
+  {
+   "depends_on": "allow_material",
+   "fieldname": "material",
+   "fieldtype": "Link",
+   "label": "Material",
+   "options": "Material"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_make",
+   "fieldtype": "Check",
+   "label": "Allow Make?"
+  },
+  {
+   "depends_on": "allow_make",
+   "fieldname": "make",
+   "fieldtype": "Data",
+   "label": "Make"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_model",
+   "fieldtype": "Check",
+   "label": "Allow Model?"
+  },
+  {
+   "depends_on": "allow_model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fieldname": "section_break_14",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_color",
+   "fieldtype": "Check",
+   "label": "Allow Color?"
+  },
+  {
+   "depends_on": "allow_color",
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "label": "Color"
+  },
+  {
+   "fieldname": "section_break_17",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_dimension",
+   "fieldtype": "Check",
+   "label": "Allow Dimension?"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "label": "Height"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "heigt_uom",
+   "fieldtype": "Link",
+   "label": "Heigt UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "label": "Width"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "width_uom",
+   "fieldtype": "Link",
+   "label": "Width UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_dimension",
+   "fieldname": "allow_depth",
+   "fieldtype": "Check",
+   "label": "Allow Depth?"
+  },
+  {
+   "depends_on": "eval:doc.allow_dimension&&doc.allow_depth",
+   "fieldname": "depth",
+   "fieldtype": "Float",
+   "label": "Depth"
+  },
+  {
+   "depends_on": "eval:doc.allow_dimension&&doc.allow_depth",
+   "fieldname": "depth_uom",
+   "fieldtype": "Link",
+   "label": "Depth UOM",
+   "options": "UOM"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2020-12-04 16:50:11.520039",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Item Description",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
