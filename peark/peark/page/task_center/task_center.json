@@ -1,0 +1,26 @@
+{
+ "content": null,
+ "creation": "2020-11-30 09:47:59.170534",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2020-11-30 09:48:37.434465",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "task-center",
+ "owner": "Administrator",
+ "page_name": "task-center",
+ "roles": [
+  {
+   "role": "Projects User"
+  },
+  {
+   "role": "Projects Manager"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Task Center"
+}

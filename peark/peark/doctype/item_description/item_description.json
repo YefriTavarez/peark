@@ -25,6 +25,7 @@
   "height",
   "heigt_uom",
   "column_break_21",
+  "html_22",
   "width",
   "width_uom",
   "column_break_24",
@@ -184,10 +185,14 @@
    "fieldtype": "Link",
    "label": "Depth UOM",
    "options": "UOM"
+  },
+  {
+   "fieldname": "html_22",
+   "fieldtype": "HTML"
   }
  ],
  "issingle": 1,
- "modified": "2020-12-04 16:50:11.520039",
+ "modified": "2020-12-07 11:56:28.904407",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Item Description",

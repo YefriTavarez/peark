@@ -9,6 +9,7 @@
   "title",
   "project_center_template",
   "project_type",
+  "priority",
   "column_break_4",
   "status",
   "naming_series",
@@ -24,7 +25,6 @@
   "item_specifications",
   "column_break_17",
   "production_qty",
-  "priority",
   "section_break_20",
   "expected_start_date",
   "expected_end_date",
@@ -71,8 +71,11 @@
    "fetch_from": "project_center_template.project_type",
    "fieldname": "project_type",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Project Type",
-   "options": "Project Type"
+   "options": "Project Type",
+   "reqd": 1
   },
   {
    "depends_on": "project_center_template",
@@ -143,8 +146,11 @@
   {
    "fieldname": "priority",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Priority",
-   "options": "Normal\nHigh\nRush"
+   "options": "Normal\nHigh\nRush",
+   "reqd": 1
   },
   {
    "fieldname": "expected_start_date",
@@ -208,7 +214,7 @@
    "reqd": 1
   }
  ],
- "modified": "2020-11-24 17:45:00.829967",
+ "modified": "2020-11-26 17:57:50.981682",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",

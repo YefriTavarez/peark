@@ -22,6 +22,23 @@ fixtures = [
         "filters": {
             "name": [
                 "in", [
+                    "Task-completed_by-read_only",
+                    "Task-title_field",
+                    "Project-title_field",
+                    "Project-users_section-collapsible",
+                    "Project-users_section-hidden",
+                    "Project-customer_details-collapsible",
+                    "Project-customer_details-hidden",
+                    "Project-priority-options",
+                ],
+            ],
+        },
+    },
+    {
+        "doctype": "Custom Field",
+        "filters": {
+            "name": [
+                "in", [
                     "Employee-department_1",
                     "Employee-department_2",
                     "Employee-department_3",
@@ -47,8 +64,11 @@ fixtures = [
                     "Material Request Item-planning_document",
                     "Material Request-production_planning_tool",
                     "Planning Document-expected_delivery_date",
-                    # "Planning Document-production_order",
                     "Project Template Task-user",
+                    "Project Template-department",
+                    "Project Template-use_multicheck",
+                    "Project-item_specifications",
+                    "Project-title",
                     "Purchase Order Item-planning_document",
                     "Quotation-cost_estimation",
                     "Quotation-tax_id",
@@ -56,6 +76,9 @@ fixtures = [
                     "Sales Invoice-ncf",
                     "Sales Invoice-planning_document",
                     "Sales Invoice-return_against_ncf",
+                    "Task-project_title",
+                    "Task-title",
+                    "Task-user",
                     "Workstation-department_1",
                     "Workstation-department_2",
                     "Workstation-department_3",
@@ -91,11 +114,16 @@ app_include_js = [
 
 # include js in doctype views
 doctype_js = {
+    "Item": "public/js/doctype/item.js",
     "Department": "public/js/doctype/department.js",
     "Sales Invoice": "public/js/doctype/sales_invoice.js",
     "Project": "public/js/doctype/project.js",
 }
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+
+doctype_list_js = {
+    "Item": "public/js/doctype/item_list.js"
+}
+
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 

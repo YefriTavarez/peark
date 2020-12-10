@@ -97,26 +97,26 @@ def get_data():
             "condition": has_permission(doctype="Compound Product", raise_exception=False)
         },
         {
-            "module_name": 'Planning Document',
+            "module_name": 'Project Center',
             "category": "Places",
-            "label": _('Planning Documents'),
+            "label": _('Project Centers'),
             "icon": "fa fa-columns",
             "type": 'link',
-            "link": '#List/Planning Document/List',
+            "link": '#List/Project Center/List',
             "color": '#FF4136',
             'standard': 1,
-            "condition": has_permission(doctype="Planning Document", raise_exception=False)
+            "condition": has_permission(doctype="Project Center", raise_exception=False)
         },
         {
-            "module_name": 'Planning Mission',
+            "module_name": 'Task',
             "category": "Places",
-            "label": _('Planning Missions'),
+            "label": _('Task Center'),
             "icon": "fa fa-tasks",
             "type": 'link',
-            "link": '#List/Planning Mission/List',
+            "link": '#task-center',
             "color": '#FF4136',
             'standard': 1,
-            "condition": has_permission(doctype="Planning Mission", raise_exception=False)
+            "condition": has_permission(doctype="Task", raise_exception=False)
         },
         {
             "module_name": 'Production Planning Tool',

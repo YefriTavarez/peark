@@ -7,6 +7,18 @@
             frappe.run_serially([
                 () => frm.trigger("set_queries"),
                 () => frm.trigger("add_fetches"),
+                () => frm.trigger("setup_indicators"),
+            ]);
+        },
+        after_insert(frm) {
+            console.log("after_insert");
+        },
+        after_save(frm) {
+            frappe.run_serially([
+                () => frappe.dom.freeze(),
+                () => frappe.timeout(1),
+                () => frm.reload_doc(),
+                () => frappe.dom.unfreeze(),
             ]);
         },
         add_fetches(frm) {
@@ -14,6 +26,59 @@
                 () => frm.trigger("add_project_center_template_fetch"),
             ]);
         },
+        add_indicators(frm) {
+            const { doc } = frm;
+            const { projects } = doc;
+
+            jQuery.map(projects, childdoc => {
+                const { name, project, project_template, status } = childdoc;
+
+                const gridrow = frm.get_field("projects").grid;
+
+                const row = gridrow.get_row(name);
+
+                const indicator = status == "Completed" ? "green" : "red";
+
+                jQuery(row.parent)
+                    .find(`div[data-fieldname=project] a[data-name=${project}]`)
+                    .html(`<strong
+                            class="indicator ${indicator}"
+                            data-name="${name}"
+                        >
+                            ${project}: ${project_template}
+                        </strong>`);
+            });
+        },
+        setup_indicators(frm) {
+            const { doc } = frm;
+
+            doc.__should_refresh = true;
+            let interval = setInterval(function () {
+                if (!doc.__should_refresh) {
+                    return false;
+                }
+
+                ProjectCenter
+                    .add_indicators(frm);
+            }, 500);
+
+            setTimeout(event => {
+                doc.__should_refresh = false;
+            }, 500);
+
+            jQuery(window)
+                .on("hashchange", event => {
+                    if (interval) {
+                        clearInterval(interval);
+
+                        interval = null;
+                    }
+                    // don't try this
+                    // jQuery(window).off("hashchange");
+                });
+
+        },
+
         set_queries(frm) {
             frappe.run_serially([
                 () => frm.trigger("set_sales_order_query"),
@@ -49,6 +114,10 @@
 
             frm.toggle_reqd(fieldlist, doc.order_required);
         },
+        projects_on_form_rendered(frm) {
+            const { doc } = frm;
+            doc.__should_refresh = true;
+        }
     };
 
     frappe.ui.form.on('Project Center', ProjectCenter);

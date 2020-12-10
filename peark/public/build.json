@@ -5,6 +5,9 @@
 		"public/js/templates/actions_template.html",
 		"public/js/templates/barcode_actions_template.html"
 	],
+	"js/task-dashboard.min.js": [
+		"public/js/task_dashboard.js"
+	],
 	"js/jmask.min.js": [
 		"public/js/jmask.min.js"
 	]

@@ -6,11 +6,12 @@
  "field_order": [
   "project",
   "project_template",
-  "department"
+  "department",
+  "status"
  ],
  "fields": [
   {
-   "columns": 2,
+   "columns": 6,
    "fieldname": "project",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -33,14 +34,22 @@
    "fetch_from": "project.project_template",
    "fieldname": "project_template",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Project Template",
    "options": "Project Template",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fetch_from": "project.status",
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status",
    "read_only": 1
   }
  ],
  "istable": 1,
- "modified": "2020-11-23 16:17:47.176762",
+ "modified": "2020-11-25 11:31:35.868800",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Projects",

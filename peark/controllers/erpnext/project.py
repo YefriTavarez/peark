@@ -97,11 +97,7 @@ def update_tasks(doc):
         filters = {
             "subject": task.subject,
             "project": doc.name,
-            # "status": "Open",
-            # "exp_start_date": add_days(doc.expected_start_date, task.start),
-            # "exp_end_date": add_days(doc.expected_start_date, task.start + task.duration),
-            # "description": task.description,
-            "task_weight": task.task_weight
+            "task_weight": task.task_weight,
         }
 
         exists = database.exists(doctype, filters)
@@ -112,7 +108,7 @@ def update_tasks(doc):
         taskdoc = frappe.get_doc(doctype, filters)
 
         taskdoc.update({
-            "department": task.department,
+            "department": doc.department,
             "idx": task.idx,
         })
 

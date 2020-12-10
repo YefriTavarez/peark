@@ -1,0 +1,10 @@
+#page-task-center .dashboard-list-task {
+	background-color: inherit;
+	padding: 5px 0px;
+	border-bottom: 1px solid #e8e8e8;
+	padding: 5px 15px;
+}
+
+.dashboard-list-task:last-child {
+	border-bottom: none;
+}

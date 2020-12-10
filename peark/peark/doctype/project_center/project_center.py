@@ -13,11 +13,7 @@ from frappe import _ as translate
 
 
 class ProjectCenter(Document):
-    # def after_insert(self):
-    #     self.generate_projects()
-
     def after_insert(self):
-        # if not self.is_new():
         self.generate_projects()
 
     def validate(self):
@@ -48,7 +44,7 @@ class ProjectCenter(Document):
         self.title = title
 
     def generate_projects(self):
-        def append_child(doc, template):
+        def append_child(doc, template, idx):
             doctype = "Projects"
             childdoc = frappe.new_doc(doctype)
 
@@ -59,6 +55,7 @@ class ProjectCenter(Document):
                 "parent": self.name,
                 "parenttype": self.doctype,
                 "parentfield": "projects",
+                "idx": idx,
             })
 
             childdoc.save(ignore_permissions=True)
@@ -90,7 +87,8 @@ class ProjectCenter(Document):
         if self.is_new():
             self.projects = list()
 
-        for template in template.get("templates", []):
+        templates = template.get("templates", [])
+        for idx, template in enumerate(templates, start=1):
             doctype = "Project"
 
             doc = frappe.new_doc(doctype)
@@ -102,7 +100,7 @@ class ProjectCenter(Document):
             doc.save()
 
             # update projects table
-            append_child(doc, template)
+            append_child(doc, template, idx)
 
     project_naming_series = None
     title = None
@@ -123,4 +121,4 @@ class ProjectCenter(Document):
     expected_end_date = None
     actual_start_date = None
     actual_end_date = None
-    projects = list()
+    # projects = list()
