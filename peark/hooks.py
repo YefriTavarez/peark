@@ -18,7 +18,7 @@ app_logo_url = "/assets/frappe/images/frappe-framework-logo.png"
 # ------------------
 fixtures = [
     {
-        "doctype": "Custom Field",
+        "doctype": "Property Setter",
         "filters": {
             "name": [
                 "in", [
