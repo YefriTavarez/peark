@@ -11,10 +11,37 @@ from frappe.model.naming import make_autoname
 from frappe.utils import flt
 from frappe import _ as translate
 
+from frappe import get_doc, get_all
+
 
 class ProjectCenter(Document):
     def after_insert(self):
         self.generate_projects()
+        self.set_missing_values_on_children()
+
+    def on_update(self):
+        self.set_missing_values_on_children()
+
+    def set_missing_values_on_children(self):
+        projects = self.get_projects()
+
+        for d in projects:
+            d.update_missing_values()
+
+    def get_projects(self):
+        doctype = "Projects"
+
+        filters = {
+            "parent": self.name,
+            "parenttype": "Project Center",
+            "parentfield": "projects",
+        }
+
+        fields = "name"
+
+        doclist = get_all(doctype, filters, fields, as_list=True)
+
+        return [get_doc(doctype, name) for name, in doclist]
 
     def validate(self):
         self.update_title()
@@ -121,4 +148,4 @@ class ProjectCenter(Document):
     expected_end_date = None
     actual_start_date = None
     actual_end_date = None
-    # projects = list()
+    projects = list()
