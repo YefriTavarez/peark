@@ -37,6 +37,11 @@ def set_naming_series(doc):
     if not doc.get("naming_series"):
         doc.naming_series = "SUB-PROJECT-"
 
+        if not doc.get("project_center"):
+            return False
+
+        doc.naming_series = "{0}-##".format(doc.project_center)
+
 
 def enqueue_tasks_update(doc):
     frappe.enqueue("peark.controllers.erpnext.project.update_projects",

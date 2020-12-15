@@ -124,6 +124,9 @@ class ProjectCenter(Document):
 
             doc.project_template = template.project_template
 
+            # fake field for project center
+            doc.project_center = self.name
+
             doc.save()
 
             # update projects table
