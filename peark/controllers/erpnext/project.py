@@ -40,7 +40,7 @@ def set_naming_series(doc):
         if not doc.get("project_center"):
             return False
 
-        doc.naming_series = "{0}-##".format(doc.project_center)
+        doc.naming_series = "{0}-.##".format(doc.project_center)
 
 
 def enqueue_tasks_update(doc):
