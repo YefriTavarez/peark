@@ -10,6 +10,7 @@ from frappe.model.db_query import DatabaseQuery
 
 from frappe import _ as translate
 
+
 @frappe.whitelist()
 def get_data(project=None, project_center=None, status=None, start=0, sort_by='creation', sort_order='desc'):
     filters = list()
@@ -18,7 +19,10 @@ def get_data(project=None, project_center=None, status=None, start=0, sort_by='c
         filters.append(['project', '=', project])
 
     if status:
-        filters.append(['status', '=', status])
+        if status == "Not Completed":
+            filters.append(['status', '!=', "Completed"])
+        else:
+            filters.append(['status', '=', status])
 
     if project_center:
         projects = frappe.get_all("Projects", {

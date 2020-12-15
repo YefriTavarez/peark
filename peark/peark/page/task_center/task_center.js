@@ -7,17 +7,6 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
 
     page.start = 0;
 
-    page.project_field = page.add_field({
-        fieldname: 'project',
-        label: __('Project'),
-        fieldtype: 'Link',
-        options: 'Project',
-        change: function () {
-            page.task_dashboard.start = 0;
-            page.task_dashboard.refresh();
-        }
-    });
-
     page.project_center_field = page.add_field({
         fieldname: 'project_center',
         label: __('Project Center'),
@@ -29,11 +18,22 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         }
     });
 
+    page.project_field = page.add_field({
+        fieldname: 'project',
+        label: __('Project'),
+        fieldtype: 'Link',
+        options: 'Project',
+        change: function () {
+            page.task_dashboard.start = 0;
+            page.task_dashboard.refresh();
+        }
+    });
+
     page.status_field = page.add_field({
         fieldname: 'status',
         label: __('Status'),
         fieldtype: 'Select',
-        options: 'Open\nWorking\nPending Review\nOverdue\nCompleted\nCancelled',
+        options: 'Open\nWorking\nPending Review\nOverdue\nCompleted\nCancelled\nNot Completed',
         change: function () {
             page.task_dashboard.start = 0;
             page.task_dashboard.refresh();
@@ -49,14 +49,14 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
                 { fieldname: 'creation', label: __('Created On') },
                 { fieldname: 'modified', label: __('Last Modified') },
                 { fieldname: 'status', label: __('Status') },
-            ]
+            ],
         },
         change: function (sort_by, sort_order) {
             page.task_dashboard.sort_by = sort_by;
             page.task_dashboard.sort_order = sort_order;
             page.task_dashboard.start = 0;
             page.task_dashboard.refresh();
-        }
+        },
     });
 
     // page.sort_selector.wrapper.css({ 'margin-right': '15px', 'margin-top': '4px' });
@@ -77,21 +77,25 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         page.task_dashboard.refresh();
 
         // item click
-        var setup_click = function (doctype) {
-            page.main.on('click', 'a[data-type="' + doctype.toLowerCase() + '"]', function () {
-                var name = jQuery(this).attr('data-name');
-                var field = page[doctype.toLowerCase() + '_field'];
-                if (field.get_value() === name) {
-                    frappe.set_route('Form', doctype, name)
-                } else {
-                    field.set_input(name);
-                    page.task_dashboard.refresh();
-                }
-            });
-        }
+        page.main.on('click', 'a[data-type]', function () {
+            const doctype = jQuery(this).attr('data-type');
+            const name = jQuery(this).attr('data-name');
 
-        // setup_click('Item');
-        setup_click('Project');
+            const field = page[doctype.toLowerCase() + '_field'];
+
+            if (!field) {
+                frappe.set_route('Form', doctype, name);
+
+                return false;
+            }
+
+            if (field.get_value() === name) {
+                frappe.set_route('Form', doctype, name);
+            } else {
+                field.set_input(name);
+                page.task_dashboard.refresh();
+            }
+        });
     };
 
     frappe.require(asset, callback);
