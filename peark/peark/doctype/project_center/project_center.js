@@ -11,7 +11,7 @@
             ]);
         },
         after_insert(frm) {
-            console.log("after_insert");
+            // console.log("after_insert");
         },
         after_save(frm) {
             frappe.run_serially([

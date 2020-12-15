@@ -22,6 +22,10 @@ class ProjectCenter(Document):
     def on_update(self):
         self.set_missing_values_on_children()
 
+    def validate(self):
+        self.update_title()
+        self.validate_production_qty()
+
     def set_missing_values_on_children(self):
         projects = self.get_projects()
 
@@ -42,10 +46,6 @@ class ProjectCenter(Document):
         doclist = get_all(doctype, filters, fields, as_list=True)
 
         return [get_doc(doctype, name) for name, in doclist]
-
-    def validate(self):
-        self.update_title()
-        self.validate_production_qty()
 
     def validate_production_qty(self):
         if flt(self.production_qty):

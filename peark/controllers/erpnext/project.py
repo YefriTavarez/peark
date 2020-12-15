@@ -35,7 +35,7 @@ def set_new_name(doc):
 
 def set_naming_series(doc):
     if not doc.get("naming_series"):
-        doc.naming_series = "PROJECT-"
+        doc.naming_series = "SUB-PROJECT-"
 
 
 def enqueue_tasks_update(doc):
