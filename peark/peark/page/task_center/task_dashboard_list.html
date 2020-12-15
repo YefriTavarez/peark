@@ -1,13 +1,39 @@
 {% for d in data %}
 <div class="dashboard-list-task">
-    <div class="row">
-        <div class="col-sm-4 small" style="margin-top: 8px;">
-            <a data-type="project" data-name="{{ d.project }}">
-                <strong>{{ d.project }}</strong>: {{ d.project_title || d.title || d.subject }}
+    <div class="row" style="min-height: 42px;">
+        <div class="col-sm-1 small" style="margin-top: 8px;">
+            <div class="form-check">
+                <input
+                    type="checkbox"
+                    class="form-check-input"
+                    {% if d.status == "Completed" %}
+                        checked
+                    {% endif %}
+
+                    data-name="{{ d.name }}"
+                    data-doctype="{{ d.doctype || "Task" }}"
+                    {% if d.status == "Completed" %}
+                        data-action="open"
+                    {% else %}
+                        data-action="close"
+                    {% endif %}
+                >
+            </div>
+        </div>
+        <div class="col-sm-2 small" style="margin-top: 8px;">
+            <span 
+                class="indicator {{ frappe.utils.guess_colour(d.status) }}"
+            >
+                {{ __(d.translated_status || d.status) }}
+            </span>
+        </div>
+        <div class="col-sm-5 small" style="margin-top: 8px;">
+            <a data-type="Project" data-name="{{ d.project }}">
+                <strong>{{ d.project }}</strong>: {{ d.subject }}
             </a>
         </div>
         <div class="col-sm-4 small" style="margin-top: 8px;">
-            <a data-type="Project" data-name="{{ d.project }}">
+            <a data-type="Task" data-name="{{ d.name }}">
                 {{ d.subject }}
 
                 {% if show_department && d.department %}
@@ -15,32 +41,6 @@
                 {% endif %}
             </a>
         </div>
-        <div class="col-sm-2 small" style="margin-top: 8px;">
-            <span 
-                data-type="Task"
-                data-name="{{ d.name }}"
-                class="indicator {{ frappe.utils.guess_colour(d.status) }}"
-            >
-                {{ __(d.translated_status || d.status) }}
-            </span>
-        </div>
-        {% if can_write %}
-        <div class="col-sm-1 text-right" style="margin-top: 8px;">
-            <button 
-                class="btn btn-primary btn-xs btn-action {% if d.status == "Completed" %} hide {% endif %}"
-                data-name="{{ d.name }}"
-                data-doctype="{{ d.doctype || "Task" }}"
-                data-action="close">{{ __("Cerrar") }}
-            </button>
-
-            <button 
-                class="btn btn-default btn-xs btn-action  {% if d.status != "Completed" %} hide {% endif %}"
-                data-name="{{ d.name }}"
-                data-doctype="{{ d.doctype || "Task" }}"
-                data-action="open">{{ __("Re-Abrir") }}
-            </button>
-        </div>
-        {% endif %}
     </div>
 </div>
 {% endfor %}
