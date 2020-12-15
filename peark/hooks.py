@@ -194,6 +194,9 @@ doc_events = {
         "validate": "peark.controllers.erpnext.project.validate",
         "on_trash": "peark.controllers.erpnext.project.on_trash",
     },
+    "Project Template": {
+        "validate": "peark.controllers.erpnext.project_template.validate",
+    },
     "Material Request": {
         "on_change": "peark.controllers.erpnext.material_request.on_change",
         "on_cancel": "peark.controllers.erpnext.material_request.on_cancel",
