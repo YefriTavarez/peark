@@ -5,6 +5,40 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         single_column: true
     });
 
+
+    page.get_last_status = function () {
+        const defval = 'Not Completed';
+
+        const key = "task_center:last_status";
+
+        let last_status;
+
+        last_status = localStorage
+            .getItem(key);
+
+        if (!last_status) {
+            last_status = defval;
+
+            localStorage
+                .setItem(key, last_status);
+        }
+
+        return last_status;
+    };
+
+    page.remember_status = function (status) {
+        const defval = 'Not Completed';
+
+        const key = "task_center:last_status";
+
+        if (!status) {
+            status = defval;
+        }
+
+        localStorage
+            .setItem(key, status);
+    };
+
     page.start = 0;
 
     page.project_center_field = page.add_field({
@@ -33,10 +67,14 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         fieldname: 'status',
         label: __('Status'),
         fieldtype: 'Select',
+        default: page.get_last_status(),
         options: 'Open\nWorking\nPending Review\nOverdue\nCompleted\nCancelled\nNot Completed',
         change: function () {
             page.task_dashboard.start = 0;
             page.task_dashboard.refresh();
+
+            const status = page.status_field.get_value();
+            page.remember_status(status);
         }
     });
 
