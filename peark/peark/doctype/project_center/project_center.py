@@ -62,6 +62,9 @@ class ProjectCenter(Document):
         if self.get("project_type"):
             title = "{}: {}".format(self.project_type, title)
 
+        if self.get("customer"):
+            title = "{} {}".format(title, self.customer)
+
         if self.get("product_name"):
             title = "{} ({})".format(title, self.product_name)
 
@@ -71,6 +74,29 @@ class ProjectCenter(Document):
         self.title = title
 
     def generate_projects(self):
+        def set_fetch_from(doc):
+            doctype = "Task"
+
+            kwargs = {
+                "filters": {
+                    "project": doc.name,
+                },
+                "fields": "name",
+                "as_list": True,
+            }
+
+            doclist = frappe.get_all(doctype, **kwargs)
+
+            for name, in doclist:
+                doc = frappe.get_doc(doctype, name)
+
+                doc.project_title = self.title
+                doc.title = "{}: {}" \
+                    .format(self.name, self.title)
+
+                # persists changes
+                doc.db_update()
+
         def append_child(doc, template, idx):
             doctype = "Projects"
             childdoc = frappe.new_doc(doctype)
@@ -93,6 +119,8 @@ class ProjectCenter(Document):
                 "expected_end_date": self.expected_end_date,
                 "title": self.title,
                 "project_name": self.product_name,
+                "sales_order": self.sales_order,
+                "customer": self.customer,
                 "project_type": self.project_type,
                 "priority": self.priority,
                 "department": template.department,
@@ -114,7 +142,7 @@ class ProjectCenter(Document):
         if self.is_new():
             self.projects = list()
 
-        templates = template.get("templates", [])
+        templates = template.get("templates", list())
         for idx, template in enumerate(templates, start=1):
             doctype = "Project"
 
@@ -130,6 +158,7 @@ class ProjectCenter(Document):
             doc.save()
 
             # update projects table
+            set_fetch_from(doc)
             append_child(doc, template, idx)
 
     project_naming_series = None
