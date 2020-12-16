@@ -44,9 +44,27 @@ def get_data(project=None, project_center=None, status=None, start=0, sort_by='c
     except frappe.PermissionError:
         return []
 
-    items = frappe.get_list("Task", filters=filters, fields="*")
+    items = frappe.get_list("Task", filters=filters,
+                            fields="*", limit_start=start, limit_page_length="21")
 
     for item in items:
         item.translated_status = translate(item.status)
+        set_project_center(item)
 
     return items
+
+
+def set_project_center(task):
+    doctype = "Projects"
+    kwargs = {
+        "filters": {
+            "parentfield": "projects",
+            "parenttype": "Project Center",
+            "project": task.project,
+        },
+        "fieldname": "parent",
+    }
+
+    project_center = frappe.get_value(doctype, **kwargs)
+
+    task.project_center = project_center
