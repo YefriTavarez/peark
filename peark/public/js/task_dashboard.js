@@ -50,7 +50,6 @@ peark.TaskDashboard = Class.extend({
 		}
 
 		var context = this.get_task_dashboard_data(data, this.max_count, true);
-		// this.max_count = this.max_count;
 
 		// show more button
 		if (data && data.length === 21) {
