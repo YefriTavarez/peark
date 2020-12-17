@@ -65,6 +65,7 @@ fixtures = [
                     "Material Request-production_planning_tool",
                     "Planning Document-expected_delivery_date",
                     "Project Template Task-user",
+                    "Project Template Task-department",
                     "Project Template-department",
                     "Project Template-use_multicheck",
                     "Project-item_specifications",
