@@ -21,6 +21,9 @@ def set_new_name(doc):
 
 
 def set_employee_number(doc):
+    if doc.employee_number:
+        return False
+
     doc.employee_number = next_employee_number()
 
 
