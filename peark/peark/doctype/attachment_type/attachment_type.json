@@ -1,0 +1,74 @@
+{
+ "autoname": "field:attachment_name",
+ "creation": "2020-12-16 10:29:09.835675",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "attachment_name",
+  "prefix",
+  "limit"
+ ],
+ "fields": [
+  {
+   "fieldname": "attachment_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Attachment Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "ex: PO for Purchase Order types",
+   "fieldname": "prefix",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Prefix",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "limit",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Limit",
+   "reqd": 1
+  }
+ ],
+ "modified": "2020-12-16 10:41:46.123332",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "peark",
+ "name": "Attachment Type",
+ "owner": "ytavarez@igcaribe.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

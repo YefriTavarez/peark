@@ -95,6 +95,16 @@ fixtures = [
             ],
         },
     },
+    {
+        "doctype": "Attachment Type",
+        "filters": {
+            "name": (
+                "in", (
+                    "404",
+                )
+            ),
+        }
+    }
 ]
 # Includes in <head>
 # ------------------
@@ -119,6 +129,7 @@ doctype_js = {
     "Department": "public/js/doctype/department.js",
     "Sales Invoice": "public/js/doctype/sales_invoice.js",
     "Project": "public/js/doctype/project.js",
+    "Project Center": "public/js/doctype/project_center.js",
 }
 
 doctype_list_js = {
