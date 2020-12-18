@@ -13,7 +13,7 @@
 				<div>
 					{{ __('Drag and drop files, ') }}
 					<label style="margin: 0">
-						<a href="#" class="text-primary" @click.prevent>{{ __('browse,') }}</a>
+						<a href="#" class="text-primary" @click.prevent>{{ __('browse') }}</a>
 						<input
 							type="file"
 							class="hidden"
@@ -23,7 +23,7 @@
 							:accept="restrictions.allowed_file_types.join(', ')"
 						>
 					</label>
-					<span v-if="!disable_file_browser">
+					<!-- <span v-if="!disable_file_browser">
 						{{ __('choose an') }}
 						<a href="#" class="text-primary bold"
 							@click.stop.prevent="show_file_browser = true"
@@ -36,7 +36,7 @@
 						@click.stop.prevent="show_web_link = true"
 					>
 						{{ __('web link') }}
-					</a>
+					</a> -->
 				</div>
 				<div class="text-muted text-medium">
 					{{ upload_notes }}

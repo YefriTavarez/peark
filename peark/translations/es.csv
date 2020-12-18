@@ -1,5 +1,4 @@
 "","",""
-"","",""
 "","{product_feature} Feature cannot be in the {tablename} table at Row #{idx}. Please check!","Carácteristica de Producto: {product_feature} no puede estar en la tabla de {tablename} en la Fila #{idx}. ¡Favor de Revisar!"
 "","A Compound Product linked to this Product Assembly does not exist","No se encontró un Producto Compuesto enlazado a este Ensamblado de Producto"
 "","All Open Planning Documents will be fetched. Continue?","Todos los Documentos de Planificación en estado abierto serán obtenidos. ¿Desea continuar?"
@@ -31,6 +30,7 @@
 "","Backboard","Material de Respaldo"
 "","Barcode copied to clipboard","Código de barra copiado al portapapeles"
 "","Barcorde has been scanned","Código de barra ha sido escaneado"
+"","browse","explorar"
 "","Call to Action","Tomar Acción"
 "","Cancelled","Cancelado"
 "","Change View","Cambiar Vista"
