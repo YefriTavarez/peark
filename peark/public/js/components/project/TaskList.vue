@@ -13,7 +13,6 @@
                 v-for="(task, index) in tasks" 
                 :key="index"
                 v-bind:task="task"
-                @update-status="updateStatus"
             />
         </tbody>
     </table>
@@ -32,27 +31,7 @@ export default {
         },
         frm: {
             default: null,
-        }
+        },
     },
-    methods: {
-        updateStatus(name) {
-            const { tasks } = this;
-
-            tasks
-                .map((task, idx) => {
-                    const { status } = task;
-
-                    if (task.name == name) {
-                        if (status === "Completed") {
-                            this.tasks[idx].status = "Open";
-                        } else {
-                            this.tasks[idx].status = "Completed";
-                        }
-
-                        console.log({ newStatus: this.tasks[idx].status });
-                    }
-                });
-        }
-    }
 }
 </script>

@@ -1,11 +1,10 @@
 <template>
     <tr>
-        <td data-column="idx" class="text-right">{{ task.idx }}</td>
+        <td data-column="idx" class="text-right">{{ opts.idx }}</td>
         <td data-column="subject">
             <a @click.prevent="view_task">
-                {{ task.name }}
+                {{ opts.subject }}
             </a>
-            {{ task.subject }}
         </td>
         <td data-column="status">{{ displayStatus }}</td>
         <td data-column="actions">
@@ -22,6 +21,11 @@
 <script>
 export default {
     name: "TaskItem",
+    data() {
+        return {
+            opts: new Array(),
+        };
+    },
     props: {
         task: {
             default: {},
@@ -32,23 +36,61 @@ export default {
             frappe.set_route("Form", "Task", this.task.name);
         },
         updateStatus() {
-            this.task.status = "Closed";
-            // this.$emit("update-status", this.task.name);
-        }
+            const { opts } = this;
+
+            opts.oldStatus = this.status;
+
+            if (opts.status === "Completed") {
+                opts.status = "Open";
+            } else {
+                opts.status = "Completed";
+            }
+
+            this.updateDbStatus();
+        },
+        updateDbStatus() {
+            const { opts } = this;
+            const { status, name } = opts;
+
+            const method = "peark.controllers.erpnext.project.update_task";
+            const action =  (status === "Completed") ? "close" : "open";
+
+            const args = { status, name };
+
+            const callback = response => {
+                if (cur_frm.doc.__unsaved) {
+                    cur_frm.dashboard.clear_headline();
+                    cur_frm.dashboard.set_headline_alert(__("This form has been modified after you have loaded it")
+                        + '<a class="btn btn-xs btn-link pull-right" onclick="cur_frm.reload_doc()">'
+                        + __("Refresh") + '</a>', "alert-warning");
+
+                    opts.status = opts.oldStatus;
+                } else {
+                    cur_frm.reload_doc();
+                }
+            };
+
+            frappe.call({ method, args, callback });
+        },
     },
     computed: {
         displayStatus() {
-            return __(this.task.status);
+            return __(this.opts.status);
         },
         actionLabel() {
-            const { status } = this.task;
+            const { status } = this.opts;
 
-            if (status === "Completed") {
+            if (status == "Completed") {
                 return __("Re-Open");
             } else {
                 return __("Close");
             }
         }
+    },
+    beforeMount() {
+        // magic trick to receive via props
+        // and update based on internal state change
+        this.opts = this.task;
     }
 }
 </script>

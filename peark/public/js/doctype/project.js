@@ -23,10 +23,22 @@ frappe.ui.form.on('Project', {
         }
 
         if (project_tasks) {
-            frappe
-                .utils
-                .project
-                .render_tasks(project_tasks, parent);
+            // frappe
+            //     .utils
+            //     .project
+            //     .render_tasks(project_tasks, parent);
+
+            const wrapper = jQuery("<div class=\"task-wrapper\"></div>")
+                .appendTo(
+                    jQuery(parent)
+                        .empty()
+                );
+
+            new frappe.ui.TaskList({
+                wrapper: wrapper,
+                tasks: project_tasks,
+                frm: frm,
+            });
         }
     },
     setup_listeners(frm) {
