@@ -3,6 +3,7 @@
 		"public/js/peark.js",
 		"public/js/attachment.js",
 		"public/js/barcodescan.js",
+		"public/js/components/project/index.js",
 		"public/js/templates/actions_template.html",
 		"public/js/templates/barcode_actions_template.html"
 	],
