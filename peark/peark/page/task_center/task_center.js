@@ -17,7 +17,7 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
             .getItem(key);
 
         if (!last_status) {
-            last_status = defval;
+            // last_status = defval;
 
             localStorage
                 .setItem(key, last_status);
@@ -31,9 +31,9 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
 
         const key = "task_center:last_status";
 
-        if (!status) {
-            status = defval;
-        }
+        // if (!status) {
+        //     status = defval;
+        // }
 
         localStorage
             .setItem(key, status);
@@ -68,7 +68,7 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         label: __('Status'),
         fieldtype: 'Select',
         default: page.get_last_status(),
-        options: 'Open\nWorking\nPending Review\nOverdue\nCompleted\nCancelled\nNot Completed',
+        options: '\nOpen\nWorking\nPending Review\nOverdue\nCompleted\nCancelled\nNot Completed',
         change: function () {
             page.task_dashboard.start = 0;
             page.task_dashboard.refresh();

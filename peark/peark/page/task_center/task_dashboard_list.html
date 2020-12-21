@@ -1,35 +1,38 @@
 {% for d in data %}
 <div class="dashboard-list-task">
     <div class="row" style="min-height: 42px;">
-        <div class="col-sm-2 small" style="margin-top: 8px;">
-            <div class="form-check">
-                <input
-                    type="checkbox"
-                    class="form-check-input"
-                    {% if d.status == "Completed" %}
-                        checked
-                    {% endif %}
-
-                    data-name="{{ d.name }}"
-                    data-doctype="{{ d.doctype || "Task" }}"
-                    {% if d.status == "Completed" %}
-                        data-action="open"
-                    {% else %}
-                        data-action="close"
-                    {% endif %}
-                >
-
-                <a data-type="Project Center" data-name="{{ d.project_center }}">
-                    <strong>{{ d.project_center }}</strong>
-                </a>
-            </div>
-        </div>
-        <div class="col-sm-2 small" style="margin-top: 8px;">
+        <div class="col-sm-12 small" style="margin-top: 8px;">
             <span 
                 class="indicator {{ frappe.utils.guess_colour(d.status) }}"
             >
                 {{ __(d.translated_status || d.status) }}
             </span>
+        </div>
+        <div class="col-sm-2 small" style="margin-top: 8px;">
+            <div class="form-check">
+                <label class="checkbox-inline">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        {% if d.status == "Completed" %}
+                            checked
+                        {% endif %}
+
+                        data-name="{{ d.name }}"
+                        data-doctype="{{ d.doctype || "Task" }}"
+                        {% if d.status == "Completed" %}
+                            data-action="open"
+                        {% else %}
+                            data-action="close"
+                        {% endif %}
+                        style="margin-top: 2px;"
+                    >
+                    
+                    <a data-type="Project Center" data-name="{{ d.project_center }}">
+                        <strong>{{ d.project_center }}</strong>
+                    </a>
+                </label>
+            </div>
         </div>
         <div class="col-sm-4 small" style="margin-top: 8px;">
             <a data-type="Project" data-name="{{ d.project }}">
