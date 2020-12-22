@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td data-column="idx" class="text-right">{{ opts.idx }}</td>
+        <td data-column="idx" class="text-right">{{ displayIndex }}</td>
         <td data-column="subject">
             <a @click.prevent="view_task">
                 {{ opts.subject }}
@@ -30,6 +30,9 @@ export default {
         task: {
             default: {},
         },
+        index: {
+            default: 0,
+        }
     },
     methods: {
         view_task() {
@@ -97,6 +100,17 @@ export default {
             } else {
                 return __("Close");
             }
+        },
+        displayIndex() {
+            const { idx } = this.opts;
+
+            if (!cint(idx)) {
+                const { index } = this;
+
+                return cint(index) + 1;
+            }
+
+            return idx;
         }
     },
     beforeMount() {
