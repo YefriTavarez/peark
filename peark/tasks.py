@@ -8,10 +8,12 @@ import frappe
 import peark.controllers.cost_estimation
 import peark.controllers.planning_mission
 import peark.controllers.planning_document
+import peark.controllers.project_center
 
 
 def all():
     peark.controllers.planning_mission.set_to_delayed()
+    peark.controllers.project_center.update_projects()
 
 
 def daily():

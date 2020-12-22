@@ -6,15 +6,17 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe.model.document import Document
-from frappe.model.naming import make_autoname
+
+from frappe import _ as translate
+from frappe import get_doc, get_all
 
 from frappe.utils import flt
-from frappe import _ as translate
-
-from frappe import get_doc, get_all
 
 
 class ProjectCenter(Document):
+    def onload(self):
+        self.update_projects()
+
     def after_insert(self):
         self.generate_projects()
         self.set_missing_values_on_children()
@@ -25,6 +27,53 @@ class ProjectCenter(Document):
     def validate(self):
         self.update_title()
         self.validate_production_qty()
+
+    def update_projects(self, autocommit=True):
+        status_list = list()
+
+        def update_project(project):
+            doctype = "Project"
+            name = project.project
+
+            fieldname = "status"
+
+            value = frappe.get_value(doctype, name, fieldname)
+
+            if value == project.status:
+                return project.status
+
+            project.set(fieldname, value)
+            project.db_update()
+
+            return project.status
+
+        for project in self.projects:
+            status = update_project(project=project)
+
+            status_list.append(status)
+
+            prev_status = self.status
+            status_change_comment = translate("Set to {}")
+
+            if all(status == "Completed" for status in status_list):
+                self.status = "Completed"
+            else:
+                if "Delayed" in status_list:
+                    self.status = "Delayed"
+
+                else:
+                    self.status = "Open"
+
+            if prev_status != self.status:
+                comment = status_change_comment \
+                    .format(self.status)
+
+                self.add_comment("Edit", comment)
+
+                self.db_update()
+
+        if autocommit:
+            frappe.db.commit()
 
     def set_missing_values_on_children(self):
         projects = self.get_projects()
