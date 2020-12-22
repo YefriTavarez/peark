@@ -34,7 +34,7 @@ frappe.ui.form.on('Project', {
                         .empty()
                 );
 
-            new frappe.ui.TaskList({
+            frm.cur_task_list = new frappe.ui.TaskList({
                 wrapper: wrapper,
                 tasks: project_tasks,
                 frm: frm,

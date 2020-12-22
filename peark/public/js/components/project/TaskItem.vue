@@ -66,7 +66,19 @@ export default {
 
                     opts.status = opts.oldStatus;
                 } else {
-                    cur_frm.reload_doc();
+                    // cur_frm.reload_doc();
+                    const { doc } = cur_frm;
+                    const { 
+                        message: {
+                            percent_complete,
+                            status,
+                        },
+                    } = response;
+
+                    doc.percent_complete = percent_complete;
+                    doc.status = status;
+
+                    cur_frm.refresh();
                 }
             };
 

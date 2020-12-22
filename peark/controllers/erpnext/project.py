@@ -144,6 +144,8 @@ def update_task(name, status):
         doc.run_method("update_percent_complete")
         doc.db_update()
 
+        return doc.as_dict()
+
     doctype = "Task"
 
     doc = frappe.get_doc(doctype, name)
@@ -164,4 +166,4 @@ def update_task(name, status):
 
     doc.db_update()
 
-    update_project(doc)
+    return update_project(doc)
