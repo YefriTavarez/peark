@@ -1,0 +1,171 @@
+{
+ "creation": "2020-12-22 15:36:23.667418",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "detalles_del_producto",
+  "producto",
+  "column_break_2",
+  "dimension_del_producto",
+  "section_break_4",
+  "detalles_del_material",
+  "materials",
+  "gsm",
+  "column_break_7",
+  "dimensiones",
+  "dimension_del_montaje",
+  "unidades_montadas",
+  "section_break_7",
+  "detalles_de_la_entrega",
+  "volumen",
+  "column_break_8",
+  "dia_de_entrega",
+  "section_break_13",
+  "costos",
+  "precio_de_compra_del_material",
+  "precio_de_compra_unitario_del_material",
+  "column_break_16",
+  "precio_unitario_de_venta",
+  "total_a_facturar"
+ ],
+ "fields": [
+  {
+   "fieldname": "detalles_del_producto",
+   "fieldtype": "Heading",
+   "label": "Detalles del Producto"
+  },
+  {
+   "fieldname": "producto",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Producto"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dimension_del_producto",
+   "fieldtype": "Link",
+   "label": "Dimension del Producto",
+   "options": "Dimension"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "detalles_del_material",
+   "fieldtype": "Heading",
+   "label": "Detalles del Material"
+  },
+  {
+   "fieldname": "materials",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Material de Impresi\u00f3n",
+   "options": "Paperboard"
+  },
+  {
+   "fieldname": "gsm",
+   "fieldtype": "Int",
+   "label": "GSM"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dimensiones",
+   "fieldtype": "Link",
+   "label": "Dimension del Material",
+   "options": "Dimension"
+  },
+  {
+   "fieldname": "dimension_del_montaje",
+   "fieldtype": "Link",
+   "label": "Dimension del Montaje (Sin m\u00e1rgenes m\u00ednimos)",
+   "options": "Dimension"
+  },
+  {
+   "default": "1",
+   "fieldname": "unidades_montadas",
+   "fieldtype": "Int",
+   "label": "Unidades Montadas"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "detalles_de_la_entrega",
+   "fieldtype": "Heading",
+   "label": "Detalles de la Entrega"
+  },
+  {
+   "fieldname": "volumen",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Volumen"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "dia_de_entrega",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Dia de Entrega"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "costos",
+   "fieldtype": "Heading",
+   "label": "Costos"
+  },
+  {
+   "description": "Por Pliego",
+   "fieldname": "precio_de_compra_del_material",
+   "fieldtype": "Currency",
+   "label": "Precio de Compra del Material"
+  },
+  {
+   "description": "Precio de Compra del Material / Unidades Montadas",
+   "fieldname": "precio_de_compra_unitario_del_material",
+   "fieldtype": "Currency",
+   "label": "Precio de Compra Unitario del Material",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "precio_unitario_de_venta",
+   "fieldtype": "Currency",
+   "label": "Precio Unitario de Venta"
+  },
+  {
+   "fieldname": "total_a_facturar",
+   "fieldtype": "Currency",
+   "label": "Total a Facturar",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-12-22 16:19:10.398462",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "peark",
+ "name": "Recurring Production Planning Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

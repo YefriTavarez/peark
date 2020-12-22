@@ -1,0 +1,119 @@
+{
+ "autoname": "PLAN-.#####",
+ "creation": "2020-12-22 15:31:45.089890",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "cliente",
+  "divisa",
+  "section_break_2",
+  "detalle",
+  "section_break_4",
+  "gastos_porcentual_de_material",
+  "volumen_total",
+  "column_break_5",
+  "gastos_de_material",
+  "facturacion_total",
+  "margen"
+ ],
+ "fields": [
+  {
+   "fieldname": "cliente",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "default": "DOP",
+   "fieldname": "divisa",
+   "fieldtype": "Link",
+   "label": "Divisa",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Detalle de Planificacion"
+  },
+  {
+   "fieldname": "detalle",
+   "fieldtype": "Table",
+   "options": "Recurring Production Planning Detail"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "gastos_porcentual_de_material",
+   "fieldtype": "Percent",
+   "label": "Gastos Porcentual de Material",
+   "read_only": 1
+  },
+  {
+   "fieldname": "volumen_total",
+   "fieldtype": "Float",
+   "label": "Volumen Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gastos_de_material",
+   "fieldtype": "Currency",
+   "label": "Gastos de Material",
+   "read_only": 1
+  },
+  {
+   "fieldname": "facturacion_total",
+   "fieldtype": "Currency",
+   "label": "Facturacion Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "margen",
+   "fieldtype": "Currency",
+   "label": "Margen",
+   "read_only": 1
+  }
+ ],
+ "modified": "2020-12-22 15:44:46.547541",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "peark",
+ "name": "Recurring Production Planning",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "cliente",
+ "track_changes": 1
+}
