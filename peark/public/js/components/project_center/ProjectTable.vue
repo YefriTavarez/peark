@@ -119,7 +119,12 @@
             </div>
             <!-- end row -->
           </div>
-          <div class="grid-empty text-center hidden">{{ __("No Data") }}</div>
+          <div
+            class="grid-empty text-center"
+            v-bind:class="{ hidden: projects.length }"
+          >
+            {{ __("No Data") }}
+          </div>
         </div>
       </div>
     </div>
