@@ -4,7 +4,29 @@
 frappe.provide("peark.utils.FileUploader");
 frappe.ui.form.on('Project Center', {
 	refresh(frm) {
-		frm.trigger("setup_attachments");
+		frappe.run_serially([
+			frm.trigger("setup_projects"),
+			frm.trigger("setup_attachments"),
+		]);
+	},
+	setup_projects(frm) {
+		const { doc } = frm;
+		const { projects } = doc;
+
+		const selector =
+			"div[data-fieldtype=HTML][data-fieldname=project_display]";
+
+		const wrapper = jQuery("<div></div>")
+			.appendTo(
+				jQuery(selector)
+					.empty()
+			);
+
+		frm.cur_project_table = new frappe.ui.ProjectTable({
+			wrapper,
+			frm,
+			projects,
+		});
 	},
 	setup_attachments(frm) {
 		const selector = ".sidebar-menu.form-attachments a.add-attachment";

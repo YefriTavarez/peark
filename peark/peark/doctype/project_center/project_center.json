@@ -32,6 +32,7 @@
   "actual_start_date",
   "actual_end_date",
   "section_break_26",
+  "project_display",
   "projects"
  ],
  "fields": [
@@ -56,6 +57,7 @@
   {
    "fieldname": "projects",
    "fieldtype": "Table",
+   "hidden": 1,
    "label": "Projects",
    "no_copy": 1,
    "options": "Projects",
@@ -212,10 +214,15 @@
    "label": "Production Qty",
    "precision": "0",
    "reqd": 1
+  },
+  {
+   "fieldname": "project_display",
+   "fieldtype": "HTML",
+   "label": "Projects"
   }
  ],
- "modified": "2020-11-26 17:57:50.981682",
- "modified_by": "Administrator",
+ "modified": "2020-12-23 10:24:47.397597",
+ "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Project Center",
  "owner": "Administrator",
