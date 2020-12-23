@@ -100,7 +100,7 @@ peark.TaskDashboard = Class.extend({
 		const self = this;
 
 		jQuery(parent)
-			.find("input[type=checkbox][data-action]")
+			.find("i[data-action]")
 			.click(function (event) {
 				const doctype = jQuery(this)
 					.attr("data-doctype");
