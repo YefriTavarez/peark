@@ -81,7 +81,8 @@ export default {
                     doc.percent_complete = percent_complete;
                     doc.status = status;
 
-                    cur_frm.refresh();
+                    cur_frm.refresh_fields();
+                    cur_frm.refresh_header();
                 }
             };
 
