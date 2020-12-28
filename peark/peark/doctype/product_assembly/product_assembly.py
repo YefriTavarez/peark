@@ -4,6 +4,8 @@
 
 from __future__ import unicode_literals
 
+from peark.peark.doctype.paperboard.paperboard import Paperboard
+
 import frappe
 from frappe.model.document import Document
 
@@ -488,7 +490,7 @@ class ProductAssembly(Document):
     def get_full_name(self):
         values = (
             self.product_profile,
-            self.paperboard,
+            self.get_paperboard_name(),
             self.dimension,
             self.get_front_colors(),
             self.get_pantone_colors(),
@@ -519,6 +521,24 @@ class ProductAssembly(Document):
         )
 
         return ", ".join([value for value in values if value])
+
+    def get_paperboard_name(self):
+        if not self.paperboard_caliper:
+            return self.paperboard
+
+        doctype = self.meta \
+            .get_field("paperboard") \
+            .options
+
+        name = self.paperboard
+
+        doc = frappe.get_doc(doctype, name)
+
+        paperboard = doc \
+            .get_full_name(weight_or_caliper=self.paperboard_caliper,
+                           ignore_trademark=True)
+
+        return paperboard
 
     def get_front_colors(self):
         value = cint(self.front_colors)
@@ -634,6 +654,7 @@ class ProductAssembly(Document):
     enabled = True
     is_compound_product = False
     paperboard = None
+    paperboard_caliper = None
     item_groups = list()
     front_colors = 0
     pantone_colors = 0

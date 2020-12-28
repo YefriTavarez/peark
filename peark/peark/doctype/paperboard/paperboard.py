@@ -51,7 +51,7 @@ class Paperboard(Document):
     def update_title(self):
         self.title = self.get_full_name()
 
-    def get_full_name(self, weight_or_caliper=None):
+    def get_full_name(self, weight_or_caliper=None, ignore_trademark=False):
         # not all paperboard have caliper
         title = self.material_name
 
@@ -63,7 +63,7 @@ class Paperboard(Document):
 
         title = "{} {}C".format(title, 2 if self.double_sided else 1)
 
-        if self.trademark:
+        if self.trademark and not ignore_trademark:
             title = "{} ({})".format(title, self.trademark)
 
         return title
