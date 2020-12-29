@@ -29,7 +29,7 @@ class Dimension(Document):
         doctype = self.doctype
         name = self.generate_autoname()
 
-        url_to_form = frappe.utils.get_url_to_form(doctype, name)
+        reversed_name = self.generate_autoname(reversed=True)
 
         error_message = """
             Se encontró una {doctype} en el sistema que coincide 
@@ -37,21 +37,29 @@ class Dimension(Document):
             <a href="{url_to_form}"><strong>{doctype}</strong>: {name}</a>
         """
 
-        if not database.exists(doctype, name):
+        exists = database.exists(doctype, name)
+        exists_in_reversed = database.exists(doctype, reversed_name)
+
+        if not exists and not exists_in_reversed:
             return
 
         if not self.is_new() and self.name == name:
             return
 
+        url_to_form = frappe.utils.get_url_to_form(
+            doctype, reversed_name if exists_in_reversed else name)
+
         frappe.throw(
             error_message
             .format(doctype=doctype,
                     url_to_form=url_to_form,
-                    name=name)
+                    name=reversed_name if exists_in_reversed else name)
         )
 
-    def generate_autoname(self):
-        return "{width} {width_uom} x {height} {height_uom}" \
+    def generate_autoname(self, reversed=False):
+        return ("{height} {height_uom} x {width} {width_uom}"
+                if reversed else
+                "{width} {width_uom} x {height} {height_uom}") \
             .format(width=self.width,
                     width_uom=self.width_uom,
                     height=self.height,
