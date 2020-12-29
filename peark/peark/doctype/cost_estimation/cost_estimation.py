@@ -108,7 +108,7 @@ class CostEstimation(Document):
             sub_assemblies = [d.get_product_assembly()
                               for d in product_compound.parts]
 
-        self.set_assembly_onload(product_assembly, sub_assemblies)
+            self.set_assembly_onload(product_assembly, sub_assemblies)
 
     def set_assembly_onload(self, product_assembly, sub_assemblies=None):
         def fetch_default_rate(product_option, option, options):

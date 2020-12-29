@@ -15,8 +15,8 @@
   "double_sided",
   "section_break_7",
   "techniques",
-  "column_break_9",
   "item_groups",
+  "column_break_9",
   "section_break_14",
   "calipers",
   "column_break_19",
@@ -150,6 +150,7 @@
   {
    "fieldname": "techniques",
    "fieldtype": "Table MultiSelect",
+   "hidden": 1,
    "label": "T\u00e9cnicas de Impresi\u00f3n",
    "options": "Supported Techniques"
   },
@@ -160,7 +161,7 @@
    "options": "Paperboard Calipers"
   }
  ],
- "modified": "2020-11-10 20:04:54.006781",
+ "modified": "2020-12-29 09:03:04.096247",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Paperboard",

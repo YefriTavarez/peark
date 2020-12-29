@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 
+from frappe import db as database
 from frappe import _ as translate
 from frappe import get_doc, get_all
 
@@ -209,6 +210,30 @@ class ProjectCenter(Document):
             # update projects table
             set_fetch_from(doc)
             append_child(doc, template, idx)
+
+    def get_product_assembly(self):
+        item_doc = self.get_item_doc()
+
+        doctype = item_doc.ref_doctype
+        name = item_doc.ref_docname
+
+        errmsg = translate("Product Assembly not found for Item: {}")
+        if not database \
+                .exists(doctype, name):
+            frappe.throw(errmsg.format(item_doc.name))
+
+        return frappe.get_doc(doctype, name)
+
+    def get_item_doc(self):
+        doctype = "Item"
+        name = self.item_code
+
+        errmsg = translate("Item Code is missing")
+
+        if not name:
+            frappe.throw(errmsg)
+
+        return frappe.get_doc(doctype, name)
 
     project_naming_series = None
     title = None

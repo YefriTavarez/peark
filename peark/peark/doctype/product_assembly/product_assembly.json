@@ -63,12 +63,14 @@
    "default": "0",
    "fieldname": "horizontal_margin",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Margen Horizontal"
   },
   {
    "default": "0",
    "fieldname": "vertical_margin",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Margen Vertical"
   },
   {
@@ -265,8 +267,8 @@
    "options": "Paperboard Caliper"
   }
  ],
- "modified": "2020-11-30 14:46:44.173542",
- "modified_by": "Administrator",
+ "modified": "2020-12-29 09:20:25.099085",
+ "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Product Assembly",
  "owner": "yefritavarez@gmail.com",
