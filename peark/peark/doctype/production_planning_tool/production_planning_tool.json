@@ -16,8 +16,8 @@
   "sales_order",
   "item_code",
   "section_break_10",
-  "fetch_planning_documents",
-  "planning_documents",
+  "fetch_project_centers",
+  "project_centers",
   "section_break_13",
   "warehouse",
   "section_break_15",
@@ -89,15 +89,15 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "fetch_planning_documents",
+   "fieldname": "fetch_project_centers",
    "fieldtype": "Button",
-   "label": "Fetch Planning Documents"
+   "label": "Fetch Project Centers"
   },
   {
-   "fieldname": "planning_documents",
+   "fieldname": "project_centers",
    "fieldtype": "Table",
-   "label": "Production Planning Documents",
-   "options": "Production Planning Documents"
+   "label": "Production Project Centers",
+   "options": "Production Project Centers"
   },
   {
    "fieldname": "section_break_13",

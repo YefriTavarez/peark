@@ -10,7 +10,7 @@
   "uom",
   "warehouse",
   "request_type",
-  "planning_document",
+  "project_center",
   "expected_on"
  ],
  "fields": [
@@ -63,10 +63,10 @@
    "reqd": 1
   },
   {
-   "fieldname": "planning_document",
+   "fieldname": "project_center",
    "fieldtype": "Link",
-   "label": "Planning Document",
-   "options": "Planning Document",
+   "label": "Project Center",
+   "options": "Project Center",
    "read_only": 1
   },
   {
@@ -78,7 +78,7 @@
   }
  ],
  "istable": 1,
- "modified": "2020-10-26 17:36:53.970549",
+ "modified": "2020-12-28 17:36:53.970549",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Planning Materials",

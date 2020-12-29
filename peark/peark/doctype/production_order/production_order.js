@@ -404,7 +404,7 @@ frappe.ui.form.on('Production Order', {
             () => frm.trigger("fetch_operations"),
         ]);
     },
-    planning_document(frm) {
+    project_center(frm) {
         const { events } = frm;
         frappe.run_serially([
             () => frm.trigger("fetch_item"),

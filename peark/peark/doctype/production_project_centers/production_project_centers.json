@@ -4,7 +4,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "planning_document",
+  "project_center",
   "product_name",
   "item",
   "item_specs",
@@ -13,29 +13,29 @@
  ],
  "fields": [
   {
-   "fieldname": "planning_document",
+   "fieldname": "project_center",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Planning Document",
-   "options": "Planning Document",
+   "label": "Project Center",
+   "options": "Project Center",
    "reqd": 1
   },
   {
-   "fetch_from": "planning_document.product_name",
+   "fetch_from": "project_center.product_name",
    "fieldname": "product_name",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Product Name"
   },
   {
-   "fetch_from": "planning_document.item_code",
+   "fetch_from": "project_center.item_code",
    "fieldname": "item",
    "fieldtype": "Link",
    "label": "Item",
    "options": "Item"
   },
   {
-   "fetch_from": "planning_document.item_specifications",
+   "fetch_from": "project_center.item_specifications",
    "fetch_if_empty": 1,
    "fieldname": "item_specs",
    "fieldtype": "Small Text",
@@ -43,7 +43,7 @@
    "read_only": 1
   },
   {
-   "fetch_from": "planning_document.production_qty",
+   "fetch_from": "project_center.production_qty",
    "fetch_if_empty": 1,
    "fieldname": "qty",
    "fieldtype": "Int",
@@ -61,10 +61,10 @@
   }
  ],
  "istable": 1,
- "modified": "2020-10-26 19:32:37.853939",
+ "modified": "2020-12-28 19:32:37.853939",
  "modified_by": "Administrator",
  "module": "peark",
- "name": "Production Planning Documents",
+ "name": "Production Project Centers",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,

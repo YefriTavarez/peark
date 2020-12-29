@@ -8,7 +8,7 @@
 /// sales_order = None
 /// item_code = None
 /// customer = None
-/// planning_documents = list()
+/// project_centers = list()
 /// warehouse = None
 /// planning_materials = list()
 
@@ -133,12 +133,12 @@ frappe.ui.form.on('Production Planning Tool', {
         }
 
         const {
-            planning_documents,
+            project_centers,
             planning_materials,
         } = doc;
 
-        if (!planning_documents) {
-            doc.planning_documents = new Array();
+        if (!project_centers) {
+            doc.project_centers = new Array();
         }
 
         if (!planning_materials) {
@@ -149,7 +149,7 @@ frappe.ui.form.on('Production Planning Tool', {
             planning_materials
                 .every(d => !d.__islocal)
 
-            && planning_documents
+            && project_centers
                 .every(d => !d.__islocal)
         ) {
             return false;
@@ -162,7 +162,7 @@ frappe.ui.form.on('Production Planning Tool', {
         ]);
     },
 
-    fetch_planning_documents(frm) {
+    fetch_project_centers(frm) {
         const { doc } = frm;
 
         const {
@@ -184,11 +184,11 @@ frappe.ui.form.on('Production Planning Tool', {
         if (!fieldlist.some(d => d)) {
             const message = [
                 __("You didn't specify any filters."),
-                __("All Open Planning Documents will be fetched. Continue?"),
+                __("All Open Project Centers will be fetched. Continue?"),
             ];
 
             const ifyes = function () {
-                frm.call("on_fetch_planning_documents");
+                frm.call("on_fetch_project_centers");
             };
 
             const ifno = function () {
@@ -201,17 +201,17 @@ frappe.ui.form.on('Production Planning Tool', {
             return false;
         }
 
-        frm.call("on_fetch_planning_documents")
+        frm.call("on_fetch_project_centers")
             .then(() => frm.dirty());
     },
     fetch_materials(frm) {
         // const { doc } = frm;
-        // const { planning_documents } = doc;
+        // const { project_centers } = doc;
 
-        // const errmsg = __("There should be at least one Planning Document "
-        //     + "in the Production Planning Documents' table");
+        // const errmsg = __("There should be at least one Project Center "
+        //     + "in the Production Project Centers' table");
 
-        // if (!planning_documents || !planning_documents.length) {
+        // if (!project_centers || !project_centers.length) {
         //     frappe.throw(errmsg);
         // }
 
@@ -348,12 +348,12 @@ frappe.ui.form.on('Production Planning Tool', {
         }
 
 
-        const { planning_documents } = doc;
-        if (!planning_documents) {
-            doc.planning_documents = new Array();
+        const { project_centers } = doc;
+        if (!project_centers) {
+            doc.project_centers = new Array();
         }
 
-        if (planning_documents.length) {
+        if (project_centers.length) {
             frm.call("make_production_orders")
                 .then((response) => {
                     const { show_alert } = frappe;
@@ -423,7 +423,7 @@ frappe.ui.form.on('Production Planning Tool', {
         const { doc } = frm;
 
         const {
-            planning_documents,
+            project_centers,
             planning_materials,
         } = doc;
 
@@ -445,8 +445,8 @@ frappe.ui.form.on('Production Planning Tool', {
         }
 
 
-        if (!planning_documents) {
-            doc.planning_documents = new Array();
+        if (!project_centers) {
+            doc.project_centers = new Array();
         }
 
         if (!planning_materials) {
@@ -457,7 +457,7 @@ frappe.ui.form.on('Production Planning Tool', {
             planning_materials
                 .some(d => d.__islocal)
 
-            && planning_documents
+            && project_centers
                 .some(d => d.__islocal)
         ) {
             console.log("explain: other");

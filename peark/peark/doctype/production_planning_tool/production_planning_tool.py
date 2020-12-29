@@ -82,7 +82,7 @@ class ProductionPlanningTool(Document):
                     "schedule_date": get_schedule_date(material.expected_on),
                     "description": material.item_specs,
                     "item_name": material.item_specs[0:45],
-                    "planning_document": material.planning_document,
+                    "project_center": material.project_center,
                 })
 
                 update_parent_date(doc, material.expected_on)
@@ -100,7 +100,7 @@ class ProductionPlanningTool(Document):
 
     def make_production_orders(self):
         # source docfield
-        # planning_document = None
+        # project_center = None
         # product_name = None
         # item = None
         # item_specs = None
@@ -108,8 +108,8 @@ class ProductionPlanningTool(Document):
         # warehouse = None
 
         def get_product_assembly(args):
-            doctype = "Planning Document"
-            name = args.planning_document
+            doctype = "Project Center"
+            name = args.project_center
 
             doc = frappe.get_doc(doctype, name)
 
@@ -120,7 +120,7 @@ class ProductionPlanningTool(Document):
             doc = frappe.new_doc(doctype)
 
             # target docfield
-            # planning_document = None
+            # project_center = None
             # status = None
             # customer = None
             # sales_order = None
@@ -134,7 +134,7 @@ class ProductionPlanningTool(Document):
 
             doc.update({
                 "production_planning_tool": self.name,
-                "planning_document": planning.planning_document,
+                "project_center": planning.project_center,
                 "product_name": planning.product_name,
                 "item_specs": product_assembly.get_full_name(),
                 "qty": planning.qty,
@@ -161,7 +161,7 @@ class ProductionPlanningTool(Document):
             return doc.name
 
         doclist = list()
-        for planning in self.planning_documents:
+        for planning in self.project_centers:
             product_assembly_parent = get_product_assembly(planning)
 
             if not product_assembly_parent.is_compound_product:
@@ -208,9 +208,9 @@ class ProductionPlanningTool(Document):
 
             return options.split(", ")
 
-        def get_expected_start_date(planning_document):
-            doctype = "Planning Document"
-            name = planning_document
+        def get_expected_start_date(project_center):
+            doctype = "Project Center"
+            name = project_center
             fieldname = "expected_start_date"
 
             return database.get_value(doctype, name, fieldname)
@@ -241,30 +241,30 @@ class ProductionPlanningTool(Document):
 
             return field.default
 
-        def add_material(material, feature, planning_document):
+        def add_material(material, feature, project_center):
             from math import ceil
 
             planning_material = pydict()
 
             planning_material.item = material.item
             planning_material.item_specs = material.item_name
-            planning_material.qty = ceil(material.qty * planning_document.qty)
+            planning_material.qty = ceil(material.qty * project_center.qty)
             planning_material.uom = material.uom
             planning_material.warehouse = self.warehouse
 
             planning_material.request_type = get_default_request_type()
-            planning_material.planning_document = planning_document.planning_document
+            planning_material.project_center = project_center.project_center
             planning_material.expected_on = get_expected_start_date(
-                planning_document.planning_document)
+                project_center.project_center)
 
             self.append("planning_materials", planning_material)
 
-        planning_documents = self.planning_documents
+        project_centers = self.project_centers
 
-        for planning_document in planning_documents:
-            for feature in get_product_features(planning_document.item):
+        for project_center in project_centers:
+            for feature in get_product_features(project_center.item):
                 for material in get_list_of_materials(feature):
-                    add_material(material, feature, planning_document)
+                    add_material(material, feature, project_center)
 
         infomsg = translate("Didn't find any Product Feature with "
                             "Materials specified on it")
@@ -272,16 +272,16 @@ class ProductionPlanningTool(Document):
             frappe.msgprint(infomsg)
 
     def on_fetch_materials_prevalidate(self):
-        planning_documents = self.planning_documents
+        project_centers = self.project_centers
 
-        errmsg = translate("There should be at least one Planning Document "
-                           "in the Production Planning Documents' table")
+        errmsg = translate("There should be at least one Project Center "
+                           "in the Production Project Centers' table")
 
-        if not planning_documents:
+        if not project_centers:
             frappe.throw(errmsg)
 
-    def on_fetch_planning_documents(self):
-        planning_docs = self.get_planning_documents_based_on_filters()
+    def on_fetch_project_centers(self):
+        planning_docs = self.get_project_centers_based_on_filters()
 
         for planning_doc in planning_docs:
             self.get_new_production_planning_doc(planning_doc)
@@ -302,7 +302,7 @@ class ProductionPlanningTool(Document):
 
         warehouse = get_warehouse(planning_doc)
 
-        tablename = "planning_documents"
+        tablename = "project_centers"
         doc = self.append(tablename, planning_doc)
 
         doc.warehouse = warehouse
@@ -338,11 +338,11 @@ class ProductionPlanningTool(Document):
 
         return filters
 
-    def get_planning_documents_based_on_filters(self):
+    def get_project_centers_based_on_filters(self):
         filters = self.get_filters()
-        doctype = "Planning Document"
+        doctype = "Project Center"
         fields = [
-            "name As planning_document",
+            "name As project_center",
             "product_name",
             "item_code As item",
             "item_specifications As item_specs",
@@ -358,6 +358,6 @@ class ProductionPlanningTool(Document):
     sales_order = None
     item_code = None
     customer = None
-    planning_documents = list()
+    project_centers = list()
     warehouse = None
     planning_materials = list()

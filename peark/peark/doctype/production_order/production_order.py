@@ -69,8 +69,8 @@ class ProductionOrder(Document):
             if self.get("repeated_work") else translate("No")
 
     def set_item(self):
-        doctype = "Planning Document"
-        name = self.planning_document
+        doctype = "Project Center"
+        name = self.project_center
         fieldname = "item_code"
 
         if name:
@@ -78,8 +78,8 @@ class ProductionOrder(Document):
                 .get_value(doctype, name, fieldname)
 
     def set_product_name(self):
-        doctype = "Planning Document"
-        name = self.planning_document
+        doctype = "Project Center"
+        name = self.project_center
         fieldname = "product_name"
 
         if name:
@@ -87,8 +87,8 @@ class ProductionOrder(Document):
                 .get_value(doctype, name, fieldname)
 
     def set_qty(self):
-        doctype = "Planning Document"
-        name = self.planning_document
+        doctype = "Project Center"
+        name = self.project_center
         fieldname = "production_qty"
 
         if name:
@@ -96,8 +96,8 @@ class ProductionOrder(Document):
                 .get_value(doctype, name, fieldname)
 
     def set_customer(self):
-        doctype = "Planning Document"
-        name = self.planning_document
+        doctype = "Project Center"
+        name = self.project_center
         fieldname = "customer"
 
         if name:
@@ -105,8 +105,8 @@ class ProductionOrder(Document):
                 .get_value(doctype, name, fieldname)
 
     def set_sales_order(self):
-        doctype = "Planning Document"
-        name = self.planning_document
+        doctype = "Project Center"
+        name = self.project_center
         fieldname = "sales_order"
 
         if name:
@@ -201,7 +201,7 @@ class ProductionOrder(Document):
             childdoc.db_update()
 
     naming_series = None
-    planning_document = None
+    project_center = None
     status = None
     customer = None
     sales_order = None

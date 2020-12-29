@@ -8,8 +8,8 @@ import frappe
 from frappe.model.document import Document
 
 
-class ProductionPlanningDocuments(Document):
-    planning_document = None
+class ProductionProjectCenters(Document):
+    project_center = None
     product_name = None
     item = None
     item_specs = None
