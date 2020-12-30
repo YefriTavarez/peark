@@ -575,8 +575,8 @@ frappe.ui.form.on('Product Assembly', {
         const product_profile_doc = __onload.product_profile_doc || {};
 
         const fields_list = [
-            ["horizontal_margin", "allow_printing", d => !!d],
-            ["vertical_margin", "allow_printing", d => !!d],
+            // ["horizontal_margin", "allow_printing", d => !!d],
+            // ["vertical_margin", "allow_printing", d => !!d],
             ["section_break_13", "allow_printing", d => !!d],
             ["dimension", "dimensions", d => !!d],
             ["paperboard", "paperboards", d => !!d],
