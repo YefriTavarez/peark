@@ -130,6 +130,17 @@ def get_data():
             "condition": has_permission(doctype="Production Planning Tool", raise_exception=False)
         },
         {
+            "module_name": 'Recurring Production Planning',
+            "category": "Places",
+            "label": _('Recurring Production Planning'),
+            "icon": "fa fa-superpowers",
+            "type": 'link',
+            "link": '#List/Recurring Production Planning/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Recurring Production Planning", raise_exception=False)
+        },
+        {
             "module_name": 'Production Order',
             "category": "Places",
             "label": _('Production Order'),

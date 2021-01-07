@@ -39,7 +39,7 @@
   {
    "fieldname": "project_center_template",
    "fieldtype": "Link",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Project Center Template",
    "options": "Project Center Template",
    "reqd": 1,
@@ -73,8 +73,6 @@
    "fetch_from": "project_center_template.project_type",
    "fieldname": "project_type",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Project Type",
    "options": "Project Type",
    "reqd": 1
@@ -222,7 +220,7 @@
    "label": "Projects"
   }
  ],
- "modified": "2020-12-23 11:25:32.679516",
+ "modified": "2021-01-05 09:50:45.225917",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Project Center",

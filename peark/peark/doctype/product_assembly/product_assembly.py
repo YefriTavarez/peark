@@ -322,7 +322,7 @@ class ProductAssembly(Document):
     def generate_hash(self):
         array = [
             "".join(
-                gut(cstr(self.get(key))))
+                gut(cstr(self.get(key)), 5))
             for key in self.get_fields() if cstr(self.get(key))]
 
         pre_hash = "".join(array)
@@ -632,6 +632,7 @@ class ProductAssembly(Document):
         return [
             "dimension",
             "paperboard",
+            "paperboard_caliper",
             "front_colors",
             "pantone_colors",
             "back_colors",
