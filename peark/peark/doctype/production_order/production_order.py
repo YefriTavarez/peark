@@ -24,6 +24,19 @@ class ProductionOrder(Document):
 
     def validate(self):
         self.validate_item_agaist_product_assembly()
+        self.fetch_item_specs()
+
+    def fetch_item_specs(self):
+        doctype = "Product Assembly"
+        name = self.product_assembly
+        fieldname = "full_specifications"
+
+        if not name:
+            return False
+
+        value = frappe.get_value(doctype, name, fieldname)
+
+        self.item_specs = value
 
     def validate_item_agaist_product_assembly(self):
         fields = ("ref_doctype", "ref_docname")

@@ -282,7 +282,7 @@ frappe.ui.form.on('Production Order', {
                 });
         })();
 
-        if (!operations.length) {
+        if (!operations || !operations.length) {
             const content = `<div class=\"grid-empty text-center\">
                 ${__("No data")}
             </div>`;
