@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2020, Yefri Tavarez Nolasco and Contributors
+# Copyright (c) 2021, Yefri Tavarez Nolasco and Contributors
 # See license.txt
 from __future__ import unicode_literals
 
 # import frappe
 import unittest
 
-class TestColorPantone(unittest.TestCase):
+class TestPantoneColors(unittest.TestCase):
 	pass
