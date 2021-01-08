@@ -7,6 +7,7 @@
             frappe.run_serially([
                 () => frm.trigger("set_queries"),
                 () => frm.trigger("add_fetches"),
+                () => frm.trigger("toggle_display_fields"),
             ]);
         },
         after_insert(frm) {
@@ -24,6 +25,52 @@
             frappe.run_serially([
                 () => frm.trigger("add_project_center_template_fetch"),
             ]);
+        },
+        toggle_display_fields(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_display_front_pantones_field"),
+                () => frm.trigger("toggle_display_back_pantones_field"),
+            ]);
+        },
+        toggle_display_front_pantones_field(frm) {
+            const { doc } = frm;
+            const fieldname = "front_pantones";
+            const keyworkds = [
+                "Color Pantone Tiro",
+                "Colores Pantone Tiro"
+            ];
+
+            let display = false;
+            let reqd = false;
+            keyworkds.map(keyworkd => {
+                if (doc.item_specifications.indexOf(keyworkd) !== -1) {
+                    display = true;
+                    reqd = true;
+                }
+            });
+
+            frm.toggle_display(fieldname, display);
+            frm.toggle_reqd(fieldname, reqd);
+        },
+        toggle_display_back_pantones_field(frm) {
+            const { doc } = frm;
+            const fieldname = "back_pantones";
+            const keyworkds = [
+                "Color Pantone Retiro",
+                "Colores Pantone Retiro"
+            ];
+
+            let display = false;
+            let reqd = false;
+            keyworkds.map(keyworkd => {
+                if (doc.item_specifications.indexOf(keyworkd) !== -1) {
+                    display = true;
+                    reqd = true;
+                }
+            });
+
+            frm.toggle_display(fieldname, display);
+            frm.toggle_reqd(fieldname, reqd);
         },
         set_queries(frm) {
             frappe.run_serially([
@@ -59,6 +106,9 @@
             ];
 
             frm.toggle_reqd(fieldlist, doc.order_required);
+        },
+        item_specifications(frm) {
+            frm.trigger("toggle_display_fields");
         },
     };
 

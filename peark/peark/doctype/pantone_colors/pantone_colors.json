@@ -1,0 +1,46 @@
+{
+ "creation": "2021-01-07 18:00:47.422296",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "pantone_code",
+  "specification",
+  "last_purchase_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "pantone_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Pantone Code",
+   "options": "Pantone Color",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "pantone_code.specification",
+   "fieldname": "specification",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Specification"
+  },
+  {
+   "fetch_from": "pantone_code.last_purchase_rate",
+   "fieldname": "last_purchase_rate",
+   "fieldtype": "Currency",
+   "label": "Last Purchase Rate",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-01-07 18:58:44.164518",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Pantone Colors",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

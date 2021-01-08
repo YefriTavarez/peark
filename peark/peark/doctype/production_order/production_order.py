@@ -17,6 +17,8 @@ class ProductionOrder(Document):
         self.set_paperboard()
         self.set_allow_printing()
         self.set_printing_sides()
+        self.set_front_pantones_str()
+        self.set_back_pantones_str()
         self.set_repeated_work_in_words()
 
     def on_change(self):
@@ -24,6 +26,19 @@ class ProductionOrder(Document):
 
     def validate(self):
         self.validate_item_agaist_product_assembly()
+        self.fetch_item_specs()
+
+    def fetch_item_specs(self):
+        doctype = "Product Assembly"
+        name = self.product_assembly
+        fieldname = "full_specifications"
+
+        if not name:
+            return False
+
+        value = frappe.get_value(doctype, name, fieldname)
+
+        self.item_specs = value
 
     def validate_item_agaist_product_assembly(self):
         fields = ("ref_doctype", "ref_docname")
@@ -55,6 +70,14 @@ class ProductionOrder(Document):
 
         self.allow_printing = database.get_value(doctype, name, fieldname)
 
+    def set_front_pantones_str(self):
+        self.front_pantones_str = ", " \
+            .join([d.pantone_code for d in self.front_pantones])
+
+    def set_back_pantones_str(self):
+        self.back_pantones_str = ", " \
+            .join([d.pantone_code for d in self.back_pantones])
+
     def set_printing_sides(self):
         doctype = "Product Profile"
         name = self.product_profile
@@ -71,11 +94,14 @@ class ProductionOrder(Document):
     def set_item(self):
         doctype = "Project Center"
         name = self.project_center
-        fieldname = "item_code"
+        fields = [
+            "item_code",
+            "item_specifications",
+        ]
 
         if name:
-            self.item = database \
-                .get_value(doctype, name, fieldname)
+            self.item, self.item_specs = database \
+                .get_value(doctype, name, fields)
 
     def set_product_name(self):
         doctype = "Project Center"
@@ -122,6 +148,30 @@ class ProductionOrder(Document):
         doc = self.get_product_assembly()
 
         self.product_assembly = doc.name
+
+    def set_colors(self, assembly=None):
+        self.front_pantones = list()
+        self.back_pantones = list()
+
+        doctype = "Project Center"
+        name = self.project_center
+
+        if not name:
+            return False
+
+        doc = frappe.get_doc(doctype, name)
+
+        for child in doc.front_pantones:
+            fieldname = "front_pantones"
+            childcopy = frappe.copy_doc(child)
+
+            self.append(fieldname, childcopy)
+
+        for child in doc.back_pantones:
+            fieldname = "back_pantones"
+            childcopy = frappe.copy_doc(child)
+
+            self.append(fieldname, childcopy)
 
     def set_operations(self, assembly=None):
         self.operations = list()
@@ -205,6 +255,8 @@ class ProductionOrder(Document):
     status = None
     customer = None
     sales_order = None
+    front_pantones = list()
+    back_pantones = list()
     product_profile = None
     product_assembly = None
     item = None
