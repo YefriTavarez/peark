@@ -25,6 +25,8 @@
   "item_specifications",
   "column_break_17",
   "production_qty",
+  "front_pantones",
+  "back_pantones",
   "section_break_20",
   "expected_start_date",
   "expected_end_date",
@@ -218,10 +220,22 @@
    "fieldname": "project_display",
    "fieldtype": "HTML",
    "label": "Projects"
+  },
+  {
+   "fieldname": "front_pantones",
+   "fieldtype": "Table MultiSelect",
+   "label": "Front Pantones",
+   "options": "Pantone Colors"
+  },
+  {
+   "fieldname": "back_pantones",
+   "fieldtype": "Table MultiSelect",
+   "label": "Back Pantones",
+   "options": "Pantone Colors"
   }
  ],
- "modified": "2021-01-05 09:50:45.225917",
- "modified_by": "ytavarez@igcaribe.com",
+ "modified": "2021-01-07 18:04:16.486893",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",
  "owner": "Administrator",

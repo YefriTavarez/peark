@@ -11,8 +11,10 @@
   "section_break_3",
   "status",
   "customer",
-  "product_name",
   "sales_order",
+  "product_name",
+  "front_pantones",
+  "back_pantones",
   "column_break_7",
   "product_profile",
   "product_assembly",
@@ -172,9 +174,21 @@
    "label": "Production Planning Tool",
    "options": "Production Planning Tool",
    "read_only": 1
-  }
+  },
+  {
+    "fieldname": "front_pantones",
+    "fieldtype": "Table MultiSelect",
+    "label": "Front Pantones",
+    "options": "Pantone Colors"
+   },
+   {
+    "fieldname": "back_pantones",
+    "fieldtype": "Table MultiSelect",
+    "label": "Back Pantones",
+    "options": "Pantone Colors"
+   }
  ],
- "modified": "2021-01-07 15:37:47.920324",
+ "modified": "2021-01-07 15:37:50",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Order",
