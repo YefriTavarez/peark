@@ -50,7 +50,7 @@
             });
 
             frm.toggle_display(fieldname, display);
-            frm.toggle_reqd(fieldname, reqd);
+            // frm.toggle_reqd(fieldname, reqd);
         },
         toggle_display_back_pantones_field(frm) {
             const { doc } = frm;
@@ -70,7 +70,7 @@
             });
 
             frm.toggle_display(fieldname, display);
-            frm.toggle_reqd(fieldname, reqd);
+            // frm.toggle_reqd(fieldname, reqd);
         },
         set_queries(frm) {
             frappe.run_serially([

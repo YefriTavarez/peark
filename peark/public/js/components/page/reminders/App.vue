@@ -9,7 +9,7 @@
       </div>
     </div>
     <form @submit.prevent="addTodo" class="header">
-      <h2 style="margin: 5px; color: #36414c">{{ __("My ToDos") }}</h2>
+      <h2 style="margin: 5px; color: #36414c">{{ __("My Reminders") }}</h2>
       <input type="text" v-model="newTodo" :placeholder="__('Title')" />
       <span @click="addTodo" class="addBtn">{{ __("Add") }}</span>
     </form>
@@ -27,25 +27,24 @@
             'fa fa-square-o': todo.workflow_status !== 'Completed',
           }"
           @click="toggleStatus(todo)"
-        ></i>
+        >
+        </i>
 
-        <span @dblclick="toggleStatus(todo)">
-          {{ todo.content }}
-          <i
-            v-if="todo.flag"
-            class="fa fa-flag"
-            v-bind:class="{
-              yellow: todo.flag == 'Yellow',
-              red: todo.flag == 'Red',
-              orange: todo.flag == 'Orange',
-              green: todo.flag == 'Green',
-              blue: todo.flag == 'Blue',
-              purple: todo.flag == 'Purple',
-              gray: todo.flag == 'Gray',
-            }"
-            aria-hidden="true"
-          ></i>
-        </span>
+        <strong>
+          {{ __(todo.workflow_status) }}
+          <br v-if="inline(todo)" />
+        </strong>
+
+        <span
+          v-html="todo.content"
+          @dblclick="toggleStatus(todo)"
+        ></span>
+        <i
+          v-if="todo.flag"
+          class="fa fa-flag"
+          v-bind:class="flagClass(todo.flag)"
+          aria-hidden="true"
+        ></i>
 
         <div style="position: absolute; bottom: 15.5px; right: 15px">
           <i @click="showDetails(todo)" class="fa fa-pencil action-btn"></i
@@ -102,6 +101,21 @@ export default {
 
       this.newTodo = "";
     },
+    inline(todo) {
+      const { content } = todo;
+      return !content.includes("<div");
+    },
+    flagClass(flag) {
+      return {
+        yellow: flag == "Yellow",
+        red: flag == "Red",
+        orange: flag == "Orange",
+        green: flag == "Green",
+        blue: flag == "Blue",
+        purple: flag == "Purple",
+        gray: flag == "Gray",
+      };
+    },
     showDetails(todo) {
       // sample
       // {
@@ -111,7 +125,7 @@ export default {
       // 	"closed": false
       // }
 
-      const title = __("ToDo Details");
+      const title = __("Reminder Details");
       const primary_label = __("Save");
       const fields = [
         // {
@@ -187,7 +201,7 @@ export default {
           fieldtype: "Section Break",
         },
         {
-          fieldtype: "Small Text",
+          fieldtype: "Text Editor",
           fieldname: "content",
           label: __("Content"),
           default: todo.content,

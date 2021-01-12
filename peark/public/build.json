@@ -11,6 +11,12 @@
 	"js/task-dashboard.min.js": [
 		"public/js/task_dashboard.js"
 	],
+	"js/reminders.min.js": [
+		"public/js/components/page/reminders/index.js"
+	],
+	"js/vuex.min.js": [
+		"public/js/vuex.js"
+	],
 	"js/jmask.min.js": [
 		"public/js/jmask.min.js"
 	]

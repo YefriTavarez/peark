@@ -8,7 +8,7 @@ frappe.pages['reminders'].on_page_load = function (wrapper) {
 	});
 
 	const asset = [
-		// "assets/js/vuex.min.js",
+		"assets/js/vuex.min.js",
 		"assets/js/reminders.min.js",
 	];
 

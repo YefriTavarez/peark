@@ -1,14 +1,19 @@
 // Copyright (c) 2020, Yefri Tavarez Nolasco and contributors
 // For license information, please see license.txt
 
+frappe.provide("peark.ui");
+frappe.provide("peark.ui.layouts_by_name");
 frappe.ui.form.on('Production Order', {
     refresh(frm) {
         frappe.run_serially([
             () => frm.trigger("set_queries"),
-            () => frm.trigger("render_operations"),
+            () => frm.trigger("should_render_operations"),
             () => frm.trigger("enable_child_fields"),
             () => frm.trigger("toggle_display_fields"),
         ]);
+    },
+    onload(frm) {
+        frm.trigger("setup_pearks");
     },
     before_save(frm) {
         frappe.run_serially([
@@ -211,6 +216,11 @@ frappe.ui.form.on('Production Order', {
 
         let display = false;
         let reqd = false;
+
+        if (!doc.item_specs) {
+            doc.item_specs = new String();
+        }
+
         keyworkds.map(keyworkd => {
             if (doc.item_specs.indexOf(keyworkd) !== -1) {
                 display = true;
@@ -232,6 +242,11 @@ frappe.ui.form.on('Production Order', {
 
         let display = false;
         let reqd = false;
+
+        if (!doc.item_specs) {
+            doc.item_specs = new String();
+        }
+
         keyworkds.map(keyworkd => {
             if (doc.item_specs.indexOf(keyworkd) !== -1) {
                 display = true;
@@ -282,6 +297,37 @@ frappe.ui.form.on('Production Order', {
         };
 
         frappe.prompt(fields, callback, title, primary_label);
+    },
+
+    setup_pearks(frm, opts) {
+        const { inside_event } = opts;
+
+        if (inside_event) {
+            if (!peark.ui.layout_list) {
+                peark.ui.layout_list = new Array();
+            }
+
+            if (!peark.ui.layouts_by_name) {
+                peark.ui.layouts_by_name = new Object();
+            }
+
+            return true;
+        }
+
+        peark.ui.layout_list = new Array();
+        peark.ui.layouts_by_name = new Object();
+    },
+
+    should_render_operations(frm) {
+        const { doc } = frm;
+        const { current_render } = peark.ui;
+
+        const no_hash_changes =
+            eval(current_render && current_render === doc.name);
+
+        if (!no_hash_changes) {
+            frm.trigger("render_operations");
+        }
     },
     render_operations(frm) {
         const selector =
@@ -369,6 +415,16 @@ frappe.ui.form.on('Production Order', {
             employee.get_query = events.get_employee_query;
             work_station.get_query = events.get_workstation_query;
 
+
+            events.setup_pearks(frm, { inside_event: true });
+
+            peark.ui.layouts_by_name[operation.name] = layout;
+
+            peark.ui.layout_list.push({
+                layout: layout,
+                name: operation.name,
+            });
+
             layout.refresh(operation);
         });
 
@@ -382,6 +438,9 @@ frappe.ui.form.on('Production Order', {
             jQuery(innerselector)
                 .hide();
         }
+
+        // remember this render
+        peark.ui.current_render = doc.name;
     },
     fetch_item(frm) {
         const { doc } = frm;
@@ -463,6 +522,7 @@ frappe.ui.form.on('Production Order', {
     },
     project_center(frm) {
         const { events } = frm;
+
         frappe.run_serially([
             () => frm.trigger("fetch_item"),
             () => frm.trigger("fetch_product_name"),
@@ -483,40 +543,46 @@ frappe.ui.form.on('Production Order', {
     }
 });
 
-frappe.ui.form.on('Production Order', {
+frappe.ui.form.on("Production Order Ops", {
     product_feature(frm, doctype, name) {
-        // const doc = frappe.get_doc(doctype, name);
+        const doc = frappe.get_doc(doctype, name);
         // product_feature
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
     department(frm, doctype, name) {
-        // const doc = frappe.get_doc(doctype, name);
+        const doc = frappe.get_doc(doctype, name);
         // department
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
     work_station(frm, doctype, name) {
-        // const doc = frappe.get_doc(doctype, name);
+        const doc = frappe.get_doc(doctype, name);
         // work_station
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
     employee(frm, doctype, name) {
-        // const doc = frappe.get_doc(doctype, name);
+        const doc = frappe.get_doc(doctype, name);
         // employee
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
     employee_name(frm, doctype, name) {
-        // const doc = frappe.get_doc(doctype, name);
+        const doc = frappe.get_doc(doctype, name);
         // employee_name
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
     remarks(frm, doctype, name) {
         const doc = frappe.get_doc(doctype, name);
         // remarks
+        peark.ui.layouts_by_name[name].refresh(doc);
         frm.dirty();
     },
 
