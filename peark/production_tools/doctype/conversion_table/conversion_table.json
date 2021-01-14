@@ -1,0 +1,51 @@
+{
+ "creation": "2021-01-14 16:52:24.944618",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "from_value",
+  "from_uom",
+  "to_value",
+  "to_uom"
+ ],
+ "fields": [
+  {
+   "fieldname": "from_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "From Value"
+  },
+  {
+   "fieldname": "from_uom",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "From UOM",
+   "options": "in\ncm\nmm\nm\nft"
+  },
+  {
+   "fieldname": "to_value",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "To Value"
+  },
+  {
+   "fieldname": "to_uom",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "To UOM",
+   "options": "in\ncm\nmm\nm\nft"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-01-14 16:52:24.944618",
+ "modified_by": "Administrator",
+ "module": "Production Tools",
+ "name": "Conversion Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
