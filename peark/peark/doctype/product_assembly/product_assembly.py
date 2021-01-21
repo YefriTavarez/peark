@@ -523,8 +523,8 @@ class ProductAssembly(Document):
         return ", ".join([value for value in values if value])
 
     def get_paperboard_name(self):
-        if not self.paperboard_caliper:
-            return self.paperboard
+        if not self.paperboard:
+            return translate("No Material")
 
         doctype = self.meta \
             .get_field("paperboard") \
@@ -534,11 +534,8 @@ class ProductAssembly(Document):
 
         doc = frappe.get_doc(doctype, name)
 
-        paperboard = doc \
-            .get_full_name(weight_or_caliper=self.paperboard_caliper,
-                           ignore_trademark=True)
-
-        return paperboard
+        return doc \
+            .get_full_name(ignore_trademark=True)
 
     def get_front_colors(self):
         value = cint(self.front_colors)
@@ -632,7 +629,6 @@ class ProductAssembly(Document):
         return [
             "dimension",
             "paperboard",
-            "paperboard_caliper",
             "front_colors",
             "pantone_colors",
             "back_colors",
@@ -655,7 +651,6 @@ class ProductAssembly(Document):
     enabled = True
     is_compound_product = False
     paperboard = None
-    paperboard_caliper = None
     item_groups = list()
     front_colors = 0
     pantone_colors = 0

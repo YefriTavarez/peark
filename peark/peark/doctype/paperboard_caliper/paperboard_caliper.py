@@ -14,9 +14,9 @@ class PaperboardCaliper(Document):
 
     def set_name(self):
         name = "{} {}" \
-            .format(self.caliper, self.capliper_uom)
+            .format(self.caliper, self.caliper_uom)
 
         self.name = name
 
     caliper = None
-    capliper_uom = None
+    caliper_uom = None

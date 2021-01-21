@@ -23,7 +23,20 @@ class Dimension(Document):
         self.name = new_name
 
     def validate(self):
+        self.remove_undesired_values()
         self.validate_if_exists()
+
+    def remove_undesired_values(self):
+        # self.width = 0
+        # self.width_uom = None
+
+        if not self.width:
+            self.height = 0
+            self.height_uom = None
+
+        if not self.height:
+            self.depth = 0
+            self.depth_uom = None
 
     def validate_if_exists(self):
         doctype = self.doctype
@@ -57,16 +70,39 @@ class Dimension(Document):
         )
 
     def generate_autoname(self, reversed=False):
-        return ("{height} {height_uom} x {width} {width_uom}"
+        # three_dimensions
+        if self.height and self.width and self.depth:
+            return (
+                "{height} {height_uom} x {width} {width_uom} x {depth} {depth_uom}"
                 if reversed else
-                "{width} {width_uom} x {height} {height_uom}") \
-            .format(width=self.width,
-                    width_uom=self.width_uom,
-                    height=self.height,
-                    height_uom=self.height_uom)
+                "{width} {width_uom} x {height} {height_uom} x {depth} {depth_uom}") \
+                .format(width=self.width,
+                        width_uom=self.width_uom,
+                        height=self.height,
+                        height_uom=self.height_uom,
+                        depth=self.depth,
+                        depth_uom=self.depth_uom)
+
+        # two_dimensions
+        if self.height and self.width:
+            return ("{height} {height_uom} x {width} {width_uom}"
+                    if reversed else
+                    "{width} {width_uom} x {height} {height_uom}") \
+                .format(width=self.width,
+                        width_uom=self.width_uom,
+                        height=self.height,
+                        height_uom=self.height_uom)
+
+        # one_dimension
+        if self.width:
+            return "{width} {width_uom}" \
+                .format(width=self.width,
+                        width_uom=self.width_uom)
 
     disabled = False
     height = 0
     height_uom = None
     width = 0
     width_uom = None
+    depth = 0
+    depth_uom = None

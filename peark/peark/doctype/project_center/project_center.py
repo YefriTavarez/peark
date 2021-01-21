@@ -16,7 +16,7 @@ from frappe.utils import flt
 
 class ProjectCenter(Document):
     def onload(self):
-        self.update_projects()
+        self.update_projects(force=True)
 
     def after_insert(self):
         self.generate_projects()
@@ -29,7 +29,11 @@ class ProjectCenter(Document):
         self.update_title()
         self.validate_production_qty()
 
-    def update_projects(self, autocommit=True):
+    def update_projects(self, autocommit=True, force=False):
+        if not force:
+            frappe.errprint("peark.controllers.project_center.update_projects")
+            return False
+
         status_list = list()
 
         def update_project(project):

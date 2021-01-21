@@ -1,0 +1,186 @@
+{
+ "creation": "2021-01-14 08:10:20.677408",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "customer",
+  "section_break_2",
+  "product_name",
+  "section_break_4",
+  "width",
+  "column_break_6",
+  "height",
+  "column_break_8",
+  "depth",
+  "section_break_10",
+  "product_profile",
+  "section_break_12",
+  "standalone_product",
+  "standalone_product_image",
+  "standalone_product_display",
+  "column_break_15",
+  "mounted_product",
+  "mounted_product_image",
+  "mounted_product_display"
+ ],
+ "fields": [
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Product Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break",
+   "label": "Dimensions"
+  },
+  {
+   "fieldname": "product_profile",
+   "fieldtype": "Link",
+   "label": "Product Profile",
+   "options": "Product Profile"
+  },
+  {
+   "fieldname": "standalone_product",
+   "fieldtype": "Attach",
+   "label": "Standalone Product",
+   "options": "pdf"
+  },
+  {
+   "fieldname": "standalone_product_image",
+   "fieldtype": "Attach Image",
+   "in_preview": 1,
+   "label": "Standalone Product Image"
+  },
+  {
+   "fieldname": "mounted_product",
+   "fieldtype": "Attach",
+   "label": "Mounted Product",
+   "options": "pdf"
+  },
+  {
+   "fieldname": "mounted_product_image",
+   "fieldtype": "Attach Image",
+   "in_preview": 1,
+   "label": "Mounted Product Image"
+  },
+  {
+   "description": "mm",
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Width",
+   "precision": "6",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "mm",
+   "fieldname": "height",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Height",
+   "precision": "6",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "mm",
+   "fieldname": "depth",
+   "fieldtype": "Float",
+   "in_standard_filter": 1,
+   "label": "Depth",
+   "precision": "6",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "standalone_product_display",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "mounted_product_display",
+   "fieldtype": "HTML"
+  }
+ ],
+ "modified": "2021-01-20 09:39:46.033043",
+ "modified_by": "ytavarez@igcaribe.com",
+ "module": "peark",
+ "name": "Die Cut Stocking",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Lider de Pre Prensa",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auxiliar de Pre Prensa",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_preview_popup": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -8,6 +8,9 @@ frappe.ui.form.on('Dimension', {
 	height: function (frm) {
 		frm.set_value("height", Math.round(frm.doc.height * 16, 0) / 16);
 	},
+	depth: function (frm) {
+		frm.set_value("depth", Math.round(frm.doc.depth * 16, 0) / 16);
+	},
 	after_save: function (frm) {
 		const { doc } = frm;
 		const {
@@ -62,8 +65,19 @@ frappe.provide("frappe.events");
 jQuery.extend(frappe.events, {
 	dimension: {
 		generate_autoname(doc) {
-			const { width, width_uom, height, height_uom } = doc;
-			return `${width} ${width_uom} x ${height} ${height_uom}`;
+			const { width, width_uom, height, height_uom, depth, depth_uom } = doc;
+
+			if (flt(width) && flt(height) && flt(depth)) {
+				return `${width} ${width_uom} x ${height} ${height_uom} x ${depth} ${depth_uom}`;
+			}
+
+			if (flt(width) && flt(height)) {
+				return `${width} ${width_uom} x ${height} ${height_uom}`;
+			}
+
+			if (flt(width)) {
+				return `${width} ${width_uom}`;
+			}
 		}
 	}
 });

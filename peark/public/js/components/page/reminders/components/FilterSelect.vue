@@ -28,7 +28,6 @@
                 <option value="Working">{{ __("Working") }}</option>
                 <option value="Completed">{{ __("Completed") }}</option>
                 <option value="Overdue">{{ __("Overdue") }}</option>
-                <option value="Cancelled">{{ __("Cancelled") }}</option>
               </select>
               <i class="octicon octicon-chevron-down text-muted"></i>
             </div>
@@ -63,7 +62,7 @@ export default {
     ...Vuex.mapActions(["loadTodos", "updateFilter"]),
     handleStatusChange() {
       this.updateFilter(this.statusFilter);
-      this.loadTodos();
+      // this.loadTodos();
     },
   },
 };

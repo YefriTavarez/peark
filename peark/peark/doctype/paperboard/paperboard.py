@@ -21,6 +21,7 @@ class Paperboard(Document):
         self.name = self.title
 
     def validate(self):
+        self.validate_double_sided()
         self.update_title()
         self.remove_duplicated_weights()
         self.remove_duplicated_dimensions()
@@ -28,7 +29,15 @@ class Paperboard(Document):
         self.sort_calipers()
         self.sort_dimensions()
 
+    def validate_double_sided(self):
+        if self.one_side:
+            return False
+
+        self.double_sided = False
+
     def make_name(self):
+        """@deprecated"""
+
         sanitized_name = s_sanitize(self.material_name, upper=True)
 
         gutted = gut(sanitized_name)
@@ -41,7 +50,9 @@ class Paperboard(Document):
         if self.finish_type:
             new_name = "{}{}".format(new_name, self.finish_type[0])
 
-        new_name = "{0}{1}C".format(new_name, 2 if self.double_sided else 1)
+        if self.one_side:
+            new_name = "{0}{1}C".format(
+                new_name, 2 if self.double_sided else 1)
 
         if self.trademark:
             new_name = "{}{}".format(new_name, self.trademark[0])
@@ -49,24 +60,51 @@ class Paperboard(Document):
         self.name = new_name
 
     def update_title(self):
-        self.title = self.get_full_name()
+        self.title = self.get_full_name(comma_separated=True)
 
-    def get_full_name(self, weight_or_caliper=None, ignore_trademark=False):
+    def get_full_name(self, weight_or_caliper=None, ignore_trademark=False, comma_separated=False):
         # not all paperboard have caliper
-        title = self.material_name
+        # title = self.material_name
 
-        if weight_or_caliper:
-            title = "{} {}".format(title, cstr(weight_or_caliper))
+        # if weight_or_caliper:
+        #     title = "{} {}".format("{}{} ".format(
+        #         title, "," if comma_separated else ""), cstr(weight_or_caliper))
 
-        if self.finish_type:
-            title = "{} {}".format(title, translate(self.finish_type))
+        # if self.finish_type:
+        #     title = "{} {}".format("{}{} ".format(
+        #         title, "," if comma_separated else ""), translate(self.finish_type))
 
-        title = "{} {}C".format(title, 2 if self.double_sided else 1)
+        # if self.one_side:
+        #     title = "{} {}C".format("{}{} ".format(
+        #         title, "," if comma_separated else ""), 2 if self.double_sided else 1)
 
-        if self.trademark and not ignore_trademark:
-            title = "{} ({})".format(title, self.trademark)
+        # if self.trademark and not ignore_trademark:
+        #     title = "{} ({})".format("{}{} ".format(
+        #         title, "," if comma_separated else ""), self.trademark)
 
-        return title
+        def display_value(fieldname):
+            value = self.get(fieldname)
+            translated_value = translate(value)
+
+            return translated_value
+
+        fields = (
+            "material_type",
+            "color",
+            "segment",
+            "finish_type",
+            "coated_sides",
+            "composition",
+            "trademark" if not ignore_trademark else "fakefield",
+            "model" if not ignore_trademark else "fakefield",
+            "caliper",
+            "weight",
+        )
+
+        return (", " if comma_separated else " ") \
+            .join(display_value(fieldname) for fieldname in fields
+                  if self.get(fieldname)
+                  )
 
     def get_item_group(self):
         lastrow = self.item_groups[-1]
@@ -147,6 +185,7 @@ class Paperboard(Document):
 
         self.dimensions = dimensions
 
+    one_side = None
     double_sided = None
     finish_type = ""
     include_uom_in_title = False

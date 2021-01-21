@@ -8,22 +8,25 @@
   "title",
   "enabled",
   "backboard",
-  "material_name",
+  "material_type",
+  "segment",
+  "color",
+  "coated_sides",
   "column_break_4",
-  "trademark",
+  "composition",
   "finish_type",
+  "material_name",
+  "trademark",
+  "model",
+  "one_side",
   "double_sided",
   "section_break_7",
-  "techniques",
   "item_groups",
   "column_break_9",
   "section_break_14",
-  "calipers",
+  "caliper",
   "column_break_19",
-  "weights",
-  "form_settings_section",
-  "include_uom_in_title",
-  "column_break_22",
+  "weight",
   "purchase_info_section",
   "last_purchase_rate",
   "section_break_24",
@@ -41,14 +44,15 @@
    "default": "0",
    "fieldname": "backboard",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "\u00bfEs Respaldo?"
   },
   {
    "fieldname": "material_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
+   "hidden": 1,
    "label": "Nombre del Material",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "title",
@@ -64,19 +68,16 @@
   {
    "fieldname": "finish_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Terminaci\u00f3n",
    "options": "\nMatte\nGloss\nSemi-Gloss"
   },
   {
    "default": "0",
-   "fieldname": "include_uom_in_title",
-   "fieldtype": "Check",
-   "label": "\u00bfIncluir UdM en T\u00edtulo?"
-  },
-  {
-   "default": "0",
+   "depends_on": "one_side",
    "fieldname": "double_sided",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "\u00bfDoble Cara?"
   },
   {
@@ -112,27 +113,12 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "form_settings_section",
-   "fieldtype": "Section Break",
-   "label": "Form Settings"
-  },
-  {
-   "fieldname": "column_break_22",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_19",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "weights",
-   "fieldtype": "Table MultiSelect",
-   "label": "Weights",
-   "options": "Paperboard Weights"
   },
   {
    "collapsible": 1,
@@ -148,20 +134,69 @@
    "reqd": 1
   },
   {
-   "fieldname": "techniques",
-   "fieldtype": "Table MultiSelect",
+   "default": "0",
+   "fieldname": "one_side",
+   "fieldtype": "Check",
    "hidden": 1,
-   "label": "T\u00e9cnicas de Impresi\u00f3n",
-   "options": "Supported Techniques"
+   "label": "\u00bfUna Cara?"
   },
   {
-   "fieldname": "calipers",
-   "fieldtype": "Table MultiSelect",
+   "fieldname": "material_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Material Type",
+   "options": "Boxboard\nPaper\nVinil\nPVC\nMesh"
+  },
+  {
+   "default": "Kraft",
+   "fieldname": "segment",
+   "fieldtype": "Select",
+   "label": "Segment",
+   "options": "\nKraft\nSatin\nBond\nAdhesive\nMicro-perforated"
+  },
+  {
+   "default": "White",
+   "fieldname": "color",
+   "fieldtype": "Select",
+   "label": "Color",
+   "options": "\nWhite\nGrey\nNatural"
+  },
+  {
+   "default": "C0S",
+   "fieldname": "coated_sides",
+   "fieldtype": "Select",
+   "label": "Coated Sides",
+   "options": "C0S\nC1S\nC2S"
+  },
+  {
+   "default": "Multilayer",
+   "fieldname": "composition",
+   "fieldtype": "Select",
+   "label": "Composition",
+   "options": "Solid\nMultilayer",
+   "reqd": 1
+  },
+  {
+   "description": "Identifier",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fieldname": "caliper",
+   "fieldtype": "Link",
    "label": "Paperboard Caliper",
-   "options": "Paperboard Calipers"
+   "options": "Paperboard Caliper"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Link",
+   "label": "Paperboard Weight",
+   "options": "Paperboard Weight"
   }
  ],
- "modified": "2020-12-29 09:03:04.096247",
+ "modified": "2021-01-19 16:07:26.332541",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Paperboard",

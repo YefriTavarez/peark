@@ -104,7 +104,7 @@ frappe.ui.form.on('Ton Calculation', {
 	width: function (frm) {
 		const { width } = frm.doc;
 		const opts = {
-			message: "Ancho is Mandatory",
+			message: "Width is Mandatory",
 			indicator: "red",
 		};
 
@@ -122,7 +122,7 @@ frappe.ui.form.on('Ton Calculation', {
 	height: function (frm) {
 		const { height } = frm.doc;
 		const opts = {
-			message: "Alto is Mandatory",
+			message: "Height is Mandatory",
 			indicator: "red",
 		};
 
@@ -140,7 +140,7 @@ frappe.ui.form.on('Ton Calculation', {
 	uom: function (frm) {
 		const { uom } = frm.doc;
 		const opts = {
-			message: "Alto is Mandatory",
+			message: "Height is Mandatory",
 			indicator: "red",
 		};
 

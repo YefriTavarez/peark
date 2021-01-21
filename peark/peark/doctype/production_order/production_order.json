@@ -10,6 +10,7 @@
   "project_center",
   "section_break_3",
   "status",
+  "priority",
   "customer",
   "sales_order",
   "product_name",
@@ -176,19 +177,29 @@
    "read_only": 1
   },
   {
-    "fieldname": "front_pantones",
-    "fieldtype": "Table MultiSelect",
-    "label": "Front Pantones",
-    "options": "Pantone Colors"
-   },
-   {
-    "fieldname": "back_pantones",
-    "fieldtype": "Table MultiSelect",
-    "label": "Back Pantones",
-    "options": "Pantone Colors"
-   }
+   "fieldname": "front_pantones",
+   "fieldtype": "Table MultiSelect",
+   "label": "Front Pantones",
+   "options": "Pantone Colors"
+  },
+  {
+   "fieldname": "back_pantones",
+   "fieldtype": "Table MultiSelect",
+   "label": "Back Pantones",
+   "options": "Pantone Colors"
+  },
+  {
+   "default": "Normal",
+   "fetch_from": "project_center.priority",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priority",
+   "options": "Normal\nRush",
+   "reqd": 1
+  }
  ],
- "modified": "2021-01-07 15:37:50",
+ "modified": "2021-01-19 09:45:54.214428",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Order",

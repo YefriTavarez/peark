@@ -151,4 +151,92 @@ def get_data():
             'standard': 1,
             "condition": has_permission(doctype="Production Order", raise_exception=False)
         },
+        {
+            "module_name": 'Ton Calculation',
+            "category": "Places",
+            "label": _('Ton Calculation'),
+            "icon": "fa fa-industry",
+            "type": 'link',
+            "link": '#Form/Ton Calculation',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Ton Calculation", raise_exception=False)
+        },
+        {
+            "module_name": 'Die Cut Stocking',
+            "category": "Places",
+            "label": _('Die Cut Stocking'),
+            "icon": "fa fa-stack-overflow",
+            "type": 'link',
+            "link": '#List/Die Cut Stocking/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Die Cut Stocking", raise_exception=False)
+        },
+        {
+            "module_name": 'Material Request',
+            "category": "Places",
+            "label": _('Material Request'),
+            "icon": "fa fa-comments-o",
+            "type": 'link',
+            "link": '#List/Material Request/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Material Request", raise_exception=False)
+        },
+        {
+            "module_name": 'Sales Invoice',
+            "category": "Places",
+            "label": _('Sales Invoice'),
+            "icon": "fa fa-bolt",
+            "type": 'link',
+            "link": '#List/Sales Invoice/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Sales Invoice", raise_exception=False)
+        },
+        {
+            "module_name": 'Customer',
+            "category": "Places",
+            "label": _('Customer'),
+            "icon": "fa fa-users",
+            "type": 'link',
+            "link": '#List/Customer/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Customer", raise_exception=False)
+        },
+        {
+            "module_name": 'Supplier',
+            "category": "Places",
+            "label": _('Supplier'),
+            "icon": "fa fa-address-book-o",
+            "type": 'link',
+            "link": '#List/Supplier/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Supplier", raise_exception=False)
+        },
+        {
+            "module_name": 'Purchase Order',
+            "category": "Places",
+            "label": _('Purchase Order'),
+            "icon": "fa fa-book",
+            "type": 'link',
+            "link": '#List/Purchase Order/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Purchase Order", raise_exception=False)
+        },
+        {
+            "module_name": 'Payment Entry',
+            "category": "Places",
+            "label": _('Payment Entry'),
+            "icon": "fa fa-money",
+            "type": 'link',
+            "link": '#List/Payment Entry/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Payment Entry", raise_exception=False)
+        },
     ]

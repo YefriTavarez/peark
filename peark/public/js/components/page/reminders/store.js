@@ -31,6 +31,14 @@ const state = {
 		"Paused": ["=", "Paused"],
 		"Completed": ["=", "Completed"],
 	},
+	lambdaStatusFilters: {
+		"Not Started": d => d.workflow_status == "Not Started",
+		"Not Completed": d => d.workflow_status !== "Completed",
+		"Working": d => d.workflow_status == "Working",
+		"Paused": d => d.workflow_status == "Paused",
+		"Overdue": d => d.system_status == "Overdue",
+		"Completed": d => d.workflow_status == "Completed",
+	},
 	flagColor: {
 		"": "#d1d8dd",
 		"Yellow": "#feef72",
@@ -209,6 +217,7 @@ const mutations = {
 			doctype: doctype,
 			fields: fields,
 			filters: filters,
+			limit_page_length: 0
 		};
 
 		const callback = response => {

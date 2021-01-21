@@ -14,11 +14,16 @@
   "section_break_6",
   "height",
   "column_break_8",
-  "height_uom"
+  "height_uom",
+  "section_break_10",
+  "depth",
+  "column_break_12",
+  "depth_uom"
  ],
  "fields": [
   {
    "default": "0",
+   "depends_on": "eval:!doc.__islocal",
    "fieldname": "disabled",
    "fieldtype": "Check",
    "label": "Deshabilitado"
@@ -55,6 +60,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "width",
    "fieldname": "section_break_6",
    "fieldtype": "Section Break"
   },
@@ -66,8 +72,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Alto",
-   "precision": "3",
-   "reqd": 1
+   "precision": "3"
   },
   {
    "fieldname": "column_break_8",
@@ -82,11 +87,40 @@
    "in_standard_filter": 1,
    "label": "UdM Altura",
    "options": "UOM",
-   "remember_last_selected_value": 1,
-   "reqd": 1
+   "remember_last_selected_value": 1
+  },
+  {
+   "depends_on": "height",
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "depth",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Profundo",
+   "precision": "3"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "depth_uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "UdM Profundidad",
+   "options": "UOM",
+   "remember_last_selected_value": 1
   }
  ],
- "modified": "2020-11-03 08:50:31.817728",
+ "modified": "2021-01-15 16:03:55.231322",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Dimension",
@@ -126,7 +160,7 @@
    "share": 1
   }
  ],
- "search_fields": "width, width_uom, height, height_uom",
+ "search_fields": "width, width_uom, height, height_uom, depth, depth_uom",
  "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

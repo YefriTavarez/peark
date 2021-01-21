@@ -18,7 +18,7 @@
       <li
         :key="todo.name"
         @dblclick="toggleStatus(todo)"
-        v-for="todo in reminders"
+        v-for="todo in displayReminders"
       >
         <i
           class="fa"
@@ -35,10 +35,7 @@
           <br v-if="inline(todo)" />
         </strong>
 
-        <span
-          v-html="todo.content"
-          @dblclick="toggleStatus(todo)"
-        ></span>
+        <span v-html="todo.content" @dblclick="toggleStatus(todo)"></span>
         <i
           v-if="todo.flag"
           class="fa fa-flag"
@@ -79,12 +76,24 @@ export default {
     };
   },
   computed: {
-    ...Vuex.mapState(["reminders", "flagColor"]),
+    ...Vuex.mapState([
+      "reminders",
+      "flagColor",
+      "statusFilter",
+      "lambdaStatusFilters",
+    ]),
+    displayReminders() {
+      if (!this.statusFilter) {
+        return this.reminders;
+      }
+
+      const lambdaFilter = this.lambdaStatusFilters[this.statusFilter];
+      return this.reminders.filter(lambdaFilter);
+    },
   },
 
   methods: {
     ...Vuex.mapActions([
-      "loadTodos",
       "saveTodo",
       "toggleStatus",
       "updateTodo",
