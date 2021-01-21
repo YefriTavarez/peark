@@ -64,7 +64,7 @@
   {
    "fieldname": "standalone_product_image",
    "fieldtype": "Attach Image",
-   "in_preview": 1,
+   "hidden": 1,
    "label": "Standalone Product Image"
   },
   {
@@ -76,7 +76,7 @@
   {
    "fieldname": "mounted_product_image",
    "fieldtype": "Attach Image",
-   "in_preview": 1,
+   "hidden": 1,
    "label": "Mounted Product Image"
   },
   {
@@ -137,7 +137,7 @@
    "fieldtype": "HTML"
   }
  ],
- "modified": "2021-01-20 09:39:46.033043",
+ "modified": "2021-01-20 23:07:44.379409",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Die Cut Stocking",

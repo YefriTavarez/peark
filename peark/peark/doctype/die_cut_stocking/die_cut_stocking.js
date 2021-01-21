@@ -19,17 +19,25 @@ Object.assign(peark.die_cut_stocking, {
 				"target": "standalone_product_display",
 			},
 			{
-				"source": "mounted_product_display",
-				"target": "mounted_product_image",
+				"source": "mounted_product_image",
+				"target": "mounted_product_display",
 			},
 		];
 
-		fields.map(({ source, target }) => display_image(self, source, target));
+		fields.map(({ source, target }) => display_image(self, frm, source, target));
 	},
 
 	// utls funcs
-	display_image(self, source, target) {
-		
+	display_image(self, frm, source, target) {
+		const { doc } = frm;
+		const image_src = doc[source];
+
+		const parent = frm.fields_dict[target].$wrapper;
+
+		jQuery(parent)
+			.empty()
+			.append(`<img src=${image_src} />`);
 	},
 });
+
 frappe.ui.form.on('Die Cut Stocking', peark.die_cut_stocking);
