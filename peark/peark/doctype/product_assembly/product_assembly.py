@@ -452,8 +452,8 @@ class ProductAssembly(Document):
         return ", ".join(value for value in specs if value)
 
     def get_full_specifications(self, dont_generate=False):
-        if dont_generate and self.full_specifications:
-            return self.full_specifications
+        if dont_generate:
+            return self.full_specifications or self.product_profile
 
         if not self.is_compound_product:
             full_name = self.get_full_name()

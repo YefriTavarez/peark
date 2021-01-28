@@ -74,7 +74,8 @@
                       <strong
                         class="indicator"
                         v-bind:class="{
-                          red: 'Open' == project.status,
+                          orange: 'Open' == project.status,
+                          red: 'Delayed' == project.status,
                           green: 'Completed' == project.status,
                           grey: 'Cancelled' == project.status,
                         }"
@@ -107,7 +108,7 @@
                   data-fieldtype="Data"
                 >
                   <div class="static-area ellipsis">
-                    {{ project.status }}
+                    {{ __(project.status) }}
                   </div>
                 </div>
                 <div class="col col-xs-1 hidden">

@@ -25,7 +25,9 @@
   "item_specifications",
   "column_break_17",
   "production_qty",
+  "front_colors",
   "front_pantones",
+  "back_colors",
   "back_pantones",
   "section_break_20",
   "expected_start_date",
@@ -107,6 +109,7 @@
    "fetch_from": "sales_order.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -232,9 +235,21 @@
    "fieldtype": "Table MultiSelect",
    "label": "Back Pantones",
    "options": "Pantone Colors"
+  },
+  {
+   "fieldname": "front_colors",
+   "fieldtype": "Select",
+   "label": "Front Colors",
+   "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
+  },
+  {
+   "fieldname": "back_colors",
+   "fieldtype": "Select",
+   "label": "Back Colors",
+   "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-01-19 09:43:09.833655",
+ "modified": "2021-01-28 12:03:30.095032",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",
@@ -269,7 +284,7 @@
   }
  ],
  "search_fields": "customer, product_name, item_code, item_specifications, status",
- "sort_field": "modified",
+ "sort_field": "customer",
  "sort_order": "DESC",
  "title_field": "title",
  "track_changes": 1

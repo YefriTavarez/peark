@@ -31,12 +31,11 @@ class ProjectCenter(Document):
 
     def update_projects(self, autocommit=True, force=False):
         if not force:
-            frappe.errprint("peark.controllers.project_center.update_projects")
             return False
 
         status_list = list()
 
-        def update_project(project):
+        def update_child_project(project):
             doctype = "Project"
             name = project.project
 
@@ -44,38 +43,38 @@ class ProjectCenter(Document):
 
             value = frappe.get_value(doctype, name, fieldname)
 
-            if value == project.status:
-                return project.status
-
-            project.set(fieldname, value)
-            project.db_update()
+            if value != project.status:
+                project.set(fieldname, value)
+                project.db_update()
 
             return project.status
 
+        # remember project center status
+        prev_status = self.status
+
         for project in self.projects:
-            status = update_project(project=project)
+            status = update_child_project(project=project)
 
             status_list.append(status)
 
-            prev_status = self.status
-            status_change_comment = translate("Set to {}")
+        # just a bit of config
+        status_change_comment = translate("Set to {}")
 
-            if all(status == "Completed" for status in status_list):
-                self.status = "Completed"
+        if all(status == "Completed" for status in status_list):
+            self.status = "Completed"
+        else:
+            if "Delayed" in status_list:
+                self.status = "Delayed"
             else:
-                if "Delayed" in status_list:
-                    self.status = "Delayed"
+                self.status = "Open"
 
-                else:
-                    self.status = "Open"
+        if prev_status != self.status:
+            comment = status_change_comment \
+                .format(self.status)
 
-            if prev_status != self.status:
-                comment = status_change_comment \
-                    .format(self.status)
+            self.add_comment("Edit", comment)
 
-                self.add_comment("Edit", comment)
-
-                self.db_update()
+            self.db_update()
 
         if autocommit:
             frappe.db.commit()

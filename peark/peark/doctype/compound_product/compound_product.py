@@ -17,8 +17,8 @@ class CompoundProduct(Document):
     def on_change(self):
         pass
 
-    def validate(self):
-        self.update_product_assembly_specs()
+    def on_update(self):
+        # self.update_product_assembly_specs()
         self.udpdate_product_assembly_specs()
 
     def udpdate_product_assembly_specs(self):

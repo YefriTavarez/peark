@@ -127,7 +127,7 @@ frappe.ui.form.on('Product Assembly', {
                 .map(product_profile_doc.paperboards, d => d.paperboard);
 
             const filters = {
-                name: ["in", paperboards.join(",")],
+                name: ["in", paperboards],
             };
             return { filters };
         };
@@ -616,11 +616,11 @@ frappe.ui.form.on('Product Assembly', {
         const { doc } = frm;
 
         const get_query = function () {
-			let { item_groups } = doc;
+            let { item_groups } = doc;
 
-			if (!item_groups) {
-				item_groups = new Array();
-			}
+            if (!item_groups) {
+                item_groups = new Array();
+            }
 
 
             let last_item_group = item_groups[item_groups.length - 1];

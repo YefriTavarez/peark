@@ -239,4 +239,15 @@ def get_data():
             'standard': 1,
             "condition": has_permission(doctype="Payment Entry", raise_exception=False)
         },
+        {
+            "module_name": 'Reminder',
+            "category": "Places",
+            "label": _('Reminders'),
+            "icon": "fa fa-bell",
+            "type": 'link',
+            "link": '#reminders',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Reminder", raise_exception=False)
+        },
     ]

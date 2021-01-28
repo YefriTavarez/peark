@@ -22,8 +22,7 @@
    "fieldname": "specification",
    "fieldtype": "Small Text",
    "in_list_view": 1,
-   "label": "Specification",
-   "reqd": 1
+   "label": "Specification"
   },
   {
    "fieldname": "last_purchase_rate",
@@ -32,8 +31,8 @@
    "read_only": 1
   }
  ],
- "modified": "2020-10-08 11:52:27.447443",
- "modified_by": "yefritavarez@gmail.com",
+ "modified": "2021-01-28 11:47:46.912695",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Pantone Color",
  "owner": "yefritavarez@gmail.com",
@@ -78,5 +77,6 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "specification",
  "track_changes": 1
 }

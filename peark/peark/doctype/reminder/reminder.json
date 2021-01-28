@@ -4,13 +4,16 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "company",
   "flag",
   "content",
   "posting_date",
   "due_date",
   "workflow_status",
   "system_status",
-  "notes"
+  "notes",
+  "print_settings",
+  "letter_head"
  ],
  "fields": [
   {
@@ -23,7 +26,7 @@
   },
   {
    "fieldname": "content",
-   "fieldtype": "Text",
+   "fieldtype": "Text Editor",
    "in_list_view": 1,
    "label": "Content",
    "reqd": 1
@@ -72,9 +75,28 @@
    "print_hide": 1,
    "read_only": 1,
    "report_hide": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "print_settings",
+   "fieldtype": "Section Break",
+   "label": "Print Settings"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Link",
+   "label": "Letter Head",
+   "options": "Letter Head"
   }
  ],
- "modified": "2021-01-05 22:48:10.864417",
+ "modified": "2021-01-22 15:10:05.907615",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Reminder",

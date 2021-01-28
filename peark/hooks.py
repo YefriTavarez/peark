@@ -140,7 +140,8 @@ doctype_js = {
 }
 
 doctype_list_js = {
-    "Item": "public/js/doctype/item_list.js"
+    "Item": "public/js/doctype/item_list.js",
+    "Project": "public/js/doctype/project_list.js",
 }
 
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -274,6 +275,7 @@ scheduler_events = {
 #
 override_whitelisted_methods = {
     "frappe.desk.search.search_link": "peark.controllers.frappe.search.search_link",
+    "frappe.model.mapper.make_mapped_doc": "peark.controllers.frappe.mapper.make_mapped_doc",
 }
 #
 # each overriding function accepts a `data` argument;
