@@ -160,16 +160,22 @@ class ProductionOrder(Document):
         self.product_assembly = doc.name
 
     def set_colors(self, assembly=None):
-        self.front_pantones = list()
-        self.back_pantones = list()
-
+        # BASIC COLORS
         doctype = "Project Center"
         name = self.project_center
+        fieldname = ("front_colors", "back_colors")
 
         if not name:
             return False
 
         doc = frappe.get_doc(doctype, name)
+
+        self.front_colors = doc.front_colors
+        self.back_colors = doc.back_colors
+
+        # PANTONES
+        self.front_pantones = list()
+        self.back_pantones = list()
 
         for child in doc.front_pantones:
             fieldname = "front_pantones"

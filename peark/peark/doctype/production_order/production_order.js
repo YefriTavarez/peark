@@ -203,6 +203,8 @@ frappe.ui.form.on('Production Order', {
         frappe.run_serially([
             () => frm.trigger("toggle_display_front_pantones_field"),
             () => frm.trigger("toggle_display_back_pantones_field"),
+            () => frm.trigger("toggle_display_front_colors_field"),
+            () => frm.trigger("toggle_display_back_colors_field"),
         ]);
     },
 
@@ -256,6 +258,48 @@ frappe.ui.form.on('Production Order', {
 
         frm.toggle_display(fieldname, display);
         frm.toggle_reqd(fieldname, reqd);
+    },
+
+    toggle_display_front_colors_field(frm) {
+        const { doc } = frm;
+        const fieldname = "front_colors";
+        const keyworkds = [
+            "Color Tiro",
+            "Colores Tiro"
+        ];
+
+        let display = false;
+        let reqd = false;
+        keyworkds.map(keyworkd => {
+            if (doc.item_specs.indexOf(keyworkd) !== -1) {
+                display = true;
+                reqd = true;
+            }
+        });
+
+        frm.toggle_display(fieldname, display);
+        // frm.toggle_reqd(fieldname, reqd);
+    },
+
+    toggle_display_back_colors_field(frm) {
+        const { doc } = frm;
+        const fieldname = "back_colors";
+        const keyworkds = [
+            "Color Retiro",
+            "Colores Retiro"
+        ];
+
+        let display = false;
+        let reqd = false;
+        keyworkds.map(keyworkd => {
+            if (doc.item_specs.indexOf(keyworkd) !== -1) {
+                display = true;
+                reqd = true;
+            }
+        });
+
+        frm.toggle_display(fieldname, display);
+        // frm.toggle_reqd(fieldname, reqd);
     },
 
     prompt_for_product_feature(frm, childoc) {
