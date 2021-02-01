@@ -208,12 +208,12 @@
   },
   {
    "fieldname": "back_colors",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "Back Colors",
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-01-29 10:30:18.610534",
+ "modified": "2021-01-30 10:30:00.000000",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Order",
