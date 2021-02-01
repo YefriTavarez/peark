@@ -5,6 +5,8 @@
 from __future__ import unicode_literals
 
 import frappe
+import pyqrcode
+
 from frappe.model.document import Document
 
 from frappe import db as database
@@ -14,6 +16,7 @@ from frappe import _dict as pydict
 
 class ProductionOrder(Document):
     def before_print(self):
+        self.set_qr_image()
         self.set_paperboard()
         self.set_allow_printing()
         self.set_printing_sides()
@@ -55,6 +58,13 @@ class ProductionOrder(Document):
         if field.options != ref_doctype \
                 or self.product_assembly != ref_docname:
             frappe.throw(errmsg.format(name, self.product_assembly))
+
+    def set_qr_image(self):
+        qrobj = pyqrcode.create(self.name)
+        qr_image = qrobj.png_as_base64_str(6)
+
+        # set class property
+        self.qr_image = "data:image/png;base64, {0}".format(qr_image)
 
     def set_paperboard(self):
         doctype = "Product Assembly"
@@ -250,6 +260,7 @@ class ProductionOrder(Document):
 
             childdoc.db_update()
 
+    qr_image = None
     naming_series = None
     project_center = None
     status = None

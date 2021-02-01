@@ -15,7 +15,9 @@
   "sales_order",
   "product_name",
   "front_pantones",
+  "front_colors",
   "back_pantones",
+  "back_colors",
   "column_break_7",
   "product_profile",
   "product_assembly",
@@ -197,9 +199,21 @@
    "label": "Priority",
    "options": "Normal\nRush",
    "reqd": 1
+  },
+  {
+   "fieldname": "front_colors",
+   "fieldtype": "Select",
+   "label": "Front Colors",
+   "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
+  },
+  {
+   "fieldname": "back_colors",
+   "fieldtype": "Data",
+   "label": "Back Colors",
+   "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-01-19 09:45:54.214428",
+ "modified": "2021-01-29 10:30:18.610534",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Production Order",
