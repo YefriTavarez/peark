@@ -27,6 +27,9 @@ class ProductionOrder(Document):
     def on_change(self):
         self.update_indexes()
 
+    def on_update(self):
+        self.update_project_center_dates()
+
     def validate(self):
         self.validate_item_agaist_product_assembly()
         self.fetch_item_specs()
@@ -58,6 +61,18 @@ class ProductionOrder(Document):
         if field.options != ref_doctype \
                 or self.product_assembly != ref_docname:
             frappe.throw(errmsg.format(name, self.product_assembly))
+
+    def update_project_center_dates(self):
+        # expected_start_date
+        doctype = "Project Center"
+        name = self.project_center
+
+        doc = frappe.get_doc(doctype, name)
+
+        doc.actual_start_date = self.expected_start_date
+        doc.actual_end_date = self.expected_end_date
+
+        doc.save(ignore_permissions=True)
 
     def set_qr_image(self):
         qrobj = pyqrcode.create(self.name)
