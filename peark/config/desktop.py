@@ -250,4 +250,26 @@ def get_data():
             'standard': 1,
             "condition": has_permission(doctype="Reminder", raise_exception=False)
         },
+        {
+            "module_name": 'Payment Entry Request',
+            "category": "Places",
+            "label": _('Payment Entry Requests'),
+            "icon": "fa fa-credit-card",
+            "type": 'link',
+            "link": '#List/Payment Entry Request/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Payment Entry Request", raise_exception=False)
+        },
+        {
+            "module_name": 'Purchase Invoice',
+            "category": "Places",
+            "label": _('Purchase Invoices'),
+            "icon": "fa fa-building-o",
+            "type": 'link',
+            "link": '#List/Purchase Invoice/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Purchase Invoice", raise_exception=False)
+        },
     ]
