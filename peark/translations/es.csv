@@ -1,5 +1,4 @@
 "","",""
-"","",""
 "","{product_feature} Feature cannot be in the {tablename} table at Row #{idx}. Please check!","Carácteristica de Producto: {product_feature} no puede estar en la tabla de {tablename} en la Fila #{idx}. ¡Favor de Revisar!"
 "","A Compound Product linked to this Product Assembly does not exist","No se encontró un Producto Compuesto enlazado a este Ensamblado de Producto"
 "","Adhesive Gloss","Adhesivo Brillo"
@@ -139,6 +138,7 @@
 "","Identifier","Identificador"
 "","If you change the status of the Project Center to <strong>%(status)s</strong>, all the non-completed missions will be set to this status as well. Are you sure you want to continue?","Si cambia el estado del Documento de Planificación a <strong>%(status)s</strong>, todas las Misiones no completadas también se establecerán en este estado. ¿Está seguro de que desea continuar?"
 "","If you mark this product as Compound Product, it will be cleared.","Si marca este producto como Producto Compuesto, toda información sumistrada será borrada."
+"","Ignore Composition?","¿Ignorar Composición?"
 "","In Days","En Días"
 "","In Minutes","En Minutos"
 "","In Review","En Revisión"
