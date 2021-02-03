@@ -12,7 +12,6 @@
   "title",
   "naming_series",
   "status",
-  "system_status",
   "amended_from",
   "section_break_7",
   "party_type",
@@ -22,8 +21,14 @@
   "owner",
   "section_break_13",
   "amount",
+  "base_amount",
   "column_break_15",
   "currency",
+  "exchange_rate",
+  "section_break_20",
+  "paid_amount",
+  "column_break_22",
+  "paid_percentage",
   "section_break_17",
   "reason"
  ],
@@ -53,19 +58,9 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "\nDraft\nRequested\nInitiated\nPartially Paid\nPaid\nCancelled\nDenied",
+   "options": "\nDraft\nPending\nAproved\nPaid\nCancelled\nDenied\nOverdue",
+   "read_only": 1,
    "reqd": 1
-  },
-  {
-   "default": "Open",
-   "fieldname": "system_status",
-   "fieldtype": "Select",
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "System Status",
-   "no_copy": 1,
-   "options": "Open\nOverdue\nClosed",
-   "read_only": 1
   },
   {
    "fieldname": "owner",
@@ -166,10 +161,46 @@
    "hidden": 1,
    "label": "Title",
    "options": "{party_name}: {reason}"
+  },
+  {
+   "fieldname": "base_amount",
+   "fieldtype": "Currency",
+   "label": "Base Amount",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "exchange_rate",
+   "fieldtype": "Currency",
+   "label": "Exchange Rate",
+   "reqd": 1
+  },
+  {
+   "depends_on": "paid_amount",
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "paid_amount",
+   "fieldtype": "Currency",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "paid_percentage",
+   "fieldtype": "Percent",
+   "label": "Paid Percentage",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
   }
  ],
  "is_submittable": 1,
- "modified": "2021-02-02 14:16:48.397244",
+ "modified": "2021-02-03 09:20:15.226334",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Payment Entry Request",
