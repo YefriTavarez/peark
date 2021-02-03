@@ -12,6 +12,7 @@
   "title",
   "naming_series",
   "status",
+  "user_acknowledgement",
   "amended_from",
   "section_break_7",
   "party_type",
@@ -30,7 +31,9 @@
   "column_break_22",
   "paid_percentage",
   "section_break_17",
-  "reason"
+  "reason",
+  "section_break_26",
+  "letter_head"
  ],
  "fields": [
   {
@@ -111,12 +114,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "reason",
-   "fieldtype": "Text Editor",
-   "label": "Reason",
-   "reqd": 1
-  },
-  {
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
@@ -160,7 +157,9 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Title",
-   "options": "{party_name}: {reason}"
+   "length": 1000,
+   "options": "{party_name}: {reason}",
+   "read_only": 1
   },
   {
    "fieldname": "base_amount",
@@ -197,10 +196,38 @@
   {
    "fieldname": "column_break_22",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reason",
+   "fieldtype": "Text Editor",
+   "label": "Reason",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_26",
+   "fieldtype": "Section Break",
+   "label": "Print Settings"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Link",
+   "label": "Letter Head",
+   "options": "Letter Head"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:!doc.__islocal",
+   "description": "User acknowledges has attached the required documents and all the information provided is acurate...",
+   "fieldname": "user_acknowledgement",
+   "fieldtype": "Check",
+   "label": "User Acknowledgement",
+   "no_copy": 1,
+   "print_hide": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2021-02-03 09:20:15.226334",
+ "modified": "2021-02-03 10:33:06.711611",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Payment Entry Request",
