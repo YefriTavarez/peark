@@ -35,13 +35,22 @@ frappe.ui.form.on('Payment Entry Request', {
 		]);
 	},
 	add_create_payment_entry_button(frm) {
+		const { doc } = frm;
+
 		const parent = __("Create");
 		const label = __("Payment Entry");
 		const action = event => {
 			frm.trigger("create_payment_entry");
 		};
 
-		frm.add_custom_button(label, action, parent);
+		const enabled_states = [
+			"Aproved",
+			"Paid",
+		];
+
+		if (enabled_states.includes(doc.status)) {
+			frm.add_custom_button(label, action, parent);
+		}
 	},
 	create_payment_entry(frm) {
 		const { doc } = frm;
