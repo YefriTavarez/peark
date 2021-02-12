@@ -10,6 +10,7 @@ import peark.controllers.planning_mission
 import peark.controllers.planning_document
 import peark.controllers.project_center
 import peark.controllers.project
+import peark.controllers.payment_entry_request
 
 
 def all():
@@ -19,6 +20,7 @@ def all():
 
 def daily():
     peark.controllers.cost_estimation.set_to_expired()
+    peark.controllers.payment_entry_request.set_to_delayed()
     peark.controllers.planning_document.set_to_delayed()
 
 
