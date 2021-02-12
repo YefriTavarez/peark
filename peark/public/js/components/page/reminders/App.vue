@@ -216,6 +216,18 @@ export default {
           default: todo.content,
           reqd: true,
         },
+        {
+          fieldtype: "Button",
+          fieldname: "edit_in_full_page",
+          label: __("Edit in full page"),
+          click: _ => {
+            const view = "Form";
+            const doctype = "Reminder";
+            const name = todo.name;
+
+            frappe.set_route(view, doctype, name);
+          },
+        },
       ];
 
       const callback = (values) => {
