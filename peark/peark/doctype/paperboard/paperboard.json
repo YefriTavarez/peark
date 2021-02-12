@@ -147,7 +147,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Material Type",
-   "options": "Boxboard\nPaper\nVinil\nPVC\nMesh\nCoroplast"
+   "options": "Boxboard\nPaper\nVinil\nPVC\nMesh\nCoroplast\nSintra"
   },
   {
    "default": "Kraft",
@@ -204,7 +204,7 @@
    "label": "Ignore Composition?"
   }
  ],
- "modified": "2021-02-03 15:32:00.642633",
+ "modified": "2021-02-03 17:03:56.166918",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Paperboard",
