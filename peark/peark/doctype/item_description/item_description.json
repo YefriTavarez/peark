@@ -5,29 +5,33 @@
  "engine": "InnoDB",
  "field_order": [
   "item_name",
+  "ignore_case_for_item_name",
   "section_break_2",
   "allow_short_description",
   "short_description",
+  "ignore_case_for_short_description",
   "section_break_5",
   "allow_material",
   "material",
   "section_break_8",
   "allow_make",
   "make",
+  "ignore_case_for_make",
   "section_break_11",
   "allow_model",
   "model",
+  "ignore_case_for_model",
   "section_break_14",
   "allow_color",
   "color",
   "section_break_17",
   "allow_dimension",
-  "height",
-  "heigt_uom",
-  "column_break_21",
-  "html_22",
   "width",
   "width_uom",
+  "column_break_21",
+  "allow_height",
+  "height",
+  "heigt_uom",
   "column_break_24",
   "allow_depth",
   "depth",
@@ -44,6 +48,33 @@
   {
    "fieldname": "section_break_2",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_case_for_item_name",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_case_for_short_description",
+   "fieldtype": "Check",
+   "label": "Ignore Case?",
+   "depends_on": "allow_short_description"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_case_for_make",
+   "fieldtype": "Check",
+   "label": "Ignore Case?",
+   "depends_on": "allow_make"
+  },
+  {
+   "default": "0",
+   "fieldname": "ignore_case_for_model",
+   "fieldtype": "Check",
+   "label": "Ignore Case?",
+   "depends_on": "allow_model"
   },
   {
    "default": "0",
@@ -133,13 +164,20 @@
    "label": "Allow Dimension?"
   },
   {
+   "default": "0",
    "depends_on": "allow_dimension",
+   "fieldname": "allow_height",
+   "fieldtype": "Check",
+   "label": "Allow Height?"
+  },
+  {
+   "depends_on": "eval:doc.allow_dimension&&doc.allow_height",
    "fieldname": "height",
    "fieldtype": "Float",
    "label": "Height"
   },
   {
-   "depends_on": "allow_dimension",
+   "depends_on": "eval:doc.allow_dimension&&doc.allow_height",
    "fieldname": "heigt_uom",
    "fieldtype": "Link",
    "label": "Heigt UOM",
@@ -185,14 +223,10 @@
    "fieldtype": "Link",
    "label": "Depth UOM",
    "options": "UOM"
-  },
-  {
-   "fieldname": "html_22",
-   "fieldtype": "HTML"
   }
  ],
  "issingle": 1,
- "modified": "2020-12-07 11:56:28.904407",
+ "modified": "2021-02-15 07:40:00.000000",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Item Description",

@@ -56,6 +56,12 @@
                 () => frm.trigger("toggle_show_description_button"),
             ]);
         },
+        allow_height(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_fields"),
+                () => frm.trigger("toggle_show_description_button"),
+            ]);
+        },
 
         allow_depth(frm) {
             frappe.run_serially([
@@ -67,7 +73,8 @@
         item_name(frm) {
             const { doc } = frm;
             const value = ItemDescription
-                .title_case(doc.item_name);
+                .title_case(doc.item_name,
+                    doc.ignore_case_for_item_name);
 
             const equals = value == doc.item_name;
 
@@ -81,7 +88,8 @@
         short_description(frm) {
             const { doc } = frm;
             const value = ItemDescription
-                .title_case(doc.short_description);
+                .title_case(doc.short_description,
+                    doc.ignore_case_for_short_description);
 
             const equals = value == doc.short_description;
 
@@ -109,7 +117,8 @@
         make(frm) {
             const { doc } = frm;
             const value = ItemDescription
-                .title_case(doc.make);
+                .title_case(doc.make,
+                    doc.ignore_case_for_make);
 
             const equals = value == doc.make;
 
@@ -123,7 +132,8 @@
         model(frm) {
             const { doc } = frm;
             const value = ItemDescription
-                .title_case(doc.model);
+                .title_case(doc.model,
+                    doc.ignore_case_for_model);
 
             const equals = value == doc.model;
 
@@ -242,27 +252,36 @@
 
             if (
                 doc.allow_dimension
-                    && doc.height
-                    && doc.heigt_uom
-                    && doc.width
-                    && doc.width_uom
+                && doc.width
+                && doc.width_uom
             ) {
-                dimension = `${doc.height} ${doc.heigt_uom} x ${doc.width} ${doc.width_uom}`;
+                dimension = `${doc.width} ${doc.width_uom}`;
             }
 
             if (
                 doc.allow_dimension
-                    && doc.height
-                    && doc.heigt_uom
-                    && doc.width
-                    && doc.width_uom
-                    && doc.allow_depth
-                    && doc.depth
-                    && doc.depth_uom
+                && doc.width
+                && doc.width_uom
+                && doc.allow_height
+                && doc.height
+                && doc.heigt_uom
             ) {
-                dimension = `${doc.height} ${doc.heigt_uom} x ${doc.width} ${doc.width_uom} x ${doc.depth} ${doc.depth_uom}`;
+                dimension = `${doc.width} ${doc.width_uom} x ${doc.height} ${doc.heigt_uom}`;
             }
 
+            if (
+                doc.allow_dimension
+                && doc.width
+                && doc.width_uom
+                && doc.allow_height
+                && doc.height
+                && doc.heigt_uom
+                && doc.allow_depth
+                && doc.depth
+                && doc.depth_uom
+            ) {
+                dimension = `${doc.width} ${doc.width_uom} x ${doc.height} ${doc.heigt_uom} x ${doc.depth} ${doc.depth_uom}`;
+            }
 
             doc.dimension = dimension;
         },
@@ -308,7 +327,7 @@
                     }
                 }
 
-                return fieldlist.join(", ");
+                return `${fieldlist.join(", ")}.`;
             };
 
 
@@ -323,6 +342,15 @@
             };
 
             frm.add_custom_button(label, action);
+            frm.add_custom_button(__("Item"), _ => {
+                const doc = frappe.model.get_new_doc("Item");
+                Object.assign(doc, {
+                    "description": get_message(),
+                    "item_name": frm.doc.item_name,
+                });
+
+                frappe.set_route("Form", doc.doctype, doc.name);
+            });
         },
 
         hide_description_button(frm) {
@@ -439,9 +467,13 @@
             return !has_errors;
         },
 
-        title_case(value) {
+        title_case(value, ignore_case) {
             if (!cstr(value)) {
                 return null;
+            }
+
+            if (ignore_case) {
+                return value;
             }
 
             const articles = [
