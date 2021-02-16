@@ -1,0 +1,34 @@
+{
+ "attach_print": 1,
+ "channel": "Email",
+ "condition": "",
+ "creation": "2021-02-16 14:51:18.158985",
+ "days_in_advance": 0,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Purchase Order",
+ "enabled": 1,
+ "event": "Method",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "<h3>Una Orden de Compra ha sido generada por {{ doc.owner }} con un nivel de Prioridad {{ doc.priority }}</h3>\n\n<p>Favor proceder con el siguiente paso...</p>",
+ "method": "send_reminder_alert",
+ "modified": "2021-02-16 14:51:18.158985",
+ "modified_by": "Administrator",
+ "module": "peark",
+ "name": "Recordatorio de Orden de Compra",
+ "owner": "Administrator",
+ "print_format": "Solicitud de Materiales",
+ "recipients": [
+  {
+   "bcc": "",
+   "email_by_role": "Purchase Manager"
+  },
+  {
+   "email_by_document_field": "owner"
+  }
+ ],
+ "sender": "Notificaciones",
+ "sender_email": "no-reply@igcaribe.com",
+ "subject": "Acci\u00f3n Requerida: Recordatorio Autom\u00e1tico de Orden de Compra"
+}

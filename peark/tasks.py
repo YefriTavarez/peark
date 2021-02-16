@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 
 import frappe
+
 import peark.controllers.cost_estimation
 import peark.controllers.planning_mission
 import peark.controllers.planning_document
@@ -12,6 +13,7 @@ import peark.controllers.project_center
 import peark.controllers.project
 import peark.controllers.payment_entry_request
 import peark.controllers.material_request
+import peark.controllers.purchase_order
 
 
 def all():
@@ -27,6 +29,7 @@ def daily():
 
 def hourly():
     peark.controllers.material_request.notify_for_unresolved()
+    peark.controllers.purchase_order.notify_for_unresolved()
 
     # finally
     frappe.db.commit()
