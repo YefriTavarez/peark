@@ -137,6 +137,10 @@ class ProductAssembly(Document):
             if value in validvalues:
                 continue
 
+            if fieldname.startswith("pantone") \
+                    and cint(value) > 0:
+                continue
+
             label = self.meta.get_field(fieldname) \
                 .label
 
