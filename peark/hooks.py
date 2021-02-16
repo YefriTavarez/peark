@@ -70,6 +70,7 @@ fixtures = [
                     "Item-section_break_106",
                     "Material Request Item-project_center",
                     "Material Request-production_planning_tool",
+                    "Material Request-priority",
                     "Project Center-expected_delivery_date",
                     "Project Template Task-user",
                     "Project Template Task-department",
