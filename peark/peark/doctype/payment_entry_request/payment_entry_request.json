@@ -19,6 +19,7 @@
   "party",
   "party_name",
   "column_break_11",
+  "priority",
   "owner",
   "section_break_13",
   "amount",
@@ -224,10 +225,18 @@
    "label": "User Acknowledgement",
    "no_copy": 1,
    "print_hide": 1
+  },
+  {
+   "default": "Normal",
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "Normal\nUrgente\nMuy Urgente",
+   "reqd": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2021-02-03 10:33:06.711611",
+ "modified": "2021-02-15 12:12:12.543083",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Payment Entry Request",
