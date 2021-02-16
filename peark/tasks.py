@@ -11,6 +11,7 @@ import peark.controllers.planning_document
 import peark.controllers.project_center
 import peark.controllers.project
 import peark.controllers.payment_entry_request
+import peark.controllers.material_request
 
 
 def all():
@@ -25,7 +26,10 @@ def daily():
 
 
 def hourly():
-    pass
+    peark.controllers.material_request.notify_for_unresolved()
+
+    # finally
+    frappe.db.commit()
 
 
 def weekly():
