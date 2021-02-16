@@ -79,6 +79,7 @@ fixtures = [
                     "Project-item_specifications",
                     "Project-title",
                     "Purchase Order Item-project_center",
+                    "Purchase Order-priority",
                     "Quotation-cost_estimation",
                     "Quotation-tax_id",
                     "Sales Invoice Item-project_center",
