@@ -109,6 +109,7 @@
    "fetch_from": "sales_order.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer"
@@ -124,6 +125,7 @@
    "description": "as the Customer knows it",
    "fieldname": "product_name",
    "fieldtype": "Small Text",
+   "in_preview": 1,
    "label": "Product Name"
   },
   {
@@ -249,7 +251,7 @@
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-01-28 12:03:30.095032",
+ "modified": "2021-02-16 17:22:45.000411",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",
@@ -284,6 +286,7 @@
   }
  ],
  "search_fields": "customer, product_name, item_code, item_specifications, status",
+ "show_preview_popup": 1,
  "sort_field": "customer",
  "sort_order": "DESC",
  "title_field": "title",
