@@ -13,12 +13,12 @@
  "is_standard": 1,
  "message": "<h3>Una Orden de Compra ha sido generada por {{ doc.owner }} con un nivel de Prioridad {{ doc.priority }}</h3>\n\n<p>Favor proceder con el siguiente paso...</p>",
  "method": "send_reminder_alert",
- "modified": "2021-02-16 14:51:18.158985",
+ "modified": "2021-02-17 14:08:35.172320",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Recordatorio de Orden de Compra",
  "owner": "Administrator",
- "print_format": "Solicitud de Materiales",
+ "print_format": "Orden de Compra Digital",
  "recipients": [
   {
    "bcc": "",
