@@ -1,8 +1,8 @@
 frappe.listview_settings["Project Center"] = {
-	add_fields: ["status"],
+	add_fields: ["status", "priority"],
 	filters: [["status", "=", "Open"]],
 	get_indicator: function (doc) {
-		const indicator = {
+		let indicator = {
 			"Open": "orange",
 			"Delayed": "red",
 			"Completed": "green",
@@ -12,6 +12,10 @@ frappe.listview_settings["Project Center"] = {
 			"Paused": "grey",
 		}[doc.status];
 
+		if (doc.status == "Open" && doc.priority == "Rush") {
+			indicator = "purple";
+		}
+
 		return [__(doc.status), indicator, "status,=," + doc.status];
-	}
+	},
 };
