@@ -36,10 +36,15 @@
  ],
  "fields": [
   {
+   "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nStarted\nDelayed\nStopped\nCancelled\nCompleted"
+   "no_copy": 1,
+   "options": "Open\nStarted\nDelayed\nStopped\nCancelled\nCompleted",
+   "reqd": 1
   },
   {
    "fetch_from": "project_center.sales_order",
@@ -213,8 +218,8 @@
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-01-30 10:30:00.000000",
- "modified_by": "Administrator",
+ "modified": "2021-02-19 11:10:43.234353",
+ "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Production Order",
  "owner": "Administrator",
