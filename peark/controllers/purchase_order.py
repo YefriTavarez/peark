@@ -14,7 +14,7 @@ from frappe import db as database
 def notify_for_unresolved():
     doctype = "Purchase Order"
     filters = {
-        "workflow_state": ["In", ["Pendiente Prod.", "Pendiente Adm."]],
+        "status": ["In", ["Draft"]],
         "priority": ["In", ["Urgente", "Muy Urgente"]],
         "creation": [">=", month_start()]
     }
