@@ -7,6 +7,7 @@
             frappe.run_serially([
                 () => frm.trigger("set_queries"),
                 () => frm.trigger("add_fetches"),
+                () => frm.trigger("add_custom_buttons"),
                 () => frm.trigger("toggle_display_fields"),
             ]);
         },
@@ -24,6 +25,11 @@
         add_fetches(frm) {
             frappe.run_serially([
                 () => frm.trigger("add_project_center_template_fetch"),
+            ]);
+        },
+        add_custom_buttons(frm) {
+            frappe.run_serially([
+                () => frm.trigger("add_create_production_order_button"),
             ]);
         },
         toggle_display_fields(frm) {
@@ -138,6 +144,29 @@
             const target_field = "order_required";
 
             frm.add_fetch(link_field, source_field, target_field);
+        },
+        add_create_production_order_button(frm) {
+            const { doc } = frm;
+
+            const label = __("Production Order");
+            const parent = __("Create");
+            const action = _ => {
+                frappe.route_options = {
+                    "project_center": frm.docname,
+                };
+
+                frappe.new_doc("Production Order");
+            };
+
+            if (frm.is_new()) {
+                return "document is new";
+            }
+
+            if (doc.status != "Open") {
+                return "document is not open";
+            }
+
+            frm.add_custom_button(label, action, parent);
         },
         order_required(frm) {
             const { doc } = frm;

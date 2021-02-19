@@ -29,6 +29,10 @@ class ProductionOrder(Document):
 
     def on_update(self):
         self.update_project_center_dates()
+        self.update_project_center_status(ontrash=False)
+
+    def on_trash(self):
+        self.update_project_center_status(ontrash=True)
 
     def validate(self):
         self.validate_item_agaist_product_assembly()
@@ -62,15 +66,41 @@ class ProductionOrder(Document):
                 or self.product_assembly != ref_docname:
             frappe.throw(errmsg.format(name, self.product_assembly))
 
-    def update_project_center_dates(self):
-        # expected_start_date
+    def get_project_center(self):
         doctype = "Project Center"
         name = self.project_center
 
-        doc = frappe.get_doc(doctype, name)
+        return frappe.get_doc(doctype, name)
+
+    def update_project_center_dates(self):
+        doc = self.get_project_center()
 
         doc.actual_start_date = self.expected_start_date
         doc.actual_end_date = self.expected_end_date
+
+        doc.save(ignore_permissions=True)
+
+    def update_project_center_status(self, ontrash=True):
+        doc = self.get_project_center()
+
+        status_map = {
+            "Open": "In Progress",
+            "Started": "In Progress",
+            "Delayed": "Delayed",
+            "Stopped": "Stopped",
+            "Cancelled": "Cancelled",
+            "Completed": "Completed",
+        }
+
+        status = status_map[self.status]
+
+        if ontrash:
+            status = "Open"
+
+        if status == doc.status:
+            return "status not changed"
+
+        doc.status = status
 
         doc.save(ignore_permissions=True)
 
