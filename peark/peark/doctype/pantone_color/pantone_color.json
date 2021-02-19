@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "field:pantone_code",
  "creation": "2020-10-08 11:52:27.447443",
  "doctype": "DocType",
@@ -6,32 +7,33 @@
  "engine": "InnoDB",
  "field_order": [
   "pantone_code",
-  "specification",
-  "last_purchase_rate"
+  "last_purchase_rate",
+  "specification"
  ],
  "fields": [
   {
    "fieldname": "pantone_code",
    "fieldtype": "Data",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Pantone Code",
    "reqd": 1,
    "unique": 1
   },
   {
-   "fieldname": "specification",
-   "fieldtype": "Small Text",
-   "in_list_view": 1,
-   "label": "Specification"
-  },
-  {
    "fieldname": "last_purchase_rate",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Last Purchase Rate",
    "read_only": 1
+  },
+  {
+   "fieldname": "specification",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "specification"
   }
  ],
- "modified": "2021-01-28 11:47:46.912695",
+ "modified": "2021-02-18 08:46:42.756723",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Pantone Color",
@@ -77,6 +79,5 @@
  "quick_entry": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "specification",
  "track_changes": 1
 }
