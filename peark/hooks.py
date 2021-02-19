@@ -119,7 +119,10 @@ fixtures = [
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/peark/css/peark.css"
+app_include_css = [
+    "/assets/peark/css/peark.css",
+]
+
 app_include_js = [
     "/assets/js/jmask.min.js",
     "/assets/js/peark.min.js",
