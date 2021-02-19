@@ -194,6 +194,15 @@ class ProductionOrder(Document):
             self.sales_order = database \
                 .get_value(doctype, name, fieldname)
 
+    def set_repeated_work(self):
+        doctype = "Project Center"
+        name = self.project_center
+        fieldname = "repeated_work"
+
+        if name:
+            self.repeated_work = database \
+                .get_value(doctype, name, fieldname)
+
     def set_product_profile(self):
         doc = self.get_product_assembly()
 

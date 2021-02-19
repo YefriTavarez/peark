@@ -526,6 +526,14 @@ frappe.ui.form.on('Production Order', {
                 // frm.trigger("");
             });
     },
+    fetch_repeated_work(frm) {
+        const { doc } = frm;
+
+        frm.call("set_repeated_work")
+            .then(() => {
+                // frm.trigger("");
+            });
+    },
     fetch_product_profile(frm) {
         const { doc } = frm;
 
@@ -573,6 +581,7 @@ frappe.ui.form.on('Production Order', {
             () => frm.trigger("fetch_qty"),
             () => frm.trigger("fetch_customer"),
             () => frm.trigger("fetch_sales_order"),
+            () => frm.trigger("fetch_repeated_work"),
             () => frm.trigger("fetch_product_profile"),
             () => frm.trigger("fetch_product_assembly"),
             () => frm.trigger("fetch_colors"),
