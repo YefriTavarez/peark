@@ -122,5 +122,19 @@ peark.TaskDashboard = Class.extend({
 
 				frappe.call({ method, args, callback });
 			});
+		jQuery(parent)
+			.find(".indicator > .fa.fa-window-restore")
+			.click(event => {
+				const { target } = event;
+
+				const data_type = jQuery(target)
+					.attr("data-type");
+
+				const data_name = jQuery(target)
+					.attr("data-name");
+
+				const url = frappe.urllib.get_full_url(`desk/#Form/${data_type}/${data_name}`);
+				window.open(url, "_blank");
+			});
 	}
 });

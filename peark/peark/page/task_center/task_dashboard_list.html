@@ -46,6 +46,14 @@
                 class="indicator {{ frappe.utils.guess_colour(d.status) }}"
             >
                 {{ __(d.translated_status || d.status) }}
+                <i
+                    data-type="Project"
+                    data-name="{{ d.project }}"
+                    class="fa fa-window-restore"
+                    aria-hidden="true"
+                    style="cursor: pointer;"
+                >
+                </i>
             </span><br>
             <a data-type="Project" data-name="{{ d.project }}">
                 {{ d.title }}
