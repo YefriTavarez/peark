@@ -19,7 +19,7 @@ def set_to_delayed():
     for name, in get_all_payment_entry_request():
         doc = get_doc(doctype, name)
 
-        if not doc.expected_end_date:
+        if not doc.due_date:
             # ignore if it has not been set yet
             continue
 
@@ -35,7 +35,8 @@ def get_all_payment_entry_request():
 
     filters = {
         "due_date": ["<", today()],
-        "status": "Pending",
+        "workflow_state": "Pendiente",
+        "status": ["!=", "Overdue"],
     }
 
     return get_all(doctype, filters, as_list=True)
