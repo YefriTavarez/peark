@@ -46,6 +46,7 @@ fixtures = [
         "filters": {
             "name": [
                 "in", [
+                    "Delivery Note-project_center",
                     "Employee-department_1",
                     "Employee-department_2",
                     "Employee-department_3",
