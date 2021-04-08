@@ -49,6 +49,8 @@ class DieCutStocking(Document):
         for img in images:
             image_type = "JPEG"
 
+            # we make it public to be able to access from
+            # the web without any restrictions
             public_target = target_jpg.replace(
                 "/private/files", "/public/files")
 

@@ -272,4 +272,15 @@ def get_data():
             'standard': 1,
             "condition": has_permission(doctype="Purchase Invoice", raise_exception=False)
         },
+        {
+            "module_name": 'Item Description',
+            "category": "Places",
+            "label": _('Item Descriptions'),
+            "icon": "fa fa-dot-circle-o",
+            "type": 'link',
+            "link": '#List/Item Description/List',
+            "color": '#FF4136',
+            'standard': 1,
+            "condition": has_permission(doctype="Purchase Invoice", raise_exception=False)
+        },
     ]

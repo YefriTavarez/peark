@@ -46,7 +46,7 @@ class Paperboard(Document):
             "color",
             "segment",
             "finish_type",
-            "coated_sides",
+            "coated_sides" if self.coated_sides != "C0S" else "fakefield",
         ]
 
         if not self.ignore_composition:
@@ -55,6 +55,7 @@ class Paperboard(Document):
         fields.extend([
             "trademark" if not ignore_trademark else "fakefield",
             "model" if not ignore_trademark else "fakefield",
+            "identifier",
             "caliper",
             "weight",
         ])
@@ -92,6 +93,7 @@ class Paperboard(Document):
     material_name = None
     trademark = None
     model = None
+    identifier = None
     one_side = True
     double_sided = False
     item_groups = list()

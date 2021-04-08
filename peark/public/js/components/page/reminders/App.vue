@@ -51,7 +51,7 @@
       </li>
     </ul>
     <div v-show="!reminders.length">
-      <center style="padding: 25px">{{ __("No Data") }}</center>
+      <center style="padding: 25px;">{{ __("No Data") }}</center>
     </div>
   </div>
 </template>

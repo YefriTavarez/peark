@@ -35,9 +35,23 @@ frappe.ui.form.on('Production Order', {
     },
     set_queries(frm) {
         frappe.run_serially([
+            () => frm.trigger("set_project_center_query"),
             () => frm.trigger("set_sales_order_query"),
             () => frm.trigger("set_product_assembly_query"),
         ]);
+    },
+    set_project_center_query(frm) {
+        const { doc } = frm;
+        const fieldname = "project_center";
+        const get_query = () => {
+            const filters = {
+                "status": ["in", ["Delayed", "Open"]],
+            };
+
+            return { filters };
+        };
+
+        frm.set_query(fieldname, get_query);
     },
     set_sales_order_query(frm) {
         const { doc } = frm;
@@ -69,6 +83,7 @@ frappe.ui.form.on('Production Order', {
     get_employee_query(frm, doctype, name) {
         const doc = frappe.get_doc(doctype, name);
         let filters = {
+            "status": "Active",
             "department": [
                 "in", [
                     doc.department, doc.parent_department
@@ -573,7 +588,12 @@ frappe.ui.form.on('Production Order', {
         ]);
     },
     project_center(frm) {
+        const { doc } = frm;
         const { events } = frm;
+
+        if (!doc.project_center) {
+            return "no project center selected";
+        }
 
         frappe.run_serially([
             () => frm.trigger("fetch_item"),

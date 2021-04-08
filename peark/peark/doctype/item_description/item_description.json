@@ -1,80 +1,71 @@
 {
- "creation": "2020-12-04 16:00:43.138580",
+ "autoname": "ITEM-DESC-.#####",
+ "creation": "2021-02-22 07:00:00",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "title",
   "item_name",
   "ignore_case_for_item_name",
-  "section_break_2",
+  "section_break_3",
   "allow_short_description",
   "short_description",
   "ignore_case_for_short_description",
-  "section_break_5",
+  "section_break_7",
   "allow_material",
   "material",
-  "section_break_8",
+  "section_break_10",
   "allow_make",
   "make",
   "ignore_case_for_make",
-  "section_break_11",
+  "section_break_14",
   "allow_model",
   "model",
   "ignore_case_for_model",
-  "section_break_14",
+  "section_break_18",
   "allow_color",
   "color",
-  "section_break_17",
+  "section_break_21",
+  "allow_additional_feature_1",
+  "additional_feature_1",
+  "ignore_case_for_additional_feature_1",
+  "section_break_25",
+  "allow_additional_feature_2",
+  "additional_feature_2",
+  "ignore_case_for_additional_feature_2",
+  "section_break_29",
+  "allow_additional_feature_3",
+  "additional_feature_3",
+  "ignore_case_for_additional_feature_3",
+  "section_break_33",
   "allow_dimension",
   "width",
   "width_uom",
-  "column_break_21",
+  "column_break_37",
   "allow_height",
   "height",
   "heigt_uom",
-  "column_break_24",
+  "column_break_41",
   "allow_depth",
   "depth",
   "depth_uom"
  ],
  "fields": [
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "item_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Item Name",
    "reqd": 1
-  },
-  {
-   "fieldname": "section_break_2",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
    "fieldname": "ignore_case_for_item_name",
    "fieldtype": "Check",
    "label": "Ignore Case?"
-  },
-  {
-   "default": "0",
-   "fieldname": "ignore_case_for_short_description",
-   "fieldtype": "Check",
-   "label": "Ignore Case?",
-   "depends_on": "allow_short_description"
-  },
-  {
-   "default": "0",
-   "fieldname": "ignore_case_for_make",
-   "fieldtype": "Check",
-   "label": "Ignore Case?",
-   "depends_on": "allow_make"
-  },
-  {
-   "default": "0",
-   "fieldname": "ignore_case_for_model",
-   "fieldtype": "Check",
-   "label": "Ignore Case?",
-   "depends_on": "allow_model"
   },
   {
    "default": "0",
@@ -86,11 +77,15 @@
    "depends_on": "allow_short_description",
    "fieldname": "short_description",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Short Description"
   },
   {
-   "fieldname": "section_break_5",
-   "fieldtype": "Section Break"
+   "default": "0",
+   "depends_on": "allow_short_description",
+   "fieldname": "ignore_case_for_short_description",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
   },
   {
    "default": "0",
@@ -102,12 +97,11 @@
    "depends_on": "allow_material",
    "fieldname": "material",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Material",
    "options": "Material"
-  },
-  {
-   "fieldname": "section_break_8",
-   "fieldtype": "Section Break"
   },
   {
    "default": "0",
@@ -119,11 +113,16 @@
    "depends_on": "allow_make",
    "fieldname": "make",
    "fieldtype": "Data",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Make"
   },
   {
-   "fieldname": "section_break_11",
-   "fieldtype": "Section Break"
+   "default": "0",
+   "depends_on": "allow_make",
+   "fieldname": "ignore_case_for_make",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
   },
   {
    "default": "0",
@@ -135,7 +134,16 @@
    "depends_on": "allow_model",
    "fieldname": "model",
    "fieldtype": "Data",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Model"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_model",
+   "fieldname": "ignore_case_for_model",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
   },
   {
    "fieldname": "section_break_14",
@@ -154,14 +162,23 @@
    "label": "Color"
   },
   {
-   "fieldname": "section_break_17",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "allow_dimension",
    "fieldtype": "Check",
    "label": "Allow Dimension?"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "width",
+   "fieldtype": "Float",
+   "label": "Width"
+  },
+  {
+   "depends_on": "allow_dimension",
+   "fieldname": "width_uom",
+   "fieldtype": "Link",
+   "label": "Width UOM",
+   "options": "UOM"
   },
   {
    "default": "0",
@@ -184,27 +201,6 @@
    "options": "UOM"
   },
   {
-   "fieldname": "column_break_21",
-   "fieldtype": "Column Break"
-  },
-  {
-   "depends_on": "allow_dimension",
-   "fieldname": "width",
-   "fieldtype": "Float",
-   "label": "Width"
-  },
-  {
-   "depends_on": "allow_dimension",
-   "fieldname": "width_uom",
-   "fieldtype": "Link",
-   "label": "Width UOM",
-   "options": "UOM"
-  },
-  {
-   "fieldname": "column_break_24",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "depends_on": "allow_dimension",
    "fieldname": "allow_depth",
@@ -223,10 +219,114 @@
    "fieldtype": "Link",
    "label": "Depth UOM",
    "options": "UOM"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_additional_feature_1",
+   "fieldtype": "Check",
+   "label": "Allow Additional Feature 1?"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_additional_feature_2",
+   "fieldtype": "Check",
+   "label": "Allow Additional Feature 2?"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_additional_feature_3",
+   "fieldtype": "Check",
+   "label": "Allow Additional Feature 3?"
+  },
+  {
+   "depends_on": "allow_additional_feature_1",
+   "fieldname": "additional_feature_1",
+   "fieldtype": "Data",
+   "label": "Additional Feature 1"
+  },
+  {
+   "depends_on": "allow_additional_feature_2",
+   "fieldname": "additional_feature_2",
+   "fieldtype": "Data",
+   "label": "Additional Feature 2"
+  },
+  {
+   "depends_on": "allow_additional_feature_3",
+   "fieldname": "additional_feature_3",
+   "fieldtype": "Data",
+   "label": "Additional Feature 3"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_additional_feature_1",
+   "fieldname": "ignore_case_for_additional_feature_1",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_additional_feature_2",
+   "fieldname": "ignore_case_for_additional_feature_2",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
+  },
+  {
+   "default": "0",
+   "depends_on": "allow_additional_feature_3",
+   "fieldname": "ignore_case_for_additional_feature_3",
+   "fieldtype": "Check",
+   "label": "Ignore Case?"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_21",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_25",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_29",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_33",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_37",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title",
+   "length": 1000,
+   "read_only": 1
   }
  ],
- "issingle": 1,
- "modified": "2021-02-15 07:40:00.000000",
+ "modified": "2021-02-22 10:27:36.257474",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Item Description",
@@ -245,6 +345,7 @@
   {
    "create": 1,
    "email": 1,
+   "if_owner": 1,
    "print": 1,
    "read": 1,
    "role": "All",
@@ -252,7 +353,12 @@
    "write": 1
   }
  ],
+ "search_fields": "item_name, short_description, material, make, model",
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "track_changes": 1
+ "title_field": "title",
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
 }

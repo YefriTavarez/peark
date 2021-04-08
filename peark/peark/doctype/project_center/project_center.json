@@ -6,36 +6,40 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "section_break_1",
+  "dashboard",
+  "section_break_3",
   "title",
   "project_center_template",
   "project_type",
   "priority",
-  "column_break_4",
+  "column_break_8",
   "status",
+  "production_status",
   "naming_series",
   "order_required",
-  "section_break_8",
+  "section_break_13",
   "customer",
   "product_name",
-  "column_break_11",
+  "column_break_16",
   "sales_order",
-  "section_break_13",
+  "section_break_18",
   "item_code",
   "item_name",
   "item_specifications",
-  "column_break_17",
+  "column_break_22",
   "production_qty",
   "front_colors",
   "front_pantones",
   "back_colors",
   "back_pantones",
-  "section_break_20",
+  "section_break_28",
   "expected_start_date",
   "expected_end_date",
-  "column_break_23",
+  "column_break_31",
   "actual_start_date",
   "actual_end_date",
-  "section_break_26",
+  "section_break_34",
   "project_display",
   "projects"
  ],
@@ -80,11 +84,6 @@
    "label": "Project Type",
    "options": "Project Type",
    "reqd": 1
-  },
-  {
-   "depends_on": "project_center_template",
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
   },
   {
    "default": "Open",
@@ -183,32 +182,7 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_11",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "section_break_13",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_17",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_20",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_26",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "order_required",
-   "fieldname": "section_break_8",
    "fieldtype": "Section Break"
   },
   {
@@ -248,10 +222,66 @@
    "fieldtype": "Select",
    "label": "Back Colors",
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
+  },
+  {
+   "default": "Unknown",
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "production_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Production Status",
+   "no_copy": 1,
+   "options": "Unknown\nOpen\nStarted\nDelayed\nStopped\nCancelled\nCompleted",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:!doc.__islocal",
+   "fieldname": "section_break_1",
+   "fieldtype": "Section Break",
+   "label": "Dashboard"
+  },
+  {
+   "fieldname": "dashboard",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "project_center_template",
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_16",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_28",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_31",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_34",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2021-02-19 11:15:22.327108",
- "modified_by": "ytavarez@igcaribe.com",
+ "modified": "2021-02-26 11:51:13.046729",
+ "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",
  "owner": "Administrator",

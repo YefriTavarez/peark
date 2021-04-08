@@ -17,6 +17,7 @@ from frappe.utils import flt
 class ProjectCenter(Document):
     def onload(self):
         self.update_projects(force=True)
+        self.set_dashboard_data()
 
     def after_insert(self):
         self.generate_projects()
@@ -28,6 +29,125 @@ class ProjectCenter(Document):
     def validate(self):
         self.update_title()
         self.validate_production_qty()
+
+    def set_dashboard_data(self):
+        dashboard_data = {
+            "production_order": self.get_linked_production_order(),
+            "billing_percent": self.get_billing_percent(),
+            "delivery_percent": self.get_delivery_percent(),
+            "invoice_count": self.get_invoice_count(),
+            "delivery_count": self.get_delivery_count(),
+        }
+
+        for key in dashboard_data.keys():
+            self.set_onload(key, dashboard_data[key])
+
+    def get_linked_production_order(self):
+        doctype = "Production Order"
+        filters = {
+            "project_center": self.name
+        }
+
+        if not database.exists(doctype, filters):
+            return None
+
+        return frappe.get_value(doctype, filters)
+
+    def get_billing_percent(self):
+        filters = {
+            "item_code": self.item_code,
+            "project_center": self.name,
+        }
+
+        result = database.sql("""
+            Select
+                Sum(qty) As total_billed
+            From
+                `tabSales Invoice Item`
+            Where
+                item_code = %(item_code)s
+                And project_center = %(project_center)s
+                And docstatus = 1
+        """, filters)
+
+        production_qty = flt(self.production_qty)
+
+        if not production_qty:
+            return .0
+
+        billed_qty = flt(result[0][0]) if result else .0
+
+        if billed_qty > production_qty:
+            return 100.0
+
+        return flt(billed_qty) / flt(production_qty) * 100.0
+
+    def get_invoice_count(self):
+        filters = {
+            "project_center": self.name,
+        }
+
+        result = database.sql("""
+            Select
+                Count(parent) As invoice_count
+            From
+                `tabSales Invoice Item`
+            Where
+                project_center = %(project_center)s
+                And docstatus = 1
+            Group By
+                parent
+        """ , filters)
+        
+        return flt(result[0][0]) if result else .0
+
+    def get_delivery_count(self):
+        filters = {
+            "project_center": self.name,
+        }
+
+        result = database.sql("""
+            Select
+                Count(name) As delivery_count
+            From
+                `tabDelivery Note`
+            Where
+                project_center = %(project_center)s
+                And docstatus = 1
+            Group By
+                parent
+        """ , filters)
+        
+        return flt(result[0][0]) if result else .0
+
+    def get_delivery_percent(self):
+        filters = {
+            "item_code": self.item_code,
+            "project_center": self.name,
+        }
+
+        result = database.sql("""
+            Select
+                Sum(delivered_qty) As total_delivered
+            From
+                `tabSales Invoice Item`
+            Where
+                item_code = %(item_code)s
+                And project_center = %(project_center)s
+                And docstatus = 1
+        """, filters)
+
+        production_qty = flt(self.production_qty)
+
+        if not production_qty:
+            return .0
+
+        delivered_qty = flt(result[0][0]) if result else .0
+
+        if delivered_qty > production_qty:
+            return 100.0
+
+        return flt(delivered_qty) / flt(production_qty) * 100.0
 
     def update_projects(self, autocommit=True, force=False):
         if not force:

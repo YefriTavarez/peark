@@ -24,15 +24,18 @@ class ProductionOrder(Document):
         self.set_back_pantones_str()
         self.set_repeated_work_in_words()
 
+    def before_insert(self):
+        self.validate_duplicates_production_orders()
+
     def on_change(self):
         self.update_indexes()
 
     def on_update(self):
         self.update_project_center_dates()
-        self.update_project_center_status(ontrash=False)
+        self.update_project_center_status()
 
     def on_trash(self):
-        self.update_project_center_status(ontrash=True)
+        self.update_project_center_status()
 
     def validate(self):
         self.validate_item_agaist_product_assembly()
@@ -49,6 +52,26 @@ class ProductionOrder(Document):
         value = frappe.get_value(doctype, name, fieldname)
 
         self.item_specs = value
+
+    def validate_duplicates_production_orders(self):
+        if not self.project_center:
+            return "production order without project center"
+
+        doctype = self.doctype
+        filters = {
+            "name": ["!=", self.name],
+            "project_center": self.project_center
+        }
+
+        value = database.get_value(doctype, filters)
+
+        if not value:
+            return "ok"
+
+        err_msg = translate("A Production Order exists "
+                            "against this Project Center.")
+
+        frappe.throw(err_msg.format(value))
 
     def validate_item_agaist_product_assembly(self):
         fields = ("ref_doctype", "ref_docname")
@@ -83,24 +106,24 @@ class ProductionOrder(Document):
     def update_project_center_status(self, ontrash=True):
         doc = self.get_project_center()
 
-        status_map = {
-            "Open": "In Progress",
-            "Started": "In Progress",
-            "Delayed": "Delayed",
-            "Stopped": "Stopped",
-            "Cancelled": "Cancelled",
-            "Completed": "Completed",
-        }
+        # status_map = {
+        #     "Open": "In Progress",
+        #     "Started": "In Progress",
+        #     "Delayed": "Delayed",
+        #     "Stopped": "Stopped",
+        #     "Cancelled": "Cancelled",
+        #     "Completed": "Completed",
+        # }
 
-        status = status_map[self.status]
+        status = self.status
 
         if ontrash:
-            status = "Open"
+            status = "Unknown"
 
         if status == doc.status:
             return "status not changed"
 
-        doc.status = status
+        doc.production_status = status
 
         doc.save(ignore_permissions=True)
 

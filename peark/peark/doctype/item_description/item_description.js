@@ -5,9 +5,10 @@
     const ItemDescription = {
         refresh(frm) {
             frappe.run_serially([
-                () => frm.trigger("disable_save"),
+                // () => frm.trigger("disable_save"),
                 () => frm.trigger("toggle_reqd_fields"),
                 () => frm.trigger("toggle_show_description_button"),
+                () => frm.trigger("set_dimension"),
             ]);
         },
 
@@ -44,6 +45,27 @@
         },
 
         allow_color(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_fields"),
+                () => frm.trigger("toggle_show_description_button"),
+            ]);
+        },
+
+        allow_additional_feature_1(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_fields"),
+                () => frm.trigger("toggle_show_description_button"),
+            ]);
+        },
+
+        allow_additional_feature_2(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_fields"),
+                () => frm.trigger("toggle_show_description_button"),
+            ]);
+        },
+
+        allow_additional_feature_3(frm) {
             frappe.run_serially([
                 () => frm.trigger("toggle_reqd_fields"),
                 () => frm.trigger("toggle_show_description_button"),
@@ -155,6 +177,51 @@
                 frm.trigger("toggle_show_description_button");
             } else {
                 frm.set_value("color", value);
+            }
+        },
+
+        additional_feature_1(frm) {
+            const { doc } = frm;
+            const value = ItemDescription
+                .title_case(doc.additional_feature_1,
+                    doc.ignore_case_for_additional_feature_1);
+
+            const equals = value == doc.additional_feature_1;
+
+            if (equals) {
+                frm.trigger("toggle_show_description_button");
+            } else {
+                frm.set_value("additional_feature_1", value);
+            }
+        },
+
+        additional_feature_2(frm) {
+            const { doc } = frm;
+            const value = ItemDescription
+                .title_case(doc.additional_feature_2,
+                    doc.ignore_case_for_additional_feature_2);
+
+            const equals = value == doc.additional_feature_2;
+
+            if (equals) {
+                frm.trigger("toggle_show_description_button");
+            } else {
+                frm.set_value("additional_feature_2", value);
+            }
+        },
+
+        additional_feature_3(frm) {
+            const { doc } = frm;
+            const value = ItemDescription
+                .title_case(doc.additional_feature_3,
+                    doc.ignore_case_for_additional_feature_3);
+
+            const equals = value == doc.additional_feature_3;
+
+            if (equals) {
+                frm.trigger("toggle_show_description_button");
+            } else {
+                frm.set_value("additional_feature_3", value);
             }
         },
 
@@ -309,7 +376,11 @@
                     "make": () => doc.allow_make && doc.make,
                     "model": () => doc.allow_model && doc.model,
                     "color": () => doc.allow_color && doc.color,
-                    "dimension": () => doc.allow_dimension && doc.height && doc.heigt_uom && doc.width && doc.width_uom,
+                    "dimension": () => doc.allow_dimension && doc.width && doc.width_uom,
+                    // "dimension": () => doc.allow_height && doc.height && doc.heigt_uom,
+                    "additional_feature_1": () => doc.allow_additional_feature_1 && doc.additional_feature_1,
+                    "additional_feature_2": () => doc.allow_additional_feature_2 && doc.additional_feature_2,
+                    "additional_feature_3": () => doc.allow_additional_feature_3 && doc.additional_feature_3,
                     // "height": () => doc.allow_dimension && doc.height,
                     // "heigt_uom": () => doc.allow_dimension && doc.heigt_uom,
                     // "width": () => doc.allow_dimension && doc.width,

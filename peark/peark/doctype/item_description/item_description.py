@@ -10,4 +10,4 @@ from frappe.model.document import Document
 
 class ItemDescription(Document):
     def validate(self):
-        frappe.throw("Not allowed to save")
+        pass

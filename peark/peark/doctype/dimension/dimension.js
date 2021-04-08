@@ -3,13 +3,26 @@
 
 frappe.ui.form.on('Dimension', {
 	width: function (frm) {
-		frm.set_value("width", Math.round(frm.doc.width * 16, 0) / 16);
+
+		const { doc } = frm;
+
+		if (!doc.disable_aproximation) {
+			frm.set_value("width", Math.round(doc.width * 16, 0) / 16);
+		}
 	},
 	height: function (frm) {
-		frm.set_value("height", Math.round(frm.doc.height * 16, 0) / 16);
+		const { doc } = frm;
+
+		if (!doc.disable_aproximation) {
+			frm.set_value("height", Math.round(doc.height * 16, 0) / 16);
+		}
 	},
 	depth: function (frm) {
-		frm.set_value("depth", Math.round(frm.doc.depth * 16, 0) / 16);
+		const { doc } = frm;
+
+		if (!doc.disable_aproximation) {
+			frm.set_value("depth", Math.round(doc.depth * 16, 0) / 16);
+		}
 	},
 	after_save: function (frm) {
 		const { doc } = frm;

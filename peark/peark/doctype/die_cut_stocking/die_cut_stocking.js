@@ -34,9 +34,11 @@ Object.assign(peark.die_cut_stocking, {
 
 		const parent = frm.fields_dict[target].$wrapper;
 
-		jQuery(parent)
-			.empty()
-			.append(`<img src=${image_src} />`);
+		parent.empty();
+
+		const _ = jQuery("<img />")
+			.attr("src", image_src)
+			.appendTo(parent);
 	},
 });
 

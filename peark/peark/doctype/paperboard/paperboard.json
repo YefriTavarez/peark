@@ -19,6 +19,7 @@
   "material_name",
   "trademark",
   "model",
+  "identifier",
   "one_side",
   "double_sided",
   "section_break_7",
@@ -147,14 +148,14 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Material Type",
-   "options": "Boxboard\nPaper\nVinil\nPVC\nMesh\nCoroplast\nSintra"
+   "options": "Boxboard\nPaper\nVinil\nPVC\nEstireno\nMesh\nCoroplast\nSintra\nLona"
   },
   {
    "default": "Kraft",
    "fieldname": "segment",
    "fieldtype": "Select",
    "label": "Segment",
-   "options": "\nKraft\nSatin\nBond\nAdhesive\nAdhesive Gloss\nAdhesive Matte\nMicro-perforated"
+   "options": "\nKraft\nSatin\nBond\nAdhesive\nAdhesive Gloss\nAdhesive Matte\nMicro-perforated\nBlackout"
   },
   {
    "default": "White",
@@ -180,7 +181,6 @@
    "reqd": 1
   },
   {
-   "description": "Identifier",
    "fieldname": "model",
    "fieldtype": "Data",
    "label": "Model"
@@ -202,9 +202,14 @@
    "fieldname": "ignore_composition",
    "fieldtype": "Check",
    "label": "Ignore Composition?"
+  },
+  {
+   "fieldname": "identifier",
+   "fieldtype": "Data",
+   "label": "Identifier"
   }
  ],
- "modified": "2021-02-03 17:03:56.166918",
+ "modified": "2021-03-31 11:49:48.104521",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Paperboard",

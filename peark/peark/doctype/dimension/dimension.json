@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "disabled",
+  "disable_aproximation",
   "section_break_2",
   "width",
   "column_break_4",
@@ -118,9 +119,15 @@
    "label": "UdM Profundidad",
    "options": "UOM",
    "remember_last_selected_value": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "disable_aproximation",
+   "fieldtype": "Check",
+   "label": "Deshabilitar Aproximaci\u00f3n"
   }
  ],
- "modified": "2021-01-15 16:03:55.231322",
+ "modified": "2021-03-01 11:46:20.545883",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Dimension",

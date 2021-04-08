@@ -36,6 +36,7 @@
  ],
  "fields": [
   {
+   "allow_in_quick_entry": 1,
    "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -47,6 +48,7 @@
    "reqd": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fetch_from": "project_center.sales_order",
    "fieldname": "sales_order",
    "fieldtype": "Link",
@@ -54,6 +56,7 @@
    "options": "Sales Order"
   },
   {
+   "allow_in_quick_entry": 1,
    "fetch_from": "sales_order.customer",
    "fieldname": "customer",
    "fieldtype": "Link",
@@ -63,6 +66,7 @@
   {
    "fieldname": "project_center",
    "fieldtype": "Link",
+   "in_preview": 1,
    "label": "Project Center",
    "options": "Project Center"
   },
@@ -157,12 +161,14 @@
    "label": "Production Order Ops"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "product_name",
    "fieldtype": "Data",
    "label": "Product Name",
    "reqd": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fetch_from": "product_assembly.full_specifications",
    "fieldname": "item_specs",
    "fieldtype": "Small Text",
@@ -170,6 +176,7 @@
    "read_only": 1
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "qty",
    "fieldtype": "Float",
    "label": "Qty",
@@ -196,6 +203,7 @@
    "options": "Pantone Colors"
   },
   {
+   "allow_in_quick_entry": 1,
    "default": "Normal",
    "fetch_from": "project_center.priority",
    "fieldname": "priority",
@@ -218,7 +226,7 @@
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   }
  ],
- "modified": "2021-02-19 11:10:43.234353",
+ "modified": "2021-04-07 14:45:17.535128",
  "modified_by": "ytavarez@igcaribe.com",
  "module": "peark",
  "name": "Production Order",
@@ -270,6 +278,7 @@
    "write": 1
   }
  ],
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
