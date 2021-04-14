@@ -123,6 +123,7 @@
         set_queries(frm) {
             frappe.run_serially([
                 () => frm.trigger("set_sales_order_query"),
+                () => frm.trigger("set_item_code_query"),
             ]);
         },
         set_sales_order_query(frm) {
@@ -131,6 +132,20 @@
             const get_query = function () {
                 const filters = {
                     "customer": doc.customer,
+                };
+
+                return { filters };
+            };
+
+            frm.set_query(fieldname, get_query);
+        },
+        set_item_code_query(frm) {
+            const { doc } = frm;
+            const fieldname = "item_code";
+            const query = ""
+            const get_query = function () {
+                const filters = {
+                    "sales_order": doc.sales_order,
                 };
 
                 return { filters };

@@ -32,10 +32,10 @@ class ProductionOrder(Document):
 
     def on_update(self):
         self.update_project_center_dates()
-        self.update_project_center_status()
+        self.update_project_center_status(ontrash=False)
 
     def on_trash(self):
-        self.update_project_center_status()
+        self.update_project_center_status(ontrash=True)
 
     def validate(self):
         self.validate_item_agaist_product_assembly()
