@@ -164,8 +164,8 @@ class ProductionOrder(Document):
         fields = ("front_colors", "pantone_colors",
                   "back_colors", "pantone_back_colors")
 
-        front_colors, pantone_colors, back_colors, pantone_back_colors = database.get_value(
-            doctype, name, fields)
+        front_colors, pantone_colors, back_colors, pantone_back_colors \
+            = database.get_value(doctype, name, fields)
 
         self.printing_sides = "Sin Impresión"
 
