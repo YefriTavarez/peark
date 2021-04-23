@@ -413,15 +413,18 @@
             };
 
             frm.add_custom_button(label, action);
-            frm.add_custom_button(__("Item"), _ => {
-                const doc = frappe.model.get_new_doc("Item");
-                Object.assign(doc, {
-                    "description": get_message(),
-                    "item_name": frm.doc.item_name,
-                });
 
-                frappe.set_route("Form", doc.doctype, doc.name);
-            });
+            if (doc.workflow_state === "Aprobado") {
+                frm.add_custom_button(__("Item"), _ => {
+                    const doc = frappe.model.get_new_doc("Item");
+                    Object.assign(doc, {
+                        "description": get_message(),
+                        "item_name": frm.doc.item_name,
+                    });
+
+                    frappe.set_route("Form", doc.doctype, doc.name);
+                });
+            }
         },
 
         hide_description_button(frm) {
