@@ -13,6 +13,8 @@ from frappe import db as database
 from frappe import _ as translate
 from frappe import _dict as pydict
 
+from frappe.utils import cint
+
 
 class ProductionOrder(Document):
     def before_print(self):
@@ -157,13 +159,23 @@ class ProductionOrder(Document):
             .join([d.pantone_code for d in self.back_pantones])
 
     def set_printing_sides(self):
-        doctype = "Product Profile"
-        name = self.product_profile
-        fieldname = "double_sided"
+        doctype = "Product Assembly"
+        name = self.product_assembly
+        fields = ("front_colors", "pantone_colors",
+                  "back_colors", "pantone_back_colors")
 
-        self.double_sided = database.get_value(doctype, name, fieldname)
-        self.printing_sides = translate("One Side") \
-            if not self.double_sided else translate("Two Sides")
+        front_colors, pantone_colors, back_colors, pantone_back_colors = database.get_value(
+            doctype, name, fields)
+
+        self.printing_sides = "Sin Impresión"
+
+        if cint(front_colors) > 0 \
+                or cint(pantone_colors) > 0:
+            self.printing_sides = translate("One Side")
+
+            if cint(back_colors) > 0 \
+                    or cint(pantone_back_colors) > 0:
+                self.printing_sides = translate("Two Sides")
 
     def set_repeated_work_in_words(self):
         self.repeated_work_in_words = translate("Yes") \
