@@ -20,7 +20,9 @@ class ProjectCenter(Document):
         self.set_dashboard_data()
 
     def after_insert(self):
-        self.generate_projects()
+        # self.generate_projects()
+        # instead, send it to a background queue
+        frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
         self.set_missing_values_on_children()
 
     def on_update(self):
