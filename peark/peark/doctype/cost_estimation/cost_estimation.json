@@ -99,18 +99,18 @@
   {
    "fieldname": "product_profile",
    "fieldtype": "Link",
+   "hidden": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Product Profile",
-   "options": "Product Profile",
-   "reqd": 1
+   "options": "Product Profile"
   },
   {
    "fieldname": "product_assembly",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Product Assembly",
-   "options": "Product Assembly",
-   "reqd": 1
+   "options": "Product Assembly"
   },
   {
    "fetch_from": "product_assembly.full_specifications",
@@ -230,6 +230,7 @@
    "description": "Show only Compound Products",
    "fieldname": "is_compound_product",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Compound Product"
   },
   {
@@ -255,6 +256,7 @@
   {
    "fieldname": "product_details_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Product Details"
   },
   {
@@ -393,8 +395,8 @@
    "options": "Coating Usage Detail"
   }
  ],
- "modified": "2020-11-14 22:33:20.161348",
- "modified_by": "Administrator",
+ "modified": "2021-08-12 13:42:39.350612",
+ "modified_by": "ernestonunez@tzcode.tech",
  "module": "peark",
  "name": "Cost Estimation",
  "owner": "yefritavarez@gmail.com",

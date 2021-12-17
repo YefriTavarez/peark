@@ -163,14 +163,23 @@
         add_create_production_order_button(frm) {
             const { doc } = frm;
 
-            const label = __("Production Order");
+            const label = __("Work Order");
             const parent = __("Create");
             const action = _ => {
-                frappe.route_options = {
+                const method = "peark.peark.doctype.project_center.project_center.make_work_order";
+                const args = {
                     "project_center": frm.docname,
                 };
 
-                frappe.new_doc("Production Order");
+                const callback = function (response) {
+                    const viewtype = "Form";
+                    const { message } = response;
+                    const [doc] = frappe.model.sync(message);
+
+                    frappe.set_route(viewtype, doc.doctype, doc.name);
+                };
+
+                frappe.call({ method, args, callback });
             };
 
             if (frm.is_new()) {

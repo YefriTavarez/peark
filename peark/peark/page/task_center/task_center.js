@@ -4,7 +4,13 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         title: __('Task Center'),
         single_column: true
     });
+    const desired_roles = [
+        "Projects Manager",
+        "System Manager",
+        "Administrator"
+    ];
 
+    const show_department = frappe.user.has_role(desired_roles);
 
     page.get_last_status = function () {
         const defval = 'Not Completed';
@@ -46,6 +52,7 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         label: __('Project Center'),
         fieldtype: 'Link',
         options: 'Project Center',
+        default: !!frappe.route_options ? frappe.route_options?.proyect_center : "",
         change: function () {
             page.task_dashboard.start = 0;
             page.task_dashboard.refresh();
@@ -62,6 +69,19 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
             page.task_dashboard.refresh();
         }
     });
+
+    if (show_department){
+        page.department_field = page.add_field({
+            fieldname: 'department',
+            label: __('Department'),
+            fieldtype: 'Link',
+            options: 'Department',
+            change: function () {
+                page.task_dashboard.start = 0;
+                page.task_dashboard.refresh();
+            }
+        });
+    }
 
     page.status_field = page.add_field({
         fieldname: 'status',
@@ -83,8 +103,9 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
         args: {
             sort_by: 'creation',
             sort_order: 'asc',
-            options: [
+            options: [  
                 { fieldname: 'creation', label: __('Created On') },
+                { fieldname: 'exp_end_date', label: __('End Date') },
                 { fieldname: 'modified', label: __('Last Modified') },
                 { fieldname: 'status', label: __('Status') },
             ],
@@ -110,6 +131,7 @@ frappe.pages['task-center'].on_page_load = function (wrapper) {
             this.project_center = page.project_center_field.get_value();
             this.status = page.status_field.get_value();
             this.project = page.project_field.get_value();
+            this.department = page.department_field?.get_value();
         }
 
         page.task_dashboard.refresh();

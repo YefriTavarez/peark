@@ -7,16 +7,18 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe.model.db_query import DatabaseQuery
-
 from frappe import _ as translate
 
 
 @frappe.whitelist()
-def get_data(project=None, project_center=None, status=None, start=0, sort_by='creation', sort_order='desc'):
+def get_data(project=None, project_center=None, department=None, status=None, start=0, sort_by='creation', sort_order='desc'):
     filters = list()
 
     if project:
         filters.append(['project', '=', project])
+
+    if department:
+        filters.append(['department', '=', department])
 
     if status:
         if status == "Not Completed":
@@ -44,13 +46,18 @@ def get_data(project=None, project_center=None, status=None, start=0, sort_by='c
     except frappe.PermissionError:
         return []
 
-    items = frappe.get_list("Task", filters=filters,
-                            fields="*", limit_start=start, limit_page_length="21")
+    items = frappe.get_list(
+        "Task",
+        filters=filters,
+        fields="*",
+        limit_start=start,
+        limit_page_length="21",
+        order_by = "{} {}".format(sort_by, sort_order)
+    )
 
     for item in items:
         item.translated_status = translate(item.status)
         set_project_center(item)
-
     return items
 
 

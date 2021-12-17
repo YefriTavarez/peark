@@ -34,6 +34,7 @@ peark.TaskDashboard = Class.extend({
 				project: this.project,
 				status: this.status,
 				project_center: this.project_center,
+				department: this.department,
 				start: this.start,
 				sort_by: this.sort_by,
 				sort_order: this.sort_order,

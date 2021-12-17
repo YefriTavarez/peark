@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
+  "item_type",
   "item_name",
   "ignore_case_for_item_name",
   "section_break_3",
@@ -24,8 +25,11 @@
   "model",
   "ignore_case_for_model",
   "section_break_18",
-  "allow_color",
-  "color",
+  "allow_primary_color",
+  "primary_color",
+  "section_break_22",
+  "allow_secondary_color",
+  "secondary_color",
   "section_break_21",
   "allow_additional_feature_1",
   "additional_feature_1",
@@ -148,18 +152,6 @@
   {
    "fieldname": "section_break_14",
    "fieldtype": "Section Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "allow_color",
-   "fieldtype": "Check",
-   "label": "Allow Color?"
-  },
-  {
-   "depends_on": "allow_color",
-   "fieldname": "color",
-   "fieldtype": "Data",
-   "label": "Color"
   },
   {
    "default": "0",
@@ -324,9 +316,49 @@
    "label": "Title",
    "length": 1000,
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_primary_color",
+   "fieldtype": "Check",
+   "label": "Allow Primary Color?"
+  },
+  {
+   "depends_on": "allow_primary_color",
+   "fieldname": "primary_color",
+   "fieldtype": "Link",
+   "label": "Primary Color",
+   "options": "Color"
+  },
+  {
+   "fieldname": "section_break_22",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "allow_secondary_color",
+   "fieldtype": "Check",
+   "label": "Allow Secondary Color?"
+  },
+  {
+   "depends_on": "allow_secondary_color",
+   "fieldname": "secondary_color",
+   "fieldtype": "Link",
+   "label": "Secondary Color",
+   "options": "Color"
+  },
+  {
+   "default": "Bienes",
+   "fieldname": "item_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item Type",
+   "options": "Bienes\nServicios",
+   "reqd": 1
   }
  ],
- "modified": "2021-02-22 10:27:36.257474",
+ "modified": "2021-12-10 17:00:25.826489",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Item Description",

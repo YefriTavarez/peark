@@ -45,7 +45,7 @@
             <span 
                 class="indicator {{ frappe.utils.guess_colour(d.status) }}"
             >
-                {{ __(d.translated_status || d.status) }}
+                <b>{{d.subject}}</b> : {{ __(d.translated_status || d.status) }}
                 <i
                     data-type="Project"
                     data-name="{{ d.project }}"
@@ -56,7 +56,7 @@
                 </i>
             </span><br>
             <a data-type="Project" data-name="{{ d.project }}">
-                {{ d.title }}
+                {{ d.project_title }}
             </a>
         </div>
 

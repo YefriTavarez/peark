@@ -60,9 +60,18 @@ def set_item_group_code(doc):
 
 
 def get_item_group_root():
-    doctype = "Item Group"
+    return frappe.db.sql("""
+        SELECT 
+            name
+        FROM 
+            `tabItem Group`
+        ORDER BY 
+            lft
+        LIMIT 1
+    """)[0][0]
+    # doctype = "Item Group"
 
-    return get_root_of(doctype)
+    # return get_root_of(doctype)
 
 
 def get_next_item_group_code(parent_item_group):

@@ -44,7 +44,14 @@
             ]);
         },
 
-        allow_color(frm) {
+        allow_primary_color(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_fields"),
+                () => frm.trigger("toggle_show_description_button"),
+            ]);
+        },
+
+        allow_secondary_color(frm) {
             frappe.run_serially([
                 () => frm.trigger("toggle_reqd_fields"),
                 () => frm.trigger("toggle_show_description_button"),
@@ -166,18 +173,32 @@
             }
         },
 
-        color(frm) {
-            const { doc } = frm;
-            const value = ItemDescription
-                .title_case(doc.color);
+        primary_color(frm) {
+            // const { doc } = frm;
+            // const value = ItemDescription
+            //     .title_case(doc.primary_color);
 
-            const equals = value == doc.color;
+            // const equals = value == doc.primary_color;
 
-            if (equals) {
-                frm.trigger("toggle_show_description_button");
-            } else {
-                frm.set_value("color", value);
-            }
+            // if (equals) {
+            //     frm.trigger("toggle_show_description_button");
+            // } else {
+            //     frm.set_value("primary_color", value);
+            // }
+        },
+
+        secondary_color(frm) {
+            // const { doc } = frm;
+            // const value = ItemDescription
+            //     .title_case(doc.secondary_color);
+
+            // const equals = value == doc.secondary_color;
+
+            // if (equals) {
+            //     frm.trigger("toggle_show_description_button");
+            // } else {
+            //     frm.set_value("secondary_color", value);
+            // }
         },
 
         additional_feature_1(frm) {
@@ -375,7 +396,8 @@
                     "material": () => doc.allow_material && doc.material,
                     "make": () => doc.allow_make && doc.make,
                     "model": () => doc.allow_model && doc.model,
-                    "color": () => doc.allow_color && doc.color,
+                    "primary_color": () => doc.allow_primary_color && doc.primary_color,
+                    "secondary_color": () => doc.allow_secondary_color && doc.secondary_color,
                     "dimension": () => doc.allow_dimension && doc.width && doc.width_uom,
                     // "dimension": () => doc.allow_height && doc.height && doc.heigt_uom,
                     "additional_feature_1": () => doc.allow_additional_feature_1 && doc.additional_feature_1,
@@ -409,14 +431,15 @@
                 const title = __("Item Description");
                 const message = get_message();
 
-                frappe.msgprint(message, title);
+                frappe.msgprint(message.toUpperCase(), title);
             };
 
             frm.add_custom_button(label, action);
             frm.add_custom_button(__("Item"), _ => {
                 const doc = frappe.model.get_new_doc("Item");
                 Object.assign(doc, {
-                    "description": get_message(),
+                    "description": get_message().toUpperCase(),
+                    "item_description": frm.docname,
                     "item_name": frm.doc.item_name,
                 });
 

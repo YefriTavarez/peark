@@ -28,6 +28,11 @@
   "item_name",
   "item_specifications",
   "column_break_22",
+  "bom",
+  "make",
+  "primary_color",
+  "secondary_color",
+  "model",
   "production_qty",
   "front_colors",
   "front_pantones",
@@ -202,24 +207,28 @@
   {
    "fieldname": "front_pantones",
    "fieldtype": "Table MultiSelect",
+   "hidden": 1,
    "label": "Front Pantones",
    "options": "Pantone Colors"
   },
   {
    "fieldname": "back_pantones",
    "fieldtype": "Table MultiSelect",
+   "hidden": 1,
    "label": "Back Pantones",
    "options": "Pantone Colors"
   },
   {
    "fieldname": "front_colors",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Front Colors",
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   },
   {
    "fieldname": "back_colors",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Back Colors",
    "options": "C\nC - M\nC - Y\nC - K\nC - M - Y\nC - M - Y - K\nM - Y - K\nM\nM - Y\nM - K\nY - K\nY\nK"
   },
@@ -278,9 +287,43 @@
   {
    "fieldname": "section_break_34",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "bom",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "BOM",
+   "options": "BOM",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "bom.make",
+   "fieldname": "make",
+   "fieldtype": "Data",
+   "label": "Make"
+  },
+  {
+   "fetch_from": "bom.primary_color",
+   "fieldname": "primary_color",
+   "fieldtype": "Link",
+   "label": "Primary Color",
+   "options": "Color"
+  },
+  {
+   "fetch_from": "bom.secondary_color",
+   "fieldname": "secondary_color",
+   "fieldtype": "Link",
+   "label": "Secondary Color",
+   "options": "Color"
+  },
+  {
+   "fetch_from": "bom.model",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
   }
  ],
- "modified": "2021-02-26 11:51:13.046729",
+ "modified": "2021-12-16 16:20:38.313020",
  "modified_by": "Administrator",
  "module": "peark",
  "name": "Project Center",

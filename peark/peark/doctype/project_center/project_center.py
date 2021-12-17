@@ -99,8 +99,8 @@ class ProjectCenter(Document):
                 And docstatus = 1
             Group By
                 parent
-        """ , filters)
-        
+        """, filters)
+
         return flt(result[0][0]) if result else .0
 
     def get_delivery_count(self):
@@ -118,8 +118,8 @@ class ProjectCenter(Document):
                 And docstatus = 1
             Group By
                 parent
-        """ , filters)
-        
+        """, filters)
+
         return flt(result[0][0]) if result else .0
 
     def get_delivery_percent(self):
@@ -182,7 +182,9 @@ class ProjectCenter(Document):
         # just a bit of config
         status_change_comment = translate("Set to {}")
 
-        if all(status == "Completed" for status in status_list):
+        if not status_list:
+            self.status = "Open"
+        elif all(status == "Completed" for status in status_list):
             self.status = "Completed"
         else:
             if "Delayed" in status_list:
@@ -370,6 +372,11 @@ class ProjectCenter(Document):
     customer = None
     product_name = None
     sales_order = None
+    bom = None
+    make = None
+    model = None
+    primary_color = None
+    secondary_color = None
     item_code = None
     item_name = None
     item_specifications = None
@@ -380,3 +387,120 @@ class ProjectCenter(Document):
     actual_start_date = None
     actual_end_date = None
     projects = list()
+
+
+valid_status = ("Open", "Completed")
+
+
+@frappe.whitelist()
+def update_subproject_status(name, status):
+    if status not in valid_status:
+        frappe.throw(translate("Invalid Status"))
+
+    # dealing doctype
+    doctype = "Project"
+
+    # fetching doc
+    doc = frappe.get_doc(doctype, name)
+
+    comment_template = translate("Status Updated from {} to {}")
+
+    if doc.status != status:
+        doc.add_comment("Edit", comment_template
+                        .format(translate(doc.status), translate(status)))
+
+    # updating fields
+    doc.status = status
+
+    # persists changes
+    doc.db_update()
+
+    # update project tasks
+    update_project_tasks(doc, status)
+
+    # returns doc
+    return doc
+
+
+def update_project_tasks(doc, status):
+    # dealing doctype
+
+    doctype = "Task"
+
+    filters = {
+        "project": doc.name,
+        "status": ["!=", status],
+    }
+
+    fields = "name"
+
+    doclist = get_all(doctype, filters, fields, as_list=True)
+
+    comment_template = translate("Status Updated from {} to {}")
+
+    for name, in doclist:
+        doc = frappe.get_doc(doctype, name)
+
+        if doc.status != status:
+            doc.add_comment("Edit", comment_template
+                            .format(translate(doc.status), translate(status)))
+
+        doc.status = status
+
+        # persists changes
+        doc.db_update()
+
+
+@frappe.whitelist()
+def make_work_order(project_center):
+    from erpnext.manufacturing.doctype.work_order.work_order \
+        import make_work_order as erpnext_make_work_order
+
+    # dealing doctype
+    doctype = "Project Center"
+
+    doc = frappe.get_doc(doctype, project_center)
+
+    # bom_no = BOM-PRPLENPL1248-001
+    # item = PRPLENPL1248
+    # qty = 1
+    workorder = erpnext_make_work_order(
+        doc.bom, doc.item_code, doc.production_qty)
+
+    # add additional fields or info
+    update_workorder(workorder, doc)
+
+    return workorder
+
+
+def update_workorder(workorder, project_center):
+    for item in workorder.required_items:
+        item.source_warehouse = get_default_supply_warehouse() \
+            or get_default_warehouse()
+
+    workorder.update({
+        "sales_order": project_center.sales_order,
+        "planned_start_date": project_center.expected_start_date,
+        "expected_delivery_date": project_center.expected_end_date,
+        "fg_warehouse": get_finished_goods_warehouse(),
+    })
+
+
+def get_finished_goods_warehouse():
+    # We prefer something like this:
+    # return frappe.db.get_single_value("Stock Settings", "finished_goods_warehouse")
+
+    return "Productos terminados - L"
+
+
+def get_default_supply_warehouse():
+    # We prefer something like this:
+    # return frappe.db.get_single_value("Stock Settings", "default_supply_warehouse")
+
+    return "Principal - L"
+
+
+def get_default_warehouse():
+    defaults = frappe.defaults.get_defaults()
+
+    return defaults.get("default_warehouse")
