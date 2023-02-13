@@ -124,6 +124,7 @@
             frappe.run_serially([
                 () => frm.trigger("set_sales_order_query"),
                 () => frm.trigger("set_item_code_query"),
+                () => frm.trigger("set_bom_query")
             ]);
         },
         set_sales_order_query(frm) {
@@ -189,7 +190,6 @@
             if (doc.status != "Open") {
                 return "document is not open";
             }
-
             frm.add_custom_button(label, action, parent);
         },
         order_required(frm) {
@@ -205,6 +205,22 @@
         item_specifications(frm) {
             frm.trigger("toggle_display_fields");
         },
+        set_bom_query(frm){
+            const { doc } = frm;
+            const fieldname = "bom";
+            const query = ""
+            const get_query = function () {
+                const filters = {
+                    "item": doc.item_code,
+                    "is_default": 1,
+                    "is_active": 1,
+                };
+
+                return { filters };
+            };
+
+            frm.set_query(fieldname, get_query);
+        }
     };
 
     frappe.ui.form.on('Project Center', ProjectCenter);

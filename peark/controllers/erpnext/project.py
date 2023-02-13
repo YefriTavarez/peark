@@ -118,6 +118,8 @@ def update_tasks(doc):
         })
 
         taskdoc.flags.ignore_permissions = True
+        taskdoc.flags.ignore_links = True
+        taskdoc.flags.ignore_mandatory = True
         taskdoc.save()
 
 

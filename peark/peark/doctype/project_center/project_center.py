@@ -22,6 +22,7 @@ class ProjectCenter(Document):
     def after_insert(self):
         # self.generate_projects()
         # instead, send it to a background queue
+        frappe.db.commit()
         frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
         self.set_missing_values_on_children()
 
@@ -270,6 +271,7 @@ class ProjectCenter(Document):
                 doc.project_title = self.title
                 doc.title = "{}: {}" \
                     .format(self.name, self.title)
+                # doc.department = get_department_for_task(task=doc
 
                 # persists changes
                 doc.db_update()
@@ -319,7 +321,7 @@ class ProjectCenter(Document):
         if self.is_new():
             self.projects = list()
 
-        templates = template.get("templates", list())
+        templates = template.get("templates", default=list())
         for idx, template in enumerate(templates, start=1):
             doctype = "Project"
 
@@ -483,6 +485,11 @@ def update_workorder(workorder, project_center):
         "planned_start_date": project_center.expected_start_date,
         "expected_delivery_date": project_center.expected_end_date,
         "fg_warehouse": get_finished_goods_warehouse(),
+        "project_center": project_center.name,
+        "make": project_center.make,
+        "model": project_center.model,
+        "primary_color": project_center.primary_color,
+        "secondary_color": project_center.secondary_color,
     })
 
 

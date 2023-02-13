@@ -32,7 +32,14 @@ def next_employee_number():
 
 
 def current_employee_number():
-    return frappe.db.sql("select max(employee_number) from tabEmployee")[0][0]
+    employee_max_number = frappe.db.sql("select max(cast(employee_number as int)) from `tabEmployee` where employee_number != 1000")[0][0]
+    
+    if employee_max_number < 385:
+        return 385
+    else:
+        return employee_max_number
+      
+    #return frappe.db.sql("select max(employee_number) from tabEmployee")[0][0]
 
 
 def update_department(doc):

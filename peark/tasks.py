@@ -11,6 +11,7 @@ import peark.controllers.planning_mission
 import peark.controllers.planning_document
 import peark.controllers.project_center
 import peark.controllers.project
+import peark.controllers.erpnext.project
 import peark.controllers.payment_entry_request
 import peark.controllers.material_request
 import peark.controllers.purchase_order
@@ -18,7 +19,8 @@ import peark.controllers.purchase_order
 
 def all():
     peark.controllers.project.set_to_delayed()
-    peark.controllers.project_center.update_projects()
+    # peark.controllers.erpnext.project.update_projects()
+    # peark.controllers.project_center.update_projects()
 
 
 def daily():

@@ -8,6 +8,7 @@ frappe.ui.form.on('Project Center', {
 			frm.trigger("setup_projects"),
 			frm.trigger("setup_attachments"),
 			frm.trigger("setup_dashboard"),
+			frm.trigger("set_queries"),
 		]);
 	},
 	setup_dashboard(frm) {
@@ -34,6 +35,17 @@ frappe.ui.form.on('Project Center', {
 			opts,
 		});
 
+	},
+	set_queries(frm){
+		frm.set_query("bom", () => {
+			return {
+				filters: {
+					is_default: 1,
+					is_active:1,
+					item: frm.doc.item_code
+				}
+			}
+		})
 	},
 	setup_projects(frm) {
 		const { doc } = frm;
