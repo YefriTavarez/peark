@@ -42,15 +42,17 @@
    "columns": 2,
    "fetch_from": "project.status",
    "fieldname": "status",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Status",
-   "read_only": 1
+   "options": "Open\nIn Progress\nStopped\nPaused\nDelayed\nCancelled\nCompleted",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "istable": 1,
- "modified": "2020-11-25 11:31:35.868800",
- "modified_by": "Administrator",
+ "modified": "2023-10-04 12:07:14.926789",
+ "modified_by": "reyferreras@tzcode.tech",
  "module": "peark",
  "name": "Projects",
  "owner": "Administrator",

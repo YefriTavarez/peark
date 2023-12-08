@@ -54,12 +54,12 @@
             >
               <!-- end row -->
               <div class="data-row row">
-                <div class="row-index sortable-handle col col-xs-1">
+                <div style="display: flex;" class="row-index sortable-handle col col-xs-1">
                   <a href="#" v-on:click.prevent="() => toggle_project_status(project, $event)" class="btn btn-link">
                     <span class="fa fa-check-square-o"  v-show="'Completed' === project.status"></span>
                     <span class="fa fa-square-o"  v-show="'Completed' !== project.status"></span>
                   </a>
-                  <span class="hidden-xs">
+                  <span style="margin-left: 10%; margin-top: 5%" class="hidden-xs">
                     {{ project.idx }}
                   </span>
                 </div>
@@ -174,6 +174,7 @@ export default {
         this.local_toggle(target);
       }
 
+      frappe.dom.freeze();
       frappe.call({
         method: 'peark.peark.doctype.project_center.update_subproject_status',
         args: {
@@ -194,12 +195,18 @@ export default {
             }
 
             this.local_toggle(target);
+          } else {
+            frappe.show_alert({
+              message: __('Error'),
+              indicator: 'red',
+            });
+            
           }
         },
         // always: () => {
         //     console.log("finally");
         // },
-        freeze: true,
+        // freeze: true,
         error: () => {
           frappe.show_alert({
             message: __('Error'),
@@ -221,27 +228,39 @@ export default {
     update_current_form() {
       const { project_list, frm } = this;
       const { doc } = frm;
-
+      
       if (
         project_list.length 
         && project_list.every(p => p.status === 'Completed')
         && doc.status !== 'Completed'
       ) {
-        frm.reload_doc();
+        this.reload_form();
       } else if (
         project_list.length 
         && project_list.every(p => p.status === 'Open')
         && doc.status !== 'Open'
       ) {
-        frm.reload_doc();
+        this.reload_form();
       } else if (
         project_list.length 
         && project_list.some(p => ['Open', 'Completed'].includes(p.status))
         && !['Open', 'Delayed'].includes(doc.status)
       ) {
-        frm.reload_doc();
+        this.reload_form();
+      } else {
+        frappe.run_serially([
+          () => frappe.timeout(2),
+          () => frappe.dom.unfreeze(),
+        ]);
       }
-    }
+    },
+    reload_form() {
+      frappe.run_serially([
+          () => frappe.timeout(2),
+          () => this.frm.reload_doc(),
+          () => frappe.dom.unfreeze(),
+        ]);
+    },
   },
   mounted() {
     this.project_list = this.projects;

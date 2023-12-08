@@ -15,6 +15,23 @@ def on_cancel(doc, method=None):
     update_production_planning_tool(doc)
 
 
+def on_submit(doc, method=None):
+    send_specific_items_notification(doc)
+
+
+def send_specific_items_notification(doc):
+
+    specifict_items = [
+        "PRSE0456",
+        "PRSE0458",
+        "SUSU0003",
+    ]
+
+    for item in doc.items:
+        if item.item_code in specifict_items:
+            doc.run_method("send_specific_items_notification")
+
+
 def update_production_planning_tool(doc):
     field = doc.meta.get_field("production_planning_tool")
 

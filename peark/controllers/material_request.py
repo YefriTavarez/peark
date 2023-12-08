@@ -10,7 +10,6 @@ from frappe import get_all, get_doc
 
 from frappe import db as database
 
-
 def notify_for_unresolved():
     doctype = "Material Request"
     filters = {
@@ -43,3 +42,29 @@ def month_start():
     today_in_parts[2] = "01"
 
     return "-".join(today_in_parts)
+
+
+@frappe.whitelist()
+def get_warehouse(user):
+    "Set warehouse based on user's cost center as 100 or 200"
+    branch = get_employee_branch(user)
+
+    if branch == "Santo Domingo":
+        return "Departamento de Produccion Sto. Dgo. - L"
+    
+    if branch == "Santiago":
+        return "Departamento de Produccion Santiago - L"
+
+
+def get_employee_branch(user_id):
+    doctype = "Employee"
+    filters = {"user_id": user_id}
+    fieldname = ["branch"]
+
+    branch = frappe.db.get_value(
+        doctype,
+        filters=filters,
+        fieldname=fieldname,
+    )
+
+    return branch

@@ -147,6 +147,7 @@ doctype_js = {
     "Sales Invoice": "public/js/doctype/sales_invoice.js",
     "Project": "public/js/doctype/project.js",
     "Project Center": "public/js/doctype/project_center.js",
+    "Material Request": "public/js/material_request.js",
 }
 
 doctype_list_js = {
@@ -230,6 +231,10 @@ doc_events = {
     "Material Request": {
         "on_change": "peark.controllers.erpnext.material_request.on_change",
         "on_cancel": "peark.controllers.erpnext.material_request.on_cancel",
+        "on_submit": "peark.controllers.erpnext.material_request.on_submit",
+    },
+    "Work Order": {
+        "on_submit": "peark.controllers.erpnext.work_order.on_submit",
     },
 
     # app events

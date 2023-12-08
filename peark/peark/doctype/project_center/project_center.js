@@ -7,20 +7,26 @@
             frappe.run_serially([
                 () => frm.trigger("set_queries"),
                 () => frm.trigger("add_fetches"),
+                () => frm.trigger("setup_projects"),
+                () => frm.trigger("setup_attachments"),
+                () => frm.trigger("setup_dashboard"),
                 () => frm.trigger("add_custom_buttons"),
                 () => frm.trigger("toggle_display_fields"),
+                () => frm.trigger("toggle_enable_fields"),
             ]);
         },
-        after_insert(frm) {
-            // console.log("after_insert");
-        },
-        after_save(frm) {
-            frappe.run_serially([
-                () => frappe.dom.freeze(),
-                () => frappe.timeout(1),
-                () => frm.reload_doc(),
-                () => frappe.dom.unfreeze(),
-            ]);
+        before_save(frm) {
+            // const event = "generated_projects";
+            // const callback = () => {
+            //     frappe.run_serially([
+            //         () => frm.reload_doc(),
+            //         () => frappe.dom.unfreeze(),
+            //     ]);
+            // };
+            // frappe.realtime.on(event, callback);
+            // if (frm.is_new()) {
+            //     frappe.dom.freeze("Cargando los sub-proyectos.");
+            // }
         },
         add_fetches(frm) {
             frappe.run_serially([
@@ -32,12 +38,79 @@
                 () => frm.trigger("add_create_production_order_button"),
             ]);
         },
+        setup_projects(frm) {
+            const { doc } = frm;
+            const { projects } = doc;
+
+            const selector =
+                "div[data-fieldtype=HTML][data-fieldname=project_display]";
+
+            const wrapper = jQuery("<div></div>")
+                .appendTo(
+                    jQuery(selector)
+                        .empty()
+                );
+
+            frm.cur_project_table = new peark.utils.ProjectTable({
+                wrapper,
+                frm,
+                projects,
+            });
+        },
+        setup_dashboard(frm) {
+            const { doc } = frm;
+
+            const { __onload: opts } = doc;
+
+            const selector =
+                "div[data-fieldtype=HTML][data-fieldname=dashboard]";
+
+            const wrapper = jQuery("<div></div>")
+                .appendTo(
+                    jQuery(selector)
+                        .empty()
+                );
+
+            if (jQuery.isEmptyObject(opts)) {
+                return "no dashboard data to display";
+            }
+
+            frm.cur_dashboard = new peark.utils.ProjectDashboard({
+                wrapper,
+                frm,
+                opts,
+            });
+
+        },
+        setup_attachments(frm) {
+            const selector = ".sidebar-menu.form-attachments a.add-attachment";
+
+            jQuery(selector)
+                .off("click")
+                .on("click", function (event) {
+                    new peark.utils.FileUploader({
+                        doctype: frm.doctype,
+                        docname: frm.docname,
+                        frm: frm,
+                        // folder: 'Home/Attachments/',
+                        on_success: (file, opts) => {
+                            // console.log({ file, opts });
+                            frm.reload_doc();
+                        }
+                    });
+                });
+        },
         toggle_display_fields(frm) {
             frappe.run_serially([
                 () => frm.trigger("toggle_display_front_pantones_field"),
                 () => frm.trigger("toggle_display_back_pantones_field"),
                 () => frm.trigger("toggle_display_front_colors_field"),
                 () => frm.trigger("toggle_display_back_colors_field"),
+            ]);
+        },
+        toggle_enable_fields(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_enable_status_field"),
             ]);
         },
         toggle_display_front_pantones_field(frm) {
@@ -120,6 +193,16 @@
             frm.toggle_display(fieldname, display);
             // frm.toggle_reqd(fieldname, reqd);
         },
+        toggle_enable_status_field(frm) {
+            const allowed_roles = [
+                "Sales Manager",
+                "Supervisor de Ventas",
+            ];
+
+            if (frappe.user.has_role(allowed_roles)) {
+                frm.toggle_enable("status", 1);
+            }
+        },
         set_queries(frm) {
             frappe.run_serially([
                 () => frm.trigger("set_sales_order_query"),
@@ -187,17 +270,31 @@
                 return "document is new";
             }
 
-            if (doc.status != "Open") {
-                return "document is not open";
-            }
+            // if (doc.status != "Open") {
+            //     return "document is not open";
+            // }
             frm.add_custom_button(label, action, parent);
+        },
+        item_code(frm) {
+            const filters = {
+                "is_active": 1,
+                "docstatus": 1,
+                "is_default": 1,
+                "item": frm.doc.item_code
+            }
+
+            frappe.db.get_value("BOM", filters, "name").then(
+                ({ message }) => {
+                    cur_frm.set_value("bom", message.name)
+                }
+            )
         },
         order_required(frm) {
             const { doc } = frm;
             const fieldlist = [
                 "customer",
                 "sales_order",
-                "product_name",
+                // "product_name",
             ];
 
             frm.toggle_reqd(fieldlist, doc.order_required);
@@ -205,13 +302,14 @@
         item_specifications(frm) {
             frm.trigger("toggle_display_fields");
         },
-        set_bom_query(frm){
+        set_bom_query(frm) {
             const { doc } = frm;
             const fieldname = "bom";
             const query = ""
             const get_query = function () {
                 const filters = {
                     "item": doc.item_code,
+                    "docstatus": 1,
                     "is_default": 1,
                     "is_active": 1,
                 };

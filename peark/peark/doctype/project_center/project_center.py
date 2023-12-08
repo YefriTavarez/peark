@@ -13,10 +13,13 @@ from frappe import get_doc, get_all
 
 from frappe.utils import flt
 
+from peark.controllers.task_center import update_project_center_status
+
 
 class ProjectCenter(Document):
     def onload(self):
-        self.update_projects(force=True)
+        # self.update_projects(force=True)
+        self.load_projects_reloaded()
         self.set_dashboard_data()
 
     def after_insert(self):
@@ -25,6 +28,7 @@ class ProjectCenter(Document):
         frappe.db.commit()
         frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
         self.set_missing_values_on_children()
+        self.create_material_request_without_bom()
 
     def on_update(self):
         self.set_missing_values_on_children()
@@ -46,7 +50,7 @@ class ProjectCenter(Document):
             self.set_onload(key, dashboard_data[key])
 
     def get_linked_production_order(self):
-        doctype = "Production Order"
+        doctype = "Work Order"
         filters = {
             "project_center": self.name
         }
@@ -152,6 +156,52 @@ class ProjectCenter(Document):
 
         return flt(delivered_qty) / flt(production_qty) * 100.0
 
+    def load_projects_reloaded(self):
+        doctype = "Project"
+        filters = {
+            "name": ["like", f"{self.name}%"],
+        }
+
+        projects = get_all(doctype, filters, [
+                           "department", "name As project", "project_template", "status"], order_by="name Asc")
+
+        self.projects = []
+
+        for project in projects:
+            self.append("projects", project)
+
+        status = "Open"
+
+        # if not projects:
+        #     status = "Open"
+        if self.status == "Open":
+            status = "Open"
+        elif self.status == "Stopped":
+            status = "Stopped"
+        elif self.status == "Delayed":
+            status = "Delayed"
+        elif self.status == "In Progress":
+            status = "In Progress"
+        elif self.status == "Canceled":
+            status = "Canceled"
+        elif self.status == "Paused":
+            status = "Paused"
+        elif self.status == "Completed":
+            status = "Completed"
+        elif all(project.status == "Completed" for project in projects):
+            status = "Completed"
+        else:
+            if any(project.status == "Delayed" for project in projects):
+                status = "Delayed"
+            elif any(project.status == "Complete" for project in projects):
+                status = "Partially Completed"
+            else:
+                status = "Open"
+
+        if status == self.status:
+            self.status = status
+            self.db_set("status", status, update_modified=False)
+
     def update_projects(self, autocommit=True, force=False):
         if not force:
             return False
@@ -183,8 +233,16 @@ class ProjectCenter(Document):
         # just a bit of config
         status_change_comment = translate("Set to {}")
 
-        if not status_list:
+        # if not status_list:
+        #     self.status = "Open"
+        if prev_status == "Open":
             self.status = "Open"
+        elif prev_status == "In Progress":
+            self.status = "In Progress"
+        elif prev_status == "Stopped":
+            self.status = "Stopped"
+        elif prev_status == "Canceled":
+            self.status = "Canceled"    
         elif all(status == "Completed" for status in status_list):
             self.status = "Completed"
         else:
@@ -233,6 +291,36 @@ class ProjectCenter(Document):
         field = translate("Production Qty")
 
         frappe.throw("{}: {}".format(errmsg, field))
+    
+    def create_material_request_without_bom(self):
+        if self.project_center_template == "Producto sin manufactura":
+            self.make_material_request()
+            self.status = "In Progress"
+    
+    def make_material_request(self):
+        doctype = "Material Request"
+
+        branch = get_branch()
+        warehouse = None
+        
+        if branch == "Santo Domingo":
+            warehouse = "Productos terminados - L"
+        
+        if branch == "Santiago":
+            warehouse = "Productos terminados Santiago - L"
+
+        doc = frappe.new_doc(doctype)
+        doc.update({
+            "material_request_type": "Material Transfer",
+            "required_date": self.delivery_date,
+        })
+        doc.append("items", {
+            "item_code": self.item_code,
+            "qty": self.production_qty,
+            "required_date": self.delivery_date,
+            "warehouse": warehouse,
+        })
+        doc.submit()
 
     def update_title(self):
         title = ""
@@ -297,7 +385,7 @@ class ProjectCenter(Document):
                 "expected_start_date": self.expected_start_date,
                 "expected_end_date": self.expected_end_date,
                 "title": self.title,
-                "project_name": self.product_name,
+                "project_name": self.product_name or self.item_name,
                 "sales_order": self.sales_order,
                 "customer": self.customer,
                 "project_type": self.project_type,
@@ -339,6 +427,9 @@ class ProjectCenter(Document):
             # update projects table
             set_fetch_from(doc)
             append_child(doc, template, idx)
+
+        frappe.publish_realtime("generated_projects",
+                                doctype=self.doctype, docname=self.name)
 
     def get_product_assembly(self):
         item_doc = self.get_item_doc()
@@ -396,6 +487,8 @@ valid_status = ("Open", "Completed")
 
 @frappe.whitelist()
 def update_subproject_status(name, status):
+    from peark.controllers.task_center import get_project_center_id
+    
     if status not in valid_status:
         frappe.throw(translate("Invalid Status"))
 
@@ -419,6 +512,18 @@ def update_subproject_status(name, status):
 
     # update project tasks
     update_project_tasks(doc, status)
+
+    first_task = frappe.get_value("Task", {"project": doc.name})
+
+    if first_task:
+        doctype = "Project Center"
+        name = get_project_center_id(first_task)
+        fieldname = "status"
+        db_status = frappe.get_value(doctype, name, fieldname)
+        
+        update_project_center_status(first_task, prev_status=db_status)
+    else:
+        frappe.throw(f"No Tasks found for Project: {doc.name}: {doc.project_template}")
 
     # returns doc
     return doc
@@ -466,22 +571,26 @@ def make_work_order(project_center):
     # bom_no = BOM-PRPLENPL1248-001
     # item = PRPLENPL1248
     # qty = 1
-    workorder = erpnext_make_work_order(
+    work_order = erpnext_make_work_order(
         doc.bom, doc.item_code, doc.production_qty)
 
     # add additional fields or info
-    update_workorder(workorder, doc)
+    update_work_order(work_order, doc)
 
-    return workorder
+    # update_project_center(doc, work_order)
+
+    return work_order
 
 
-def update_workorder(workorder, project_center):
-    for item in workorder.required_items:
+def update_work_order(work_order, project_center):
+    for item in work_order.required_items:
         item.source_warehouse = get_default_supply_warehouse() \
             or get_default_warehouse()
 
-    workorder.update({
+    work_order.update({
         "sales_order": project_center.sales_order,
+        "delivery_date": project_center.delivery_date,
+        "delivery_time": project_center.delivery_time,
         "planned_start_date": project_center.expected_start_date,
         "expected_delivery_date": project_center.expected_end_date,
         "fg_warehouse": get_finished_goods_warehouse(),
@@ -491,6 +600,15 @@ def update_workorder(workorder, project_center):
         "primary_color": project_center.primary_color,
         "secondary_color": project_center.secondary_color,
     })
+
+
+def update_project_center(project_center, work_order):
+    project_center.work_orders.append({
+        "work_order": work_order.name,
+    })
+    project_center.status = "In Progress"
+    project_center.db_update()
+    project_center.reload()
 
 
 def get_finished_goods_warehouse():
@@ -511,3 +629,13 @@ def get_default_warehouse():
     defaults = frappe.defaults.get_defaults()
 
     return defaults.get("default_warehouse")
+
+
+def get_branch():
+    doctype = "Employee"
+    filters = {
+        "user_id": frappe.session.user,
+    }
+    fields = "branch"
+
+    return frappe.get_value(doctype, filters, fields)

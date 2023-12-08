@@ -12,6 +12,9 @@ from frappe import _ as translate
 from frappe.model.naming import make_autoname
 
 
+from peark.controllers.task_center import update_project_center_status
+
+
 def autoname(doc, method):
     set_new_name(doc)
 
@@ -155,6 +158,8 @@ def update_task(name, status):
     if status not in ("Open", "Completed"):
         return False
 
+    prev_status = doc.status
+
     doc.status = status
 
     if status == "Completed":
@@ -168,4 +173,8 @@ def update_task(name, status):
 
     doc.db_update()
 
-    return update_project(doc)
+    update_project_center_status(doc.name, prev_status=prev_status)
+
+    result = update_project(doc)
+
+    return result
