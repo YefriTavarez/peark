@@ -294,10 +294,10 @@ class ProjectCenter(Document):
     
     def create_material_request_without_bom(self):
         if self.project_center_template == "Producto sin manufactura":
-            self.make_material_request()
+            self.make_material_request(self.sales_order)
             self.status = "In Progress"
     
-    def make_material_request(self):
+    def make_material_request(self, sales_order):
         doctype = "Material Request"
 
         branch = get_branch()
@@ -319,6 +319,7 @@ class ProjectCenter(Document):
             "qty": self.production_qty,
             "required_date": self.delivery_date,
             "warehouse": warehouse,
+            "sales_order": sales_order,
         })
         doc.submit()
 
