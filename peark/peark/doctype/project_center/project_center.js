@@ -13,6 +13,7 @@
                 () => frm.trigger("add_custom_buttons"),
                 () => frm.trigger("toggle_display_fields"),
                 () => frm.trigger("toggle_enable_fields"),
+                () => frm.trigger("toggle_reqd_fields"),
             ]);
         },
         before_save(frm) {
@@ -27,6 +28,9 @@
             // if (frm.is_new()) {
             //     frappe.dom.freeze("Cargando los sub-proyectos.");
             // }
+        },
+        project_center_template(frm) {
+            frm.trigger("toggle_reqd_bom");
         },
         add_fetches(frm) {
             frappe.run_serially([
@@ -112,6 +116,20 @@
             frappe.run_serially([
                 () => frm.trigger("toggle_enable_status_field"),
             ]);
+        },
+        toggle_reqd_fields(frm) {
+            frappe.run_serially([
+                () => frm.trigger("toggle_reqd_bom"),
+            ]);
+        },
+        toggle_reqd_bom(frm) {
+            const { doc } = frm;
+
+            if (doc.project_center_template != "Producto sin manufactura") {
+                frm.toggle_reqd("bom", 1);
+            } else {
+                frm.toggle_reqd("bom", 0);
+            }
         },
         toggle_display_front_pantones_field(frm) {
             const { doc } = frm;
