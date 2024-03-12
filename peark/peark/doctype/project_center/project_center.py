@@ -560,7 +560,7 @@ def update_project_tasks(doc, status):
 
 
 @frappe.whitelist()
-def make_work_order(project_center):
+def make_work_order(project_center, cost_center):
     from erpnext.manufacturing.doctype.work_order.work_order \
         import make_work_order as erpnext_make_work_order
 
@@ -576,17 +576,16 @@ def make_work_order(project_center):
         doc.bom, doc.item_code, doc.production_qty)
 
     # add additional fields or info
-    update_work_order(work_order, doc)
+    update_work_order(work_order, doc, cost_center)
 
     # update_project_center(doc, work_order)
 
     return work_order
 
 
-def update_work_order(work_order, project_center):
+def update_work_order(work_order, project_center, cost_center):
     for item in work_order.required_items:
-        item.source_warehouse = get_default_supply_warehouse() \
-            or get_default_warehouse()
+        item.source_warehouse = get_user_cost_center(cost_center)
 
     work_order.update({
         "sales_order": project_center.sales_order,
@@ -601,6 +600,16 @@ def update_work_order(work_order, project_center):
         "primary_color": project_center.primary_color,
         "secondary_color": project_center.secondary_color,
     })
+
+
+def get_user_cost_center(cost_center=None):
+
+    if cost_center:
+        if cost_center == "100 - Santo Domingo - L":
+            return "Principal - L"
+        
+        if cost_center == "200 - Santiago - L":
+            return "Santiago - L"
 
 
 def update_project_center(project_center, work_order):

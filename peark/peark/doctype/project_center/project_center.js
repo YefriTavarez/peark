@@ -271,6 +271,7 @@
                 const method = "peark.peark.doctype.project_center.project_center.make_work_order";
                 const args = {
                     "project_center": frm.docname,
+                    "cost_center": frappe.boot.user_info[frappe.session.user].cost_center,
                 };
 
                 const callback = function (response) {
