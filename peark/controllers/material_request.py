@@ -68,3 +68,21 @@ def get_employee_branch(user_id):
     )
 
     return branch
+
+
+@frappe.whitelist()
+def get_items_from_work_order(work_order):
+    doctype = "Work Order"
+    
+    doc = frappe.get_doc(doctype, work_order)
+
+    items = []
+
+    for item in doc.required_items:
+        items.append({
+            "item_code": item.item_code,
+            "source_warehouse": item.source_warehouse,
+            "required_qty": item.required_qty,
+        })
+
+    return items
