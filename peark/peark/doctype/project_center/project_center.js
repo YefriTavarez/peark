@@ -29,6 +29,9 @@
             //     frappe.dom.freeze("Cargando los sub-proyectos.");
             // }
         },
+        quotation(frm) {
+            frm.trigger("toggle_reqd_fields");
+        },
         project_center_template(frm) {
             frm.trigger("toggle_reqd_bom");
         },
@@ -114,12 +117,13 @@
         },
         toggle_enable_fields(frm) {
             frappe.run_serially([
-                () => frm.trigger("toggle_enable_status_field"),
+                // () => frm.trigger("toggle_enable_status_field"),
             ]);
         },
         toggle_reqd_fields(frm) {
             frappe.run_serially([
                 () => frm.trigger("toggle_reqd_bom"),
+                () => frm.trigger("toggle_reqd_sales_order"),
             ]);
         },
         toggle_reqd_bom(frm) {
@@ -129,6 +133,15 @@
                 frm.toggle_reqd("bom", 1);
             } else {
                 frm.toggle_reqd("bom", 0);
+            }
+        },
+        toggle_reqd_sales_order(frm) {
+            const { doc } = frm;
+
+            if (doc.quotation) {
+                frm.toggle_reqd("sales_order", 0);
+            } else {
+                frm.toggle_reqd("sales_order", 1);
             }
         },
         toggle_display_front_pantones_field(frm) {
@@ -314,7 +327,7 @@
             const { doc } = frm;
             const fieldlist = [
                 "customer",
-                "sales_order",
+                // "sales_order",
                 // "product_name",
             ];
 
