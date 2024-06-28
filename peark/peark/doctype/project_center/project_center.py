@@ -26,7 +26,7 @@ class ProjectCenter(Document):
         # self.generate_projects()
         # instead, send it to a background queue
         frappe.db.commit()
-        frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
+        # frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
         self.set_missing_values_on_children()
         self.create_material_request_without_bom()
 
@@ -295,7 +295,7 @@ class ProjectCenter(Document):
     def create_material_request_without_bom(self):
         if self.project_center_template == "Producto sin manufactura":
             self.make_material_request(self.sales_order)
-            self.status = "In Progress"
+            # self.status = "In Progress"
     
     def make_material_request(self, sales_order):
         doctype = "Material Request"
