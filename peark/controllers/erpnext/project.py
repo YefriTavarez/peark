@@ -75,6 +75,8 @@ def get_project_taks(doc):
 
 
 def update_projects():
+    return # skip for now
+
     doctype = "Project"
     filters = {
         "updated_tasks": False,

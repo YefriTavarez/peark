@@ -10,5 +10,5 @@ def update_project_center(doc):
     project_center = frappe.get_doc(doctype, doc.project_center)
 
     if project_center:
-        project_center.status = "In Progress"
+        project_center.status = "En Progreso"
         project_center.db_update()

@@ -21,21 +21,21 @@ jQuery.extend(frappe.socketio, {
 	},
 });
 
-(function () {
-	const doctypes_to_preload = [
-		"Possible Planning Mission Status",
-		"Planning Mission Templates",
-		"Data to Ask Item",
-	];
+// (function () {
+// 	const doctypes_to_preload = [
+// 		"Possible Planning Mission Status",
+// 		"Planning Mission Templates",
+// 		"Data to Ask Item",
+// 	];
 
-	jQuery.map(doctypes_to_preload, function (doctype) {
-		const { model } = frappe;
+// 	jQuery.map(doctypes_to_preload, function (doctype) {
+// 		const { model } = frappe;
 
-		model.with_doctype(doctype, response => {
-			// todo: cache doctypes
-		});
-	});
-})();
+// 		model.with_doctype(doctype, response => {
+// 			// todo: cache doctypes
+// 		});
+// 	});
+// })();
 
 frappe.provide("peark.utils");
 jQuery.extend(peark.utils, {

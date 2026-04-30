@@ -17,6 +17,19 @@ from peark.controllers.task_center import update_project_center_status
 
 
 class ProjectCenter(Document):
+    def before_insert(self):
+        self.verify_if_sales_order_or_quotation_has_items()
+        self.verify_existing_sales_orders()
+        self.verify_existing_quotations()
+
+        if self.status == "Presentar arte":
+            self.status = "Presentar Arte"
+        elif self.status == "In Progress":
+            self.status = "En Progreso"
+
+        if self.project_center_template == get_non_manufacturing_template():
+            self.status = "En Progreso"
+
     def onload(self):
         # self.update_projects(force=True)
         self.load_projects_reloaded()
@@ -25,7 +38,8 @@ class ProjectCenter(Document):
     def after_insert(self):
         # self.generate_projects()
         # instead, send it to a background queue
-        frappe.db.commit()
+        if not self.flags.dont_auto_commit:
+            frappe.db.commit()
         # frappe.enqueue_doc(self.doctype, self.name, "generate_projects")
         self.set_missing_values_on_children()
         self.create_material_request_without_bom()
@@ -36,6 +50,88 @@ class ProjectCenter(Document):
     def validate(self):
         self.update_title()
         self.validate_production_qty()
+        self.validate_cancelation()
+
+    def verify_if_sales_order_or_quotation_has_items(self):
+        doctype = "Sales Order" if self.sales_order else "Quotation"
+
+        if not self.sales_order and not self.quotation:
+            return
+
+        filters = {
+            "name": self.sales_order or self.quotation,
+        }
+
+        doc = frappe.get_doc(doctype, filters)
+
+        if not doc.items:
+            frappe.throw(f"La {translate(doctype)} no tiene Items")
+
+    def verify_existing_sales_orders(self):
+        if not self.sales_order:
+            return
+
+        items = self.get_items(sales_order=self.sales_order)
+
+        if not items:
+            return
+
+        if self.item_code not in [item.get("item_code") for item in items]:
+            frappe.throw("Este Item no está incluido en la Orden de Venta")
+
+        project_centers = self.get_project_centers_with_same_item(
+            self.item_code,
+            sales_order=self.sales_order
+        )
+
+        if project_centers:
+            frappe.throw("Este Item ya está asignado a otro Centro de Proyecto con la misma Orden de Venta")
+
+    def verify_existing_quotations(self):
+        if not self.quotation:
+            return
+
+        items = self.get_items(quotation=self.quotation)
+
+        if not items:
+            return
+
+        if self.item_code not in [item.get("item_code") for item in items]:
+            frappe.throw("Este Item no está incluido en la Cotización")
+
+        project_centers = self.get_project_centers_with_same_item(
+            self.item_code, 
+            quotation=self.quotation
+        )
+
+        if project_centers:
+            frappe.throw("Este Item ya está asignado a otro Centro de Proyecto con la misma Cotización")
+
+    def get_project_centers_with_same_item(self, item, sales_order=None, quotation=None):
+        doctype = "Project Center"
+        filters = {
+            "item_code": item,
+        }
+
+        if sales_order:
+            filters["sales_order"] = sales_order
+
+        if quotation:
+            filters["quotation"] = quotation
+
+        fields = "name"
+
+        return get_all(doctype, filters, fields)
+
+    def get_items(self, sales_order=None, quotation=None):
+        doctype = "Sales Order Item" if sales_order else "Quotation Item"
+        filters = {
+            "parent": sales_order or quotation,
+        }
+
+        fields = "item_code"
+
+        return get_all(doctype, filters, fields)
 
     def set_dashboard_data(self):
         dashboard_data = {
@@ -291,9 +387,26 @@ class ProjectCenter(Document):
         field = translate("Production Qty")
 
         frappe.throw("{}: {}".format(errmsg, field))
+
+    def validate_cancelation(self):
+        if self.status == "Cancelado":
+            query = f"""
+                Select
+                    name
+                From
+                    `tabWork Order`
+                Where
+                    project_center = '{self.name}'
+                    And docstatus = 1
+            """
+
+            work_order = database.sql(query)
+
+            if work_order:
+                frappe.throw("No se puede cancelar un proyecto con ordenes de trabajo validadas")
     
     def create_material_request_without_bom(self):
-        if self.project_center_template == "Producto sin manufactura":
+        if self.project_center_template == get_non_manufacturing_template():
             self.make_material_request(self.sales_order)
             # self.status = "In Progress"
     
@@ -302,12 +415,15 @@ class ProjectCenter(Document):
 
         branch = get_branch()
         warehouse = None
+        cost_center = None
         
         if branch == "Santo Domingo":
             warehouse = "Productos terminados - L"
+            cost_center = "100 - Santo Domingo - L"
         
         if branch == "Santiago":
             warehouse = "Productos terminados Santiago - L"
+            cost_center = "200 - Santiago - L"
 
         doc = frappe.new_doc(doctype)
         doc.update({
@@ -315,11 +431,13 @@ class ProjectCenter(Document):
             "required_date": self.delivery_date,
         })
         doc.append("items", {
+            "cost_center": cost_center,
             "item_code": self.item_code,
             "qty": self.production_qty,
             "required_date": self.delivery_date,
             "warehouse": warehouse,
             "sales_order": sales_order,
+            "project_center": self.name,
         })
         doc.submit()
 
@@ -649,3 +767,9 @@ def get_branch():
     fields = "branch"
 
     return frappe.get_value(doctype, filters, fields)
+
+
+def get_non_manufacturing_template():
+    doctype = "Logomarca Defaults"
+    fieldname = "non_manufacturing_template"
+    return frappe.db.get_single_value(doctype, fieldname)

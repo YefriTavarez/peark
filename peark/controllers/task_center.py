@@ -7,8 +7,6 @@ import frappe
 from frappe import db as database
 from frappe.utils import cstr
 
-from peark.controllers.project_center import auto_set_status
-
 
 @frappe.whitelist()
 def toggle_task_status(doctype, name, action):
@@ -35,13 +33,16 @@ def _toggle_task_status(doctype, name, action):
     # all to prevent any internal trigger in the framework for the involved doctypes
     doc = frappe.get_doc(doctype, name)
     db_status = doc.status
-    doc.status = value
-    doc.db_update()
+    # doc.status = value
+    # doc.db_update()
+
+    doc.queue_action("toggle_status", status=value)
 
     update_project_center_status(name, prev_status=db_status, action=action)
 
 
 def update_project_center_status(task_id, prev_status=None, action=None):
+    from peark.controllers.project_center import auto_set_status
     try:
         project_center_id = get_project_center_id(task_id)
     except frappe.ValidationError as e:
