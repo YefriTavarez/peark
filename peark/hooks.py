@@ -12,7 +12,7 @@ app_email = "yefritavarez@gmail.com"
 app_license = "MIT"
 
 # use frappe logo
-app_logo_url = "/assets/frappe/images/frappe-framework-logo.png"
+app_logo_url = "/assets/bluetheme/images/tz-white-logo.png"
 
 # Fixtures
 # ------------------
