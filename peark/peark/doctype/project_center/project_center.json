@@ -28,6 +28,7 @@
   "column_break_16",
   "sales_order",
   "sales_order_item",
+  "quotation_item",
   "cost_center",
   "section_break_18",
   "item_code",
@@ -138,6 +139,15 @@
    "label": "Sales Order Item",
    "no_copy": 1,
    "options": "Sales Order Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "quotation_item",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Quotation Item",
+   "no_copy": 1,
+   "options": "Quotation Item",
    "read_only": 1
   },
   {

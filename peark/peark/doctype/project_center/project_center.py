@@ -19,6 +19,7 @@ from peark.controllers.task_center import update_project_center_status
 class ProjectCenter(Document):
     def before_insert(self):
         self.set_sales_order_item_if_unambiguous()
+        self.set_quotation_item_if_unambiguous()
         self.verify_if_sales_order_or_quotation_has_items()
         self.verify_existing_sales_orders()
         self.verify_existing_quotations()
@@ -124,13 +125,37 @@ class ProjectCenter(Document):
         if self.item_code not in [item.get("item_code") for item in items]:
             frappe.throw("Este Item no está incluido en la Cotización")
 
-        project_centers = self.get_project_centers_with_same_item(
-            self.item_code, 
-            quotation=self.quotation
+        if not self.quotation_item:
+            frappe.throw(
+                "El Item seleccionado aparece en más de una fila de la Cotización. "
+                "Seleccione la fila de la Cotización para este Centro de Proyecto."
+            )
+
+        quotation_item = frappe.get_doc("Quotation Item", self.quotation_item)
+        if quotation_item.parent != self.quotation:
+            frappe.throw("La fila seleccionada no pertenece a la Cotización")
+
+        if quotation_item.item_code != self.item_code:
+            frappe.throw("La fila seleccionada no corresponde al Item del Centro de Proyecto")
+
+        project_centers = self.get_project_centers_with_same_quotation_item(
+            self.quotation_item
         )
 
         if project_centers:
-            frappe.throw("Este Item ya está asignado a otro Centro de Proyecto con la misma Cotización")
+            frappe.throw("Esta fila de la Cotización ya está asignada a otro Centro de Proyecto")
+
+    def set_quotation_item_if_unambiguous(self):
+        if not self.quotation or not self.item_code or self.quotation_item:
+            return
+
+        quotation_items = self.get_quotation_items(
+            quotation=self.quotation,
+            item_code=self.item_code,
+        )
+
+        if len(quotation_items) == 1:
+            self.quotation_item = quotation_items[0].name
 
     def get_project_centers_with_same_item(self, item, sales_order=None, quotation=None):
         doctype = "Project Center"
@@ -158,6 +183,16 @@ class ProjectCenter(Document):
 
         return get_all(doctype, filters, fields)
 
+    def get_project_centers_with_same_quotation_item(self, quotation_item):
+        doctype = "Project Center"
+        filters = {
+            "quotation_item": quotation_item,
+        }
+
+        fields = "name"
+
+        return get_all(doctype, filters, fields)
+
     def get_items(self, sales_order=None, quotation=None):
         doctype = "Sales Order Item" if sales_order else "Quotation Item"
         filters = {
@@ -179,6 +214,18 @@ class ProjectCenter(Document):
         fields = ["name", "item_code"]
 
         return get_all("Sales Order Item", filters, fields)
+
+    def get_quotation_items(self, quotation, item_code=None):
+        filters = {
+            "parent": quotation,
+        }
+
+        if item_code:
+            filters["item_code"] = item_code
+
+        fields = ["name", "item_code"]
+
+        return get_all("Quotation Item", filters, fields)
 
     def set_dashboard_data(self):
         dashboard_data = {
@@ -632,6 +679,7 @@ class ProjectCenter(Document):
     product_name = None
     sales_order = None
     sales_order_item = None
+    quotation_item = None
     bom = None
     make = None
     model = None

@@ -6,3 +6,4 @@ peark.patches.v0.set_title_as_names_in_paperboards
 peark.patches.v0.remove_commas_from_existing_paperboards
 peark.patches.v0.update_caliper_uom_on_paperboard_caliper
 peark.patches.v0.add_sales_order_item_to_project_center
+peark.patches.v0.add_quotation_item_to_project_center
