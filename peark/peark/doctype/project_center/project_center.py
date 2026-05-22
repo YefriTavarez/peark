@@ -18,6 +18,7 @@ from peark.controllers.task_center import update_project_center_status
 
 class ProjectCenter(Document):
     def before_insert(self):
+        self.set_sales_order_item_if_unambiguous()
         self.verify_if_sales_order_or_quotation_has_items()
         self.verify_existing_sales_orders()
         self.verify_existing_quotations()
@@ -79,13 +80,37 @@ class ProjectCenter(Document):
         if self.item_code not in [item.get("item_code") for item in items]:
             frappe.throw("Este Item no está incluido en la Orden de Venta")
 
-        project_centers = self.get_project_centers_with_same_item(
-            self.item_code,
-            sales_order=self.sales_order
+        if not self.sales_order_item:
+            frappe.throw(
+                "El Item seleccionado aparece en más de una fila de la Orden de Venta. "
+                "Seleccione la fila de la Orden de Venta para este Centro de Proyecto."
+            )
+
+        sales_order_item = frappe.get_doc("Sales Order Item", self.sales_order_item)
+        if sales_order_item.parent != self.sales_order:
+            frappe.throw("La fila seleccionada no pertenece a la Orden de Venta")
+
+        if sales_order_item.item_code != self.item_code:
+            frappe.throw("La fila seleccionada no corresponde al Item del Centro de Proyecto")
+
+        project_centers = self.get_project_centers_with_same_sales_order_item(
+            self.sales_order_item
         )
 
         if project_centers:
-            frappe.throw("Este Item ya está asignado a otro Centro de Proyecto con la misma Orden de Venta")
+            frappe.throw("Esta fila de la Orden de Venta ya está asignada a otro Centro de Proyecto")
+
+    def set_sales_order_item_if_unambiguous(self):
+        if not self.sales_order or not self.item_code or self.sales_order_item:
+            return
+
+        sales_order_items = self.get_sales_order_items(
+            sales_order=self.sales_order,
+            item_code=self.item_code,
+        )
+
+        if len(sales_order_items) == 1:
+            self.sales_order_item = sales_order_items[0].name
 
     def verify_existing_quotations(self):
         if not self.quotation:
@@ -123,6 +148,16 @@ class ProjectCenter(Document):
 
         return get_all(doctype, filters, fields)
 
+    def get_project_centers_with_same_sales_order_item(self, sales_order_item):
+        doctype = "Project Center"
+        filters = {
+            "sales_order_item": sales_order_item,
+        }
+
+        fields = "name"
+
+        return get_all(doctype, filters, fields)
+
     def get_items(self, sales_order=None, quotation=None):
         doctype = "Sales Order Item" if sales_order else "Quotation Item"
         filters = {
@@ -132,6 +167,18 @@ class ProjectCenter(Document):
         fields = "item_code"
 
         return get_all(doctype, filters, fields)
+
+    def get_sales_order_items(self, sales_order, item_code=None):
+        filters = {
+            "parent": sales_order,
+        }
+
+        if item_code:
+            filters["item_code"] = item_code
+
+        fields = ["name", "item_code"]
+
+        return get_all("Sales Order Item", filters, fields)
 
     def set_dashboard_data(self):
         dashboard_data = {
@@ -584,6 +631,7 @@ class ProjectCenter(Document):
     customer = None
     product_name = None
     sales_order = None
+    sales_order_item = None
     bom = None
     make = None
     model = None
