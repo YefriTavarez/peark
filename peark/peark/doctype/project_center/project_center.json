@@ -104,7 +104,7 @@
    "in_standard_filter": 1,
    "label": "Status",
    "no_copy": 1,
-   "options": "Presentar Arte\nIniciado\nEn Progreso\nCorregir\nCorrecci\u00f3n\nModificar Arte\nArte Presentado\nPendiente Aprobado por Calidad\nRevisi\u00f3n\nAprobado\nCancelado\nPausado",
+   "options": "Presentar Arte\nIniciado\nEn Progreso\nCorregir\nCorrecci\u00f3n\nModificar Arte\nCrear Arte Bordado\nArte Presentado\nPendiente Aprobado por Calidad\nRevisi\u00f3n\nAprobado\nCancelado\nPausado",
    "reqd": 1
   },
   {

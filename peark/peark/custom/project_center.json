@@ -255,7 +255,7 @@
    "doctype_or_field": "DocField",
    "field_name": "status",
    "idx": 0,
-   "modified": "2024-04-16 11:49:24.552003",
+   "modified": "2026-05-28 11:49:24.552003",
    "modified_by": "Administrator",
    "name": "Project Center-status-options",
    "owner": "Administrator",
@@ -264,7 +264,7 @@
    "parenttype": null,
    "property": "options",
    "property_type": "Text",
-   "value": "Open\nIniciado\nIn Progress\nPresentar arte\nArte presentado\nPAC (Pendiente Aprobado por Calidad)\nAprobado\nStopped\nPaused\nDelayed\nCancelled\nCompleted\nCorreccion"
+   "value": "Presentar Arte\nIniciado\nEn Progreso\nCorregir\nCorrecci\u00f3n\nModificar Arte\nCrear Arte Bordado\nArte Presentado\nPendiente Aprobado por Calidad\nRevisi\u00f3n\nAprobado\nCancelado\nPausado\nArte enviado al Cliente\nSolicitud de Correcci\u00f3n\nProducido\nTerminado"
   },
   {
    "_assign": null,
